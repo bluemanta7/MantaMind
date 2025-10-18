@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MantaMind Word List</title>
+  <link rel="stylesheet" href="Styles/style.css" />
+  <link rel="stylesheet" href="Styles/nav.css" />
+    <link rel="stylesheet" href="Styles/wordlist.css" />
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header id="top-nav">
+    <div id="nav-title">🧠 MantaMind</div>
+    <button id="burger-btn">&#9776;</button>
+  </header>
+
+  <!-- Sidebar Menu -->
+  <nav id="sidebar-menu" class="hidden">
+    <ul>
+      <li><a href="welcome.html">👋 Home</a></li>
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="review.html">📚 Review Words</a></li>
+      <li><a href="settings.html">⚙️ Settings</a></li>
+      <li><a href="#" id="logout-btn">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <h1>📚 All Words from data.json</h1>
+    <ul id="word-list">
+      <li>Loading words...</li>
+    </ul>
+  </main>
+
+  <script>
+    // 🍔 Burger Menu Toggle
+    document.getElementById('burger-btn').addEventListener('click', () => {
+      document.getElementById('sidebar-menu').classList.toggle('hidden');
+    });
+
+    // 🚪 Logout Button
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('userData');
+      location.href = 'login.html';
+    });
+
+    // 📦 Load and Display Word List
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('./data.json')
+        .then(res => res.json())
+        .then(data => {
+          const wordList = Array.isArray(data) ? data : data.words;
+          const listEl = document.getElementById('word-list');
+          listEl.innerHTML = '';
+
+          wordList.forEach(entry => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+              <strong>${entry.word}</strong>: ${entry.definition}<br>
+              <em>Example:</em> ${entry.examples[0]}
+            `;
+            listEl.appendChild(li);
+          });
+        })
+        .catch(err => {
+          console.error('❌ Failed to load data.json:', err);
+          document.getElementById('word-list').innerHTML = '<li>⚠️ Could not load word list.</li>';
+        });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+.challenge-layout {
+  padding-top: 80px;
+  text-align: center;
+  color: #e0e8f0;
+}
+
+#challenge-title {
+  font-size: 2em;
+  color: #90caf9;
+  margin-bottom: 30px;
+}
+
+.challenge-grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+#streak-box {
+  background-color: #263238;
+  padding: 20px;
+  border-radius: 12px;
+  width: 200px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  text-align: left;
+  flex-shrink: 0;
+}
+
+#streak-box h2 {
+  color: #64b5f6;
+  margin-bottom: 10px;
+}
+
+#challenge-box {
+  background-color: rgba(45, 59, 78, 0.85);
+  padding: 30px;
+  border-radius: 12px;
+  width: 500px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+#word-display,
+#task-container,
+#feedback {
+  margin: 15px 0;
+  font-size: 1.2em;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #1565c0;
+}
+
+
+
+#progress-dashboard {
+  max-width: 600px;
+  margin: 40px auto;
+  background-color: rgba(45, 59, 78, 0.85);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  color: #e0e8f0;
+}
+
+#progress-dashboard h2 {
+  color: #90caf9;
+  text-align: center;
+}
+
+#progress-dashboard h3 {
+  color: #64b5f6;
+  margin-top: 20px;
+}
+
+#progress-dashboard ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#progress-dashboard li {
+  background-color: #263238;
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 1em;
+}
+
+.game-container {
+  max-width: 700px;
+  margin: 100px auto;
+  padding: 30px;
+  background-color: rgba(45, 59, 78, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  color: #e0e8f0;
+  text-align: center;
+}
+
+#challenge-section h1 {
+  color: #90caf9;
+  margin-bottom: 20px;
+}
+
+#word-display,
+#task-container,
+#feedback {
+  margin: 15px 0;
+  font-size: 1.2em;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #1565c0;
+}
+

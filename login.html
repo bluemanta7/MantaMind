@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login to MantaMind</title>
+  <link rel="stylesheet" href="Styles/style.css" />
+  <link rel="stylesheet" href="Styles/nav.css" />
+  <link rel="stylesheet" href="Styles/auth.css" />
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header id="top-nav">
+    <div id="nav-title">🧠 MantaMind</div>
+    <button id="burger-btn">&#9776;</button>
+  </header>
+
+  <!-- Sidebar Menu -->
+  <nav id="sidebar-menu" class="hidden">
+    <ul>
+      <li><a href="welcome.html">👋 Home</a></li>
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="review.html">📚 Review Words</a></li>
+      <li><a href="settings.html">⚙️ Settings</a></li>
+      <li><a href="#" id="logout-btn">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Login Section -->
+  <main id="auth-container">
+    <h2 id="auth-title">Login to MantaMind</h2>
+    <form id="auth-form">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit" id="auth-submit">Login</button>
+    </form>
+    <p id="toggle-auth">Don't have an account? <a href="#" id="switch-mode">Sign up</a></p>
+    <div id="auth-feedback"></div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const burgerBtn = document.getElementById('burger-btn');
+      const sidebarMenu = document.getElementById('sidebar-menu');
+      if (burgerBtn && sidebarMenu) {
+        burgerBtn.addEventListener('click', () => {
+          sidebarMenu.classList.toggle('hidden');
+        });
+      }
+
+      // Auth logic
+      let userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      let currentUser = null;
+
+      document.getElementById('auth-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const isSignup = document.getElementById('auth-submit').textContent === "Sign up";
+
+        if (!username || !password) return showAuthFeedback("Please fill in both fields.");
+
+        if (isSignup) {
+          if (userData[username]) {
+            showAuthFeedback("Username already taken.");
+          } else {
+            userData[username] = {
+              password: password,
+              learnedWords: [],
+              inProgressWords: [],
+              correctStreaks: {}
+            };
+            currentUser = username;
+            saveAndRedirect();
+          }
+        } else {
+          if (!userData[username] || userData[username].password !== password) {
+            showAuthFeedback("Invalid login.");
+          } else {
+            currentUser = username;
+            saveAndRedirect();
+          }
+        }
+      });
+
+      function showAuthFeedback(msg) {
+        document.getElementById('auth-feedback').textContent = msg;
+      }
+
+      function saveAndRedirect() {
+        localStorage.setItem('currentUser', currentUser);
+        localStorage.setItem('userData', JSON.stringify(userData));
+        window.location.href = 'index.html';
+      }
+
+      document.getElementById('switch-mode').addEventListener('click', function(e) {
+        e.preventDefault();
+        const submitBtn = document.getElementById('auth-submit');
+        const title = document.getElementById('auth-title');
+        const toggleText = document.getElementById('toggle-auth');
+
+        if (submitBtn.textContent === "Login") {
+          submitBtn.textContent = "Sign up";
+          title.textContent = "Create a MantaMind Account";
+          toggleText.innerHTML = 'Already have an account? <a href="#" id="switch-mode">Login</a>';
+        } else {
+          submitBtn.textContent = "Login";
+          title.textContent = "Login to MantaMind";
+          toggleText.innerHTML = 'Don\'t have an account? <a href="#" id="switch-mode">Sign up</a>';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

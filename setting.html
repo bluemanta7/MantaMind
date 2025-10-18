@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MantaMind Settings</title>
+  <link rel="stylesheet" href="Styles/style.css" />
+<link rel="stylesheet" href="Styles/nav.css" />
+<link rel="stylesheet" href="Styles/settings.css" />
+
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header id="top-nav">
+    <div id="nav-title">🧠 MantaMind</div>
+    <button id="burger-btn">&#9776;</button>
+  </header>
+
+  <!-- Sidebar Menu -->
+  <nav id="sidebar-menu" class="hidden">
+    <ul>
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="review.html">📚 Review Words</a></li>
+      <li><a href="settings.html">⚙️ Settings</a></li>
+      <li><a href="#" id="logout-btn">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Settings Section -->
+  <main class="game-container">
+    <h1>⚙️ Settings</h1>
+    <button id="clear-progress">🧹 Clear My Progress</button>
+    <button id="toggle-theme">🌗 Toggle Dark/Light Mode</button>
+  </main>
+
+  <script>
+    // 🍔 Burger Menu Toggle
+    document.getElementById('burger-btn').addEventListener('click', () => {
+      document.getElementById('sidebar-menu').classList.toggle('hidden');
+    });
+
+    // 🚪 Logout Button
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('userData');
+      location.href = 'index.html';
+    });
+
+    // 🧹 Clear Progress
+    document.getElementById('clear-progress').addEventListener('click', () => {
+      const currentUser = localStorage.getItem('currentUser');
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+
+      if (currentUser && userData[currentUser]) {
+        userData[currentUser].learnedWords = [];
+        userData[currentUser].inProgressWords = [];
+        userData[currentUser].correctStreaks = {};
+        localStorage.setItem('userData', JSON.stringify(userData));
+        alert("Progress cleared!");
+      }
+    });
+
+    // 🌗 Theme Toggle
+    document.getElementById('toggle-theme').addEventListener('click', () => {
+      document.body.classList.toggle('light-theme');
+    });
+  </script>
+</body>
+</html>

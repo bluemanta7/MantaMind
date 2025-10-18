@@ -3,47 +3,331 @@
 <head>
   <meta charset="UTF-8" />
   <title>MantaMind: Daily Word Challenge</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    /* Optional inline styles for feedback */
-    #feedback {
-      font-weight: bold;
-      margin-top: 10px;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    #next-task {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-    }
-  </style>
+  <link rel="stylesheet" href="Styles/style.css" />
+  <link rel="stylesheet" href="Styles/nav.css" />
+  <link rel="stylesheet" href="Styles/dashboard.css" />
 </head>
 <body>
-  <!-- Scoreboard -->
-  <div id="score-board">
-    <p>🔥 Current Streak: <span id="current-streak">0</span></p>
-    <p>🏆 Best Streak: <span id="best-streak">0</span></p>
+
+  <!-- Top Navigation Bar -->
+  <header id="top-nav">
+    <div id="nav-title">🧠 MantaMind</div>
+    <button id="burger-btn">&#9776;</button>
+  </header>
+
+  <!-- Sidebar Menu -->
+  <nav id="sidebar-menu" class="hidden">
+    <ul>
+      <li><a href="welcome.html">👋 Home</a></li>
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="review.html">📚 Review Words</a></li>
+      <li><a href="settings.html">⚙️ Settings</a></li>
+      <li><a href="#" id="logout-btn">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Game Container -->
+  <main class="challenge-layout">
+    <h1 id="challenge-title">MantaMind: Daily Word Challenge</h1>
+
+    <div class="challenge-grid">
+      <!-- Left: Streak Box -->
+      <aside id="streak-box">
+  <h2>🔥 Streak Stats</h2>
+  <p>Current Streak: <span id="current-streak">0</span></p>
+  <p>Best Streak: <span id="best-streak">0</span></p>
+  <div id="completion-bar-container">
+    <div id="completion-bar"></div>
   </div>
+</aside>
 
-  <!-- Title -->
-  <h1>MantaMind: Daily Word Challenge</h1>
 
-  <!-- Word Display -->
-  <div id="word-display"></div>
+      <!-- Center: Challenge Box -->
+      <section id="challenge-box">
+        <div id="task-container">
+          <p>Click "Start Challenge" to begin your daily word learning!</p>
+        </div>
+        <div id="feedback"></div>
+        <button id="next-task">Start Challenge</button>
+        <button id="give-up-btn" style="display:none;">Give Up</button>
+        <button id="hint-btn" style="display:none;">💡 Hint</button>
 
-  <!-- Challenge Tasks -->
-  <div id="task-container"></div>
+      </section>
+    </div>
+  </main>
 
-  <!-- Feedback -->
-  <div id="feedback"></div>
+  <!-- Challenge Script -->
+  <script>
+    let wordData = [];
+    let currentWord = null;
+    let streak = { current: 0, best: 0 };
 
-  <!-- Buttons -->
-  <button id="next-task">Start Challenge</button>
-  <button id="give-up-btn">Give Up</button>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('burger-btn').addEventListener('click', () => {
+        document.getElementById('sidebar-menu').classList.toggle('hidden');
+      });
 
-  <!-- Game Script -->
-  <script src="script.js"></script>
+    document.getElementById('logout-btn').addEventListener('click', () => {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('userData');
+        location.href = 'login.html';
+      });
+    document.getElementById('hint-btn').addEventListener('click', () => {
+      const feedbackEl = document.getElementById('feedback');
+      if (!feedbackEl) return;
+
+      if (currentWord && Array.isArray(currentWord.synonyms) && currentWord.synonyms.length) {
+        feedbackEl.textContent = `💡 Synonyms: ${currentWord.synonyms.join(', ')}`;
+      } else {
+        feedbackEl.textContent = '💡 No synonyms available for this word.';
+      }
+    });
+
+
+      fetch('./data.json')
+        .then(res => res.json())
+        .then(data => {
+          wordData = Array.isArray(data) ? data : data.words;
+          console.log('✅ Loaded', wordData.length, 'words');
+        })
+        .catch(err => {
+          console.error('❌ Failed to load data.json:', err);
+          document.getElementById('task-container').innerHTML = '<p>⚠️ Error: System not functioning</p>';
+        });
+
+      document.getElementById('next-task').addEventListener('click', startChallenge);
+      document.getElementById('give-up-btn').addEventListener('click', revealAnswer);
+
+      document.getElementById('task-container').innerHTML = `<p>Click "Start Challenge" to begin your daily word learning!</p>
+`;
+
+    });
+
+    function startChallenge() {
+      if (wordData.length === 0) {
+        document.getElementById('task-container').innerHTML = '<p>⚠️ Word data not loaded. Cannot proceed.</p>';
+        return;
+      }
+
+      currentWord = wordData[Math.floor(Math.random() * wordData.length)];
+      const format = ['multiple-definition', 'multiple-word', 'fill', 'typing'][Math.floor(Math.random() * 4)];
+
+      document.getElementById('give-up-btn').style.display = 'inline-block';
+      document.getElementById('next-task').textContent = 'Next Task';
+      document.getElementById('hint-btn').style.display = 'inline-block';
+      document.getElementById('feedback').textContent = '';
+
+      if (format === 'multiple-definition') showMultipleChoiceDefinition(currentWord);
+      else if (format === 'multiple-word') showMultipleChoiceWord(currentWord);
+      else if (format === 'fill') showFillInBlank(currentWord);
+      else showTypingChallenge(currentWord);
+    }
+
+    function endChallenge() {
+      document.getElementById('task-container').innerHTML = '<p>Challenge ended. Try again tomorrow!</p>';
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('give-up-btn').style.display = 'none';
+      document.getElementById('next-task').textContent = 'Start Challenge';
+      updateStreak(false);
+    }
+
+    function updateStreak(success) {
+  if (success) {
+    streak.current++;
+    if (streak.current > streak.best) streak.best = streak.current;
+  } else {
+    streak.current = 0;
+  }
+
+  document.getElementById('current-streak').textContent = streak.current;
+  document.getElementById('best-streak').textContent = streak.best;
+
+  // ✅ Update completion bar
+  const bar = document.getElementById('completion-bar');
+  const percent = Math.min(streak.current, 10) * 10;
+  bar.style.width = `${percent}%`;
+
+  // ✅ Optional: change color if full
+  bar.style.backgroundColor = (streak.current >= 10) ? '#00c853' : '#4caf50';
+}
+
+
+    function showMultipleChoiceDefinition(wordObj) {
+      const choices = [wordObj.word];
+      while (choices.length < 4) {
+        const random = wordData[Math.floor(Math.random() * wordData.length)].word;
+        if (!choices.includes(random)) choices.push(random);
+      }
+      choices.sort(() => Math.random() - 0.5);
+
+      document.getElementById('task-container').innerHTML = `
+        <p>❓ Which word matches this definition: "<em>${wordObj.definition}</em>"</p>
+        ${choices.map(word => `<button class="choice-btn">${word}</button>`).join('')}
+      `;
+      document.querySelectorAll('.choice-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const correct = btn.textContent === wordObj.word || btn.textContent === wordObj.definition;
+
+    if (correct) {
+      btn.classList.add('correct');
+      document.getElementById('feedback').textContent = '✅ Correct!';
+      updateStreak(true);
+      disableMultipleChoice();
+    } else {
+      btn.classList.add('incorrect');
+      document.getElementById('feedback').textContent = '❌ Try again.';
+      updateStreak(false);
+    }
+  });
+});
+
+      document.querySelectorAll('.choice-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const correct = btn.textContent === wordObj.word;
+          document.getElementById('feedback').textContent = correct
+  ? '✅ Correct!'
+  : '❌ Try again.';
+
+          updateStreak(correct);
+        });
+      });
+    }
+
+    function showMultipleChoiceWord(wordObj) {
+      const choices = [wordObj.definition];
+      while (choices.length < 4) {
+        const random = wordData[Math.floor(Math.random() * wordData.length)].definition;
+        if (!choices.includes(random)) choices.push(random);
+      }
+      choices.sort(() => Math.random() - 0.5);
+
+      document.getElementById('task-container').innerHTML = `
+        <p>❓ What is the definition of "<strong>${wordObj.word}</strong>"?</p>
+        ${choices.map(def => `<button class="choice-btn">${def}</button>`).join('')}
+      `;
+      document.querySelectorAll('.choice-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const correct = btn.textContent === wordObj.word || btn.textContent === wordObj.definition;
+
+    if (correct) {
+      btn.classList.add('correct');
+      document.getElementById('feedback').textContent = '✅ Correct!';
+      updateStreak(true);
+      disableMultipleChoice();
+    } else {
+      btn.classList.add('incorrect');
+      document.getElementById('feedback').textContent = '❌ Try again.';
+      updateStreak(false);
+    }
+  });
+});
+
+      document.querySelectorAll('.choice-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const correct = btn.textContent === wordObj.definition;
+          document.getElementById('feedback').textContent = correct
+  ? '✅ Correct!'
+  : '❌ Try again.';
+
+          updateStreak(correct);
+        });
+      });
+    }
+
+    function showFillInBlank(wordObj) {
+      const sentence = wordObj.examples[0].replace(wordObj.word, '_____');
+      document.getElementById('task-container').innerHTML = `
+        <p>📝 Fill in the blank: "${sentence}"</p>
+        <input type="text" id="blank-input" placeholder="Your answer" />
+        <button id="submit-blank">Submit</button>
+      `;
+
+      document.getElementById('submit-blank').addEventListener('click', () => {
+        const input = document.getElementById('blank-input').value.trim().toLowerCase();
+        const correct = input === wordObj.word.toLowerCase();
+        document.getElementById('feedback').textContent = correct
+  ? '✅ Correct!'
+  : '❌ Try again.';
+
+        updateStreak(correct);
+      });
+    }
+
+    function showTypingChallenge(wordObj) {
+  document.getElementById('task-container').innerHTML = `
+    <p>⌨️ Type the word that matches this definition: "<em>${wordObj.definition}</em>"</p>
+    <input type="text" id="type-input" placeholder="Your answer" />
+    <button id="submit-type">Submit</button>
+  `;
+
+  document.getElementById('submit-type').addEventListener('click', () => {
+    const input = document.getElementById('type-input').value.trim().toLowerCase();
+    const correct = input === wordObj.word.toLowerCase();
+
+    if (correct) {
+      document.getElementById('feedback').textContent = '✅ Correct!';
+      updateStreak(true);
+      disableTypingChallenge();
+    } else {
+      document.getElementById('feedback').textContent = '❌ Try again or use a hint.';
+      updateStreak(false); // ✅ This now runs at the right time
+    }
+  });
+}
+
+
+  document.getElementById('task-container').innerHTML = `
+    <p>⌨️ Type the word that matches this definition: "<em>${wordObj.definition}</em>"</p>
+    <input type="text" id="type-input" placeholder="Your answer" />
+    <button id="submit-type">Submit</button>
+    
+  `;
+
+  document.getElementById('submit-type').addEventListener('click', () => {
+    const input = document.getElementById('type-input').value.trim().toLowerCase();
+    const correct = input === wordObj.word.toLowerCase();
+
+    if (correct) {
+      document.getElementById('feedback').textContent = '✅ Correct!';
+      updateStreak(true);
+      disableTypingChallenge();
+    } else {
+      document.getElementById('feedback').textContent = '❌ Try again or use a hint.';
+    }
+  });
+  // Clean-up: removed a stray block that referenced an undefined `wordObj` at top-level.
+  // Add helpful utility functions so Give Up works and typing challenge can be disabled.
+
+  function revealAnswer() {
+    const container = document.getElementById('task-container');
+    if (!currentWord) {
+      container.innerHTML = '<p>No current word to reveal.</p>';
+      return;
+    }
+
+    const examples = Array.isArray(currentWord.examples)
+      ? currentWord.examples.map(e => `<li>${e}</li>`).join('')
+      : '';
+
+    container.innerHTML = `
+      <div class="reveal-box">
+        <p><strong>Answer:</strong> ${currentWord.word}</p>
+        <p><strong>Definition:</strong> ${currentWord.definition}</p>
+        ${examples ? `<p><strong>Examples:</strong></p><ul>${examples}</ul>` : ''}
+      </div>
+    `;
+
+    // Mark as a failed attempt for streak purposes
+    updateStreak(false);
+    document.getElementById('give-up-btn').style.display = 'none';
+  }
+
+  function disableTypingChallenge() {
+    const input = document.getElementById('type-input');
+    const btn = document.getElementById('submit-type');
+    if (input) input.disabled = true;
+    if (btn) btn.disabled = true;
+  }
+</script>
 </body>
 </html>

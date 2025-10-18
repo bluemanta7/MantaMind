@@ -1,0 +1,22 @@
+#review-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: rgba(45, 59, 78, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+#review-word {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+#definition-box {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #263238;
+  border-radius: 6px;
+  color: #cfd8dc;
+}
