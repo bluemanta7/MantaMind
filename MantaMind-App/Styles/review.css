@@ -1,0 +1,153 @@
+body {
+  margin: 0;
+  padding-top: 60px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0a1f3d;
+  color: #e0e8f0;
+}
+
+#top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #0a1f3d;
+  border-bottom: 2px solid #64b5f6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 100;
+}
+
+#nav-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #90caf9;
+}
+
+#burger-btn {
+  font-size: 1.5em;
+  background: none;
+  border: none;
+  color: #e0e8f0;
+  cursor: pointer;
+}
+
+#sidebar-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 220px;
+  height: 100vh;
+  background-color: #122c54;
+  border-left: 2px solid #64b5f6;
+  padding-top: 80px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+  z-index: 99;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+#sidebar-menu:not(.hidden) {
+  transform: translateX(0);
+}
+
+#sidebar-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#sidebar-menu li {
+  margin: 15px 0;
+}
+
+#sidebar-menu a {
+  color: #e0e8f0;
+  text-decoration: none;
+  font-size: 1em;
+}
+
+#sidebar-menu a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none;
+}
+
+.game-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.game-container h1 {
+  text-align: center;
+  color: #90caf9;
+}
+
+#review-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: rgba(45, 59, 78, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+#review-word {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #90caf9;
+  font-weight: bold;
+}
+
+#definition-box {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #263238;
+  border-radius: 6px;
+  color: #cfd8dc;
+  text-align: left;
+}
+
+#definition-box p {
+  margin: 10px 0;
+}
+
+#definition-box strong {
+  color: #90caf9;
+}
+
+#show-definition, #next-word {
+  background-color: #64b5f6;
+  color: #0a1f3d;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px 5px;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#show-definition:hover, #next-word:hover {
+  background-color: #90caf9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(100, 181, 246, 0.4);
+}
+
+#show-definition:disabled, #next-word:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome to MantaMind</title>
+  <link rel="stylesheet" href="Styles/style.css" />
+  <link rel="stylesheet" href="Styles/nav.css" />
+  <link rel="stylesheet" href="Styles/welcome.css" />
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header id="top-nav">
+    <div id="nav-title">🧠 MantaMind</div>
+    <button id="burger-btn">&#9776;</button>
+  </header>
+
+  <!-- Sidebar Menu -->
+  <nav id="sidebar-menu" class="hidden">
+    <ul>
+      <li><a href="index.html">👋 Home</a></li>
+      <li><a href="challenge.html">🎮 Challenge</a></li>
+      <li><a href="profile.html">👤 Profile</a></li>
+      <li><a href="matching.html">🧩 Matching</a></li>
+      <li><a href="wordlist.html">📖 Word List</a></li>
+      <li><a href="settings.html">⚙️ Settings</a></li>
+      <li><a href="#" id="logout-btn">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Welcome Section -->
+  <main id="welcome-section">
+    <h1>Welcome to MantaMind</h1>
+    <p>Build your vocabulary. Track your progress. Challenge yourself daily.</p>
+    <button id="welcome-cta">Get Started</button>
+    <p id="signed-in" style="margin-top:8px;color:#c3f0ff;"></p>
+  </main>
+
+  <script>
+    // Modify welcome CTA if user already signed in
+    const cta = document.getElementById('welcome-cta');
+    const signedIn = document.getElementById('signed-in');
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      cta.textContent = 'Continue to Challenge';
+      cta.addEventListener('click', () => { location.href = 'challenge.html'; });
+      signedIn.textContent = `Signed in as ${currentUser}.`;
+    } else {
+      cta.textContent = 'Get Started';
+      cta.addEventListener('click', () => { location.href = 'login.html'; });
+    }
+  </script>
+  <script src="nav.js"></script>
+</body>
+</html>

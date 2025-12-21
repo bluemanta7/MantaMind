@@ -1,0 +1,517 @@
+{
+  "words": [
+    {
+      "word": "Charismatic",
+      "definition": "having a compelling charm that attracts and influences others",
+      "examples": [
+        "The leader was ____ and inspired loyalty.",
+        "Her ____ personality drew attention immediately."
+      ],
+      "synonyms": ["charming", "magnetic", "captivating"]
+    },
+    {
+      "word": "Prismatic",
+      "definition": "showing many different colors or aspects",
+      "examples": [
+        "The glass reflected a ____ glow.",
+        "His ____ personality revealed many sides."
+      ],
+      "synonyms": ["iridescent", "multifaceted", "varied"]
+    },
+    {
+      "word": "Epitome",
+      "definition": "a perfect example of a quality or type",
+      "examples": [
+        "She was the ____ of professionalism.",
+        "The design is the ____ of simplicity."
+      ],
+      "synonyms": ["embodiment", "paragon", "ideal"]
+    },
+    {
+      "word": "Recollection",
+      "definition": "the act of remembering something",
+      "examples": [
+        "He had a clear ____ of the event.",
+        "Her ____ of childhood was vivid."
+      ],
+      "synonyms": ["memory", "remembrance", "recall"]
+    },
+    {
+      "word": "Vindictive",
+      "definition": "having a strong desire for revenge",
+      "examples": [
+        "His ____ actions shocked everyone.",
+        "She became ____ after the betrayal."
+      ],
+      "synonyms": ["vengeful", "spiteful", "malicious"]
+    },
+    {
+      "word": "Narcolepsy",
+      "definition": "a disorder characterized by sudden attacks of sleep",
+      "examples": [
+        "____ can interfere with daily functioning.",
+        "He manages life with ____."
+      ],
+      "synonyms": ["sleep disorder", "hypersomnia"]
+    },
+    {
+      "word": "Predicament",
+      "definition": "a difficult or unpleasant situation",
+      "examples": [
+        "She found herself in a ____.",
+        "The error put him in a ____."
+      ],
+      "synonyms": ["dilemma", "plight", "bind"]
+    },
+    {
+      "word": "Prosperous",
+      "definition": "successful, especially financially",
+      "examples": [
+        "The city became ____ over time.",
+        "They lived a ____ life."
+      ],
+      "synonyms": ["wealthy", "thriving", "affluent"]
+    },
+    {
+      "word": "Schizophrenia",
+      "definition": "a mental disorder affecting thought processes and perception",
+      "examples": [
+        "____ requires long-term treatment.",
+        "The illness known as ____ alters perception."
+      ],
+      "synonyms": ["psychotic disorder", "mental illness"]
+    },
+    {
+      "word": "Cope",
+      "definition": "to deal effectively with something difficult",
+      "examples": [
+        "She learned to ____ with stress.",
+        "He struggled to ____ with loss."
+      ],
+      "synonyms": ["manage", "handle", "endure"]
+    },
+    {
+      "word": "Versatile",
+      "definition": "able to adapt or be used in many ways",
+      "examples": [
+        "She is a ____ performer.",
+        "The tool is extremely ____."
+      ],
+      "synonyms": ["adaptable", "flexible", "multifunctional"]
+    },
+    {
+      "word": "Cathartic",
+      "definition": "providing emotional release",
+      "examples": [
+        "The conversation was ____.",
+        "Writing can be ____."
+      ],
+      "synonyms": ["cleansing", "therapeutic", "relieving"]
+    },
+    {
+      "word": "Etiquette",
+      "definition": "the customary rules of polite behavior",
+      "examples": [
+        "Formal ____ was expected.",
+        "She studied dining ____."
+      ],
+      "synonyms": ["manners", "protocol", "decorum"]
+    },
+    {
+      "word": "Inadequate",
+      "definition": "not sufficient or good enough",
+      "examples": [
+        "The explanation was ____.",
+        "He felt ____ for the role."
+      ],
+      "synonyms": ["insufficient", "deficient", "lacking"]
+    },
+    {
+      "word": "Pandemonium",
+      "definition": "wild and noisy chaos",
+      "examples": [
+        "The announcement caused ____.",
+        "____ erupted in the crowd."
+      ],
+      "synonyms": ["chaos", "uproar", "turmoil"]
+    },
+    {
+      "word": "Hectic",
+      "definition": "very busy and chaotic",
+      "examples": [
+        "It was a ____ day.",
+        "Her schedule became ____."
+      ],
+      "synonyms": ["frantic", "frenzied", "chaotic"]
+    },
+    {
+      "word": "Statutory",
+      "definition": "required or established by law",
+      "examples": [
+        "____ requirements must be met.",
+        "The ____ limit was enforced."
+      ],
+      "synonyms": ["legal", "mandatory", "regulated"]
+    },
+    {
+      "word": "Congregate",
+      "definition": "to gather together in a group",
+      "examples": [
+        "People began to ____ outside.",
+        "Birds ____ near the water."
+      ],
+      "synonyms": ["assemble", "gather", "cluster"]
+    },
+    {
+      "word": "Lethargic",
+      "definition": "lacking energy or enthusiasm",
+      "examples": [
+        "He felt ____ all afternoon.",
+        "The heat made everyone ____."
+      ],
+      "synonyms": ["sluggish", "listless", "weary"]
+    },
+    {
+      "word": "Converse",
+      "definition": "to engage in conversation",
+      "examples": [
+        "They ____ for hours.",
+        "She enjoys ____ with strangers."
+      ],
+      "synonyms": ["talk", "communicate", "discuss"]
+    },
+    {
+      "word": "Ruminate",
+      "definition": "to think deeply or repeatedly about something",
+      "examples": [
+        "He continued to ____ over the decision.",
+        "She would ____ on past mistakes."
+      ],
+      "synonyms": ["ponder", "reflect", "contemplate"]
+    },
+    {
+      "word": "Serendipity",
+      "definition": "the occurrence of events by happy or fortunate chance",
+      "examples": [
+        "Their meeting was pure ____.",
+        "____ played a role in the discovery."
+      ],
+      "synonyms": ["chance", "luck", "fortuity"]
+    },
+    {
+      "word": "Abolish",
+      "definition": "to formally put an end to something",
+      "examples": [
+        "They voted to ____ the outdated law.",
+        "The practice was ____ decades ago."
+      ],
+      "synonyms": ["eliminate", "end", "repeal"]
+    },
+    {
+      "word": "Explicit",
+      "definition": "stated clearly and in detail",
+      "examples": [
+        "The instructions were ____.",
+        "She gave ____ consent."
+      ],
+      "synonyms": ["clear", "direct", "definite"]
+    },
+    {
+      "word": "Infantile",
+      "definition": "immature or childish",
+      "examples": [
+        "His response was ____.",
+        "They found the joke ____."
+      ],
+      "synonyms": ["childish", "immature", "juvenile"]
+    },
+    {
+      "word": "Cavalier",
+      "definition": "showing a lack of concern or seriousness",
+      "examples": [
+        "He had a ____ attitude toward rules.",
+        "Her ____ remark offended others."
+      ],
+      "synonyms": ["dismissive", "nonchalant", "careless"]
+    },
+    {
+      "word": "Stagnant",
+      "definition": "showing no movement, growth, or progress",
+      "examples": [
+        "The economy became ____.",
+        "His career felt ____."
+      ],
+      "synonyms": ["motionless", "inactive", "static"]
+    },
+    {
+      "word": "Vanity",
+      "definition": "excessive pride in appearance or abilities",
+      "examples": [
+        "His ____ was obvious.",
+        "She checked the mirror out of ____."
+      ],
+      "synonyms": ["conceit", "egotism", "self-admiration"]
+    },
+    {
+      "word": "Despondency",
+      "definition": "a state of deep sadness or hopelessness",
+      "examples": [
+        "He sank into ____ after the loss.",
+        "A feeling of ____ filled the room."
+      ],
+      "synonyms": ["despair", "hopelessness", "dejection"]
+    },
+    {
+      "word": "Arbitrary",
+      "definition": "based on random choice rather than reason",
+      "examples": [
+        "The decision seemed ____.",
+        "Rules were applied in an ____ way."
+      ],
+      "synonyms": ["random", "capricious", "unreasoned"]
+    },
+    {
+      "word": "Obfuscate",
+      "definition": "to deliberately make something unclear",
+      "examples": [
+        "He tried to ____ the facts.",
+        "The jargon only served to ____ the issue."
+      ],
+      "synonyms": ["confuse", "obscure", "cloud"]
+    },
+    {
+      "word": "Obstinate",
+      "definition": "stubbornly refusing to change one’s opinion",
+      "examples": [
+        "She remained ____ despite evidence.",
+        "His ____ nature caused conflict."
+      ],
+      "synonyms": ["stubborn", "unyielding", "inflexible"]
+    },
+    {
+      "word": "Convoluted",
+      "definition": "very complex and difficult to understand",
+      "examples": [
+        "The explanation was ____.",
+        "The plot became ____."
+      ],
+      "synonyms": ["complicated", "intricate", "tangled"]
+    },
+    {
+      "word": "Ambivalence",
+      "definition": "having mixed or contradictory feelings",
+      "examples": [
+        "She felt ____ about moving.",
+        "His ____ was obvious."
+      ],
+      "synonyms": ["uncertainty", "conflict", "mixed feelings"]
+    },
+    {
+      "word": "Suboptimal",
+      "definition": "less than the best possible",
+      "examples": [
+        "The solution was ____.",
+        "Working conditions were ____."
+      ],
+      "synonyms": ["inferior", "imperfect", "second-rate"]
+    },
+    {
+      "word": "Catalyst",
+      "definition": "something that causes or speeds up change",
+      "examples": [
+        "The event was a ____ for reform.",
+        "Anger became the ____ for action."
+      ],
+      "synonyms": ["trigger", "stimulus", "impetus"]
+    },
+    {
+      "word": "Cohesion",
+      "definition": "the quality of sticking together as a unified whole",
+      "examples": [
+        "Team ____ improved results.",
+        "The group lacked ____."
+      ],
+      "synonyms": ["unity", "bond", "solidarity"]
+    },
+    {
+      "word": "Obscure",
+      "definition": "not clearly understood or well known",
+      "examples": [
+        "The reference was ____.",
+        "He studies ____ topics."
+      ],
+      "synonyms": ["unclear", "vague", "hidden"]
+    },
+    {
+      "word": "Deprecating",
+      "definition": "belittling or expressing disapproval",
+      "examples": [
+        "He made a ____ comment.",
+        "Her ____ humor confused them."
+      ],
+      "synonyms": ["belittling", "disparaging", "demeaning"]
+    },
+    {
+      "word": "Discerning",
+      "definition": "showing good judgment and insight",
+      "examples": [
+        "She is a ____ critic.",
+        "A ____ eye noticed the flaws."
+      ],
+      "synonyms": ["perceptive", "insightful", "judicious"]
+    },
+    {
+      "word": "Unorthodox",
+      "definition": "not following traditional rules or methods",
+      "examples": [
+        "He took an ____ approach.",
+        "Her ideas were ____ but effective."
+      ],
+      "synonyms": ["unconventional", "nontraditional", "innovative"]
+    },
+    {
+      "word": "Benevolent",
+      "definition": "kind, generous, and well-meaning",
+      "examples": [
+        "A ____ donor funded the project.",
+        "He ruled in a ____ manner."
+      ],
+      "synonyms": ["kind", "generous", "compassionate"]
+    },
+    {
+      "word": "Debacle",
+      "definition": "a sudden and complete failure",
+      "examples": [
+        "The event turned into a ____.",
+        "The launch was a total ____."
+      ],
+      "synonyms": ["disaster", "fiasco", "collapse"]
+    },
+    {
+      "word": "Conundrum",
+      "definition": "a confusing or difficult problem",
+      "examples": [
+        "The puzzle presented a ____.",
+        "He faced a moral ____."
+      ],
+      "synonyms": ["dilemma", "puzzle", "riddle"]
+    },
+    {
+      "word": "Meander",
+      "definition": "to wander aimlessly or take an indirect path",
+      "examples": [
+        "They ____ through the town.",
+        "The river began to ____."
+      ],
+      "synonyms": ["wander", "roam", "ramble"]
+    },
+    {
+      "word": "Inhibition",
+      "definition": "a restraint on behavior or emotion",
+      "examples": [
+        "Alcohol lowered his ____.",
+        "Fear created an ____."
+      ],
+      "synonyms": ["restraint", "constraint", "limitation"]
+    },
+    {
+      "word": "Acuity",
+      "definition": "sharpness of mind or senses",
+      "examples": [
+        "Her mental ____ impressed everyone.",
+        "Visual ____ declined with age."
+      ],
+      "synonyms": ["sharpness", "keenness", "perception"]
+    },
+    {
+      "word": "Ignominious",
+      "definition": "deserving shame or disgrace",
+      "examples": [
+        "He suffered an ____ defeat.",
+        "The incident ended in an ____ manner."
+      ],
+      "synonyms": ["shameful", "disgraceful", "humiliating"]
+    },
+    {
+      "word": "Amalgamate",
+      "definition": "to combine or unite into one",
+      "examples": [
+        "The companies decided to ____.",
+        "They ____ their efforts."
+      ],
+      "synonyms": ["merge", "combine", "unite"]
+    },
+    {
+      "word": "Insolence",
+      "definition": "rude or disrespectful behavior",
+      "examples": [
+        "His ____ shocked the teacher.",
+        "She was punished for ____."
+      ],
+      "synonyms": ["rudeness", "impudence", "disrespect"]
+    },
+    {
+      "word": "Trepidation",
+      "definition": "a feeling of fear or anxiety",
+      "examples": [
+        "She felt ____ before speaking.",
+        "There was ____ in his voice."
+      ],
+      "synonyms": ["fear", "dread", "apprehension"]
+    },
+    {
+      "word": "Supplemental",
+      "definition": "provided in addition to something else",
+      "examples": [
+        "They included ____ materials.",
+        "The course offers ____ readings."
+      ],
+      "synonyms": ["additional", "extra", "supporting"]
+    },
+    {
+      "word": "Immaculate",
+      "definition": "perfectly clean or flawless",
+      "examples": [
+        "Her home was ____.",
+        "He kept an ____ record."
+      ],
+      "synonyms": ["spotless", "pristine", "flawless"]
+    },
+    {
+      "word": "Pretentious",
+      "definition": "trying to appear more important than one really is",
+      "examples": [
+        "His speech sounded ____.",
+        "The restaurant felt ____."
+      ],
+      "synonyms": ["showy", "pompous", "affected"]
+    },
+    {
+      "word": "Ambiguous",
+      "definition": "having more than one possible meaning",
+      "examples": [
+        "The message was ____.",
+        "His response remained ____."
+      ],
+      "synonyms": ["unclear", "vague", "equivocal"]
+    },
+    {
+      "word": "Conspicuous",
+      "definition": "easily noticed or seen",
+      "examples": [
+        "His absence was ____.",
+        "She wore a ____ outfit."
+      ],
+      "synonyms": ["noticeable", "obvious", "prominent"]
+    },
+    {
+      "word": "Covert",
+      "definition": "hidden or secret",
+      "examples": [
+        "They ran a ____ operation.",
+        "His actions were ____."
+      ],
+      "synonyms": ["secret", "hidden", "clandestine"]
+    }
+  ]
+}

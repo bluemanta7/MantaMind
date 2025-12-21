@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MantaMind Profile</title>
+  <link rel="stylesheet" href="Styles/style.css" />
+  <link rel="stylesheet" href="Styles/nav.css" />
+  <link rel="stylesheet" href="Styles/profiles.css" />
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header id="top-nav">
+    <div id="nav-title">🧠 MantaMind</div>
+    <button id="burger-btn">&#9776;</button>
+  </header>
+
+  <!-- Sidebar Menu -->
+  <nav id="sidebar-menu" class="hidden">
+    <ul>
+      <li><a href="index.html">👋 Home</a></li>
+      <li><a href="challenge.html">🎮 Challenge</a></li>
+      <li><a href="matching.html">🧩 Matching</a></li>
+      <li><a href="profile.html">👤 Profile</a></li>
+      <li><a href="wordlist.html">📖 Word List</a></li>
+      <li><a href="settings.html">⚙️ Settings</a></li>
+      <li><a href="#" id="logout-btn">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Profile Content -->
+  <main class="profile-container">
+    <div class="profile-header">
+      <h1>👤 <span id="username-display"></span>'s Profile</h1>
+      <div id="rank-badge" class="rank-badge">Loading...</div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Total Words</h3>
+        <div class="stat-value" id="total-words">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Learned</h3>
+        <div class="stat-value" id="learned-words">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>In Progress</h3>
+        <div class="stat-value" id="progress-words">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Completion</h3>
+        <div class="stat-value" id="completion-percent">0%</div>
+      </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-section">
+      <h2>📈 Learning Progress</h2>
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progress-bar">0%</div>
+      </div>
+      
+      <div class="rank-progress">
+        <h4>Rank System:</h4>
+        <p>🌱 <strong>Beginner:</strong> 0-24% completion</p>
+        <p>📚 <strong>Intermediate:</strong> 25-49% completion</p>
+        <p>🎓 <strong>Advanced:</strong> 50-74% completion</p>
+        <p>👑 <strong>Master:</strong> 75-100% completion</p>
+      </div>
+    </div>
+
+    <!-- Streaks -->
+    <div class="progress-section">
+      <h2>🔥 Streaks</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Current Streak</h3>
+          <div class="stat-value" id="current-streak">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Best Streak</h3>
+          <div class="stat-value" id="best-streak">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Matching Best Time</h3>
+          <div class="stat-value" id="matching-best">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements -->
+    <div class="achievements-section">
+      <h2>🏆 Achievements</h2>
+      <div class="achievements-grid" id="achievements-container">
+        <!-- Achievements will be dynamically loaded here -->
+      </div>
+    </div>
+
+    <!-- Word Progress -->
+    <div class="achievements-section">
+      <h2>📊 Individual Word Progress</h2>
+      <div id="word-progress-container" class="word-progress-grid">
+        <!-- per-word progress will be rendered here -->
+      </div>
+    </div>
+  </main>
+
+  <script src="nav.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>

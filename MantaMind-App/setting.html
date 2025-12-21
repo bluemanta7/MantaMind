@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MantaMind Settings</title>
+  <link rel="stylesheet" href="Styles/style.css" />
+<link rel="stylesheet" href="Styles/nav.css" />
+<link rel="stylesheet" href="Styles/settings.css" />
+
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header id="top-nav">
+    <div id="nav-title">🧠 MantaMind</div>
+    <button id="burger-btn">&#9776;</button>
+  </header>
+
+  <!-- Sidebar Menu -->
+  <nav id="sidebar-menu" class="hidden">
+    <ul>
+      <li><a href="index.html">👋 Home</a></li>
+      <li><a href="challenge.html">🎮 Challenge</a></li>
+      <li><a href="profile.html">👤 Profile</a></li>
+      <li><a href="matching.html">🧩 Matching</a></li>
+      <li><a href="wordlist.html">� Word List</a></li>
+      <li><a href="#" id="logout-btn">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Settings Section -->
+  <main class="game-container">
+    <h1>⚙️ Settings</h1>
+    <button id="clear-progress">🧹 Clear My Progress</button>
+    <button id="toggle-theme">🌗 Toggle Dark/Light Mode</button>
+
+    <section class="question-type-settings">
+      <h3>Test Question Types</h3>
+      <div class="setting-row">
+        <label for="toggle-mc">Multiple choice</label>
+        <input type="checkbox" id="toggle-mc" />
+      </div>
+      <!-- Fill-in-the-blank removed per user preference -->
+      <div class="setting-row">
+        <label for="toggle-match">Matching (up to 5 pairs)</label>
+        <input type="checkbox" id="toggle-match" />
+      </div>
+      <p class="hint">Tip: Keep matching pairs to 5 or fewer for best UX.</p>
+      <button id="save-settings" class="primary">Save settings</button>
+    </section>
+  </main>
+
+  <script>
+    // 🍔 Burger Menu Toggle
+    document.getElementById('burger-btn').addEventListener('click', () => {
+      document.getElementById('sidebar-menu').classList.toggle('hidden');
+    });
+
+    // 🚪 Logout Button
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('userData');
+      location.href = 'index.html';
+    });
+
+    // 🧹 Clear Progress
+    document.getElementById('clear-progress').addEventListener('click', () => {
+      const currentUser = localStorage.getItem('currentUser');
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+
+      if (currentUser && userData[currentUser]) {
+        userData[currentUser].learnedWords = [];
+        userData[currentUser].inProgressWords = [];
+        userData[currentUser].correctStreaks = {};
+        localStorage.setItem('userData', JSON.stringify(userData));
+        alert("Progress cleared!");
+      }
+    });
+
+    // 🌗 Theme Toggle
+    document.getElementById('toggle-theme').addEventListener('click', () => {
+      document.body.classList.toggle('light-theme');
+    });
+
+    // --- Question type settings persistence ---
+    function loadQuestionTypeSettings() {
+      const currentUser = localStorage.getItem('currentUser');
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      const defaults = { multipleChoice: true, matching: false };
+      const settings = (currentUser && userData[currentUser] && userData[currentUser].settings) || defaults;
+
+      document.getElementById('toggle-mc').checked = !!settings.multipleChoice;
+      document.getElementById('toggle-match').checked = !!settings.matching;
+    }
+
+    function saveQuestionTypeSettings() {
+      const currentUser = localStorage.getItem('currentUser');
+      if (!currentUser) return alert('No user logged in.');
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      userData[currentUser] = userData[currentUser] || {};
+      userData[currentUser].settings = {
+        multipleChoice: !!document.getElementById('toggle-mc').checked,
+        matching: !!document.getElementById('toggle-match').checked
+      };
+      localStorage.setItem('userData', JSON.stringify(userData));
+      alert('Settings saved!');
+    }
+
+    document.getElementById('save-settings').addEventListener('click', saveQuestionTypeSettings);
+    window.addEventListener('load', loadQuestionTypeSettings);
+  </script>
+  <script src="nav.js"></script>
+</body>
+</html>

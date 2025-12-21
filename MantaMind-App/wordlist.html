@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MantaMind Word List</title>
+  <link rel="stylesheet" href="Styles/style.css" />
+  <link rel="stylesheet" href="Styles/nav.css" />
+  <link rel="stylesheet" href="Styles/wordlist.css" />
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header id="top-nav">
+    <div id="nav-title">🧠 MantaMind</div>
+    <button id="burger-btn">&#9776;</button>
+  </header>
+
+  <!-- Sidebar Menu -->
+  <nav id="sidebar-menu" class="hidden">
+    <ul>
+      <li><a href="index.html">👋 Home</a></li>
+      <li><a href="challenge.html">🎮 Challenge</a></li>
+      <li><a href="matching.html">🧩 Matching</a></li>
+      <li><a href="profile.html">👤 Profile</a></li>
+      <li><a href="wordlist.html">📖 Word List</a></li>
+      <li><a href="setting.html">⚙️ Settings</a></li>
+      <li><a href="#" id="logout-btn">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="wordlist-container">
+    <h1>📚 Your Vocabulary List</h1>
+    <ul id="word-list">
+      <li>Loading words...</li>
+    </ul>
+  </main>
+
+<script src="nav.js"></script>
+<script src="wordlist.js"></script>
+</body>
+</html>

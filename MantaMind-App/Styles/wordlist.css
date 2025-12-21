@@ -1,0 +1,361 @@
+.word-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: linear-gradient(135deg, #1a5f7a 0%, #2a7f9a 100%);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 100, 150, 0.3);
+  border: 1px solid #4db8d6;
+}
+
+.word-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.word-header strong {
+  font-size: 1.2em;
+  color: #333;
+}
+
+.badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.badge.learned {
+  background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+  color: #005f73;
+}
+
+.badge.in-progress {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  color: #c1666b;
+}
+
+.word-streak {
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.word-definition {
+  color: #666;
+  line-height: 1.5;
+}
+
+body {
+      margin: 0;
+      padding-top: 60px;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0a1f3d;
+      color: #e0e8f0;
+    }
+
+    #top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: #0a1f3d;
+      border-bottom: 2px solid #64b5f6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 100;
+    }
+
+    #nav-title {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #90caf9;
+    }
+
+    #burger-btn {
+      font-size: 1.5em;
+      background: none;
+      border: none;
+      color: #e0e8f0;
+      cursor: pointer;
+    }
+
+    #sidebar-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 220px;
+      height: 100vh;
+      background-color: #122c54;
+      border-left: 2px solid #64b5f6;
+      padding-top: 80px;
+      padding-left: 20px;
+      padding-right: 20px;
+      box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+      z-index: 99;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+    }
+
+    #sidebar-menu:not(.hidden) {
+      transform: translateX(0);
+    }
+
+    #sidebar-menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #sidebar-menu li {
+      margin: 15px 0;
+    }
+
+    #sidebar-menu a {
+      color: #e0e8f0;
+      text-decoration: none;
+      font-size: 1em;
+    }
+
+    #sidebar-menu a:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #90caf9;
+    }
+
+    #word-list li {
+      background-color: #263238;
+      margin-bottom: 15px;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    #word-list strong {
+      color: #ffffff;
+    }
+
+    #word-list em {
+      color: #b0bec5;
+    }
+
+    .word-item {
+      border-left: 4px solid #64b5f6;
+      transition: all 0.2s ease;
+    }
+
+    .word-item:hover {
+      background-color: #37474f;
+      box-shadow: 0 2px 8px rgba(100, 181, 246, 0.3);
+    }
+
+    .word-item.learned {
+      border-left-color: #4caf50;
+    }
+
+    .word-item.in-progress {
+      border-left-color: #ff9800;
+    }
+
+    .word-item.not-started {
+      border-left-color: #90caf9;
+    }
+
+    .status-badge {
+      display: inline-block;
+      margin-left: 10px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.85em;
+      font-weight: bold;
+    }
+
+    .word-item.learned .status-badge {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .word-item.in-progress .status-badge {
+      background-color: #ff9800;
+      color: white;
+    }
+
+    .word-item.not-started .status-badge {
+      background-color: #64b5f6;
+      color: #0a1f3d;
+    }
+
+    .wordlist-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.wordlist-container h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+#word-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.word-item {
+  margin-bottom: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, #1a5f7a 0%, #2a7f9a 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 100, 150, 0.3);
+  border-left: 5px solid #4db8d6;
+  transition: all 0.3s;
+  border: 2px solid #4db8d6;
+}
+
+.word-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 6px 20px rgba(0, 150, 200, 0.4);
+  background: linear-gradient(135deg, #2a7f9a 0%, #3a9fba 100%);
+}
+
+.word-item.learned {
+  border-left-color: #00ff88;
+  background: linear-gradient(135deg, #00d4ff 0%, #00ff88 100%);
+  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+}
+
+.word-item.learned .word-title,
+.word-item.learned .word-definition,
+.word-item.learned .word-example {
+  color: #001a33;
+}
+
+.word-item.in-progress {
+  border-left-color: #00ffff;
+  background: linear-gradient(135deg, #0099ff 0%, #00d4ff 100%);
+  box-shadow: 0 4px 15px rgba(0, 201, 255, 0.3);
+}
+
+.word-item.in-progress .word-title,
+.word-item.in-progress .word-definition,
+.word-item.in-progress .word-example {
+  color: #001a33;
+}
+
+.word-item.not-started {
+  border-left-color: #7dd3c0;
+  background: rgba(0, 100, 150, 0.3);
+}
+
+.word-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.word-title {
+  font-size: 1.4em;
+  color: #c3f0ff;
+}
+
+.status-badge {
+  padding: 5px 14px;
+  border-radius: 15px;
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.status-badge.learned {
+  background: linear-gradient(135deg, #00d4ff 0%, #00ff88 100%);
+  color: #001a33;
+}
+
+.status-badge.in-progress {
+  background: linear-gradient(135deg, #0099ff 0%, #00d4ff 100%);
+  color: #001a33;
+}
+
+.status-badge.not-started {
+  background: rgba(0, 100, 150, 0.4);
+  color: #7dd3c0;
+  border: 1px solid #4db8d6;
+}
+
+.word-streak {
+  padding: 5px 12px;
+  background: linear-gradient(135deg, #00ffff 0%, #00ff88 100%);
+  color: #001a33;
+  border-radius: 15px;
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.word-definition {
+  color: #a0d5e8;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.word-example {
+  color: #7dd3c0;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.word-definition strong,
+.word-example strong {
+  color: #333;
+  font-weight: 600;
+}
+/* ```
+
+---
+
+## 📝 **Summary of Changes:**
+
+### **Key Fixes:**
+1. ✅ **Word List now appears in sidebar** - Added to all navigation menus
+2. ✅ **Dashboard removed** - Profile replaced it in navigation
+3. ✅ **Word-level streak tracking** - Each word has its own streak counter (0-3)
+4. ✅ **Persistent progress** - No reset when navigating between pages
+5. ✅ **Profile redesigned** - Clean card-based layout with proper spacing
+6. ✅ **Word list shows streaks** - Visual indicators for progress on each word
+
+### **File Structure:**
+```
+MantaMind-App/
+├── Scripts/
+│   ├── profile.js (NEW)
+│   └── wordlist.js (NEW)
+├── Styles/
+│   ├── profile.css (UPDATED)
+│   └── wordlist.css (UPDATED)
+├── script.js (UPDATED)
+├── profile.html (UPDATED)
+└── wordlist.html (UPDATED) */

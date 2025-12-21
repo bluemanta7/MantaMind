@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MantaMind Review</title>
+  <link rel="stylesheet" href="Styles/style.css" />
+<link rel="stylesheet" href="Styles/nav.css" />
+<link rel="stylesheet" href="Styles/review.css" />
+
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header id="top-nav">
+    <div id="nav-title">🧠 MantaMind</div>
+    <button id="burger-btn">&#9776;</button>
+  </header>
+
+  <!-- Sidebar Menu -->
+  <nav id="sidebar-menu" class="hidden">
+    <ul>
+      <li><a href="index.html">👋 Home</a></li>
+      <li><a href="challenge.html">🎮 Challenge</a></li>
+      <li><a href="profile.html">👤 Profile</a></li>
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="review.html">📚 Review Words</a></li>
+      <li><a href="wordlist.html">📖 Word List</a></li>
+      <li><a href="settings.html">⚙️ Settings</a></li>
+      <li><a href="#" id="logout-btn">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Review Section -->
+  <main class="game-container">
+    <h1>📚 Review Your Words</h1>
+    <div id="review-container">
+      <p><strong>Word:</strong> <span id="review-word"></span></p>
+      <button id="show-definition">Show Definition</button>
+      <div id="definition-box" style="display:none;"></div>
+      <button id="next-word">Next Word</button>
+    </div>
+  </main>
+
+  <script>
+    // 🍔 Burger Menu Toggle
+    document.getElementById('burger-btn').addEventListener('click', () => {
+      document.getElementById('sidebar-menu').classList.toggle('hidden');
+    });
+
+    // 🚪 Logout Button
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('userData');
+      location.href = 'login.html';
+    });
+
+    // 📚 Review Logic
+    document.addEventListener('DOMContentLoaded', async () => {
+      const currentUser = localStorage.getItem('currentUser');
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+
+      if (!currentUser || !userData[currentUser]) {
+        document.body.innerHTML = "<h2 style='text-align:center; margin-top: 50px;'>Please log in first.</h2>";
+        return;
+      }
+
+      const user = userData[currentUser];
+      const reviewWords = [...(user.learnedWords || []), ...(user.inProgressWords || [])];
+      let reviewIndex = 0;
+
+      const reviewWordEl = document.getElementById('review-word');
+      const definitionBox = document.getElementById('definition-box');
+
+      // Load word data
+      let allWords = [];
+      try {
+        const response = await fetch('./data.json');
+        const data = await response.json();
+        allWords = Array.isArray(data) ? data : data.words || [];
+      } catch (error) {
+        console.error('Failed to load word data:', error);
+      }
+
+      function showWord() {
+        if (reviewWords.length === 0) {
+          reviewWordEl.textContent = "No words to review yet.";
+          document.getElementById('show-definition').style.display = 'none';
+          document.getElementById('next-word').style.display = 'none';
+          return;
+        }
+
+        const word = reviewWords[reviewIndex];
+        reviewWordEl.textContent = word;
+        definitionBox.style.display = 'none';
+        definitionBox.textContent = '';
+      }
+
+      function showDefinition() {
+        const word = reviewWords[reviewIndex];
+        const entry = allWords.find(w => w.word === word);
+        if (entry) {
+          definitionBox.innerHTML = `
+            <p><strong>Definition:</strong> ${entry.definition}</p>
+            ${entry.examples ? `<p><strong>Example:</strong> ${entry.examples[0]}</p>` : ''}
+            ${entry.synonyms ? `<p><strong>Synonyms:</strong> ${entry.synonyms.join(', ')}</p>` : ''}
+          `;
+          definitionBox.style.display = 'block';
+        } else {
+          definitionBox.textContent = "Definition not found.";
+          definitionBox.style.display = 'block';
+        }
+      }
+
+      function nextWord() {
+        reviewIndex = (reviewIndex + 1) % reviewWords.length;
+        showWord();
+      }
+
+      document.getElementById('show-definition').addEventListener('click', showDefinition);
+      document.getElementById('next-word').addEventListener('click', nextWord);
+
+      showWord();
+    });
+  </script>
+</body>
+</html>
