@@ -1,0 +1,35 @@
+/* Theme: Blue (theme-blue)
+   Defines theme variables and blue theme overrides.
+*/
+
+body.theme-blue {
+  --tm-bg-start: #0a2342;
+  --tm-bg-mid: #1a4d7a;
+  --tm-bg-end: #0f3a5f;
+  --tm-accent: #00d4ff;
+  --tm-accent-2: #00ff88;
+  --tm-accent-strong: #1a6f9a;
+  --tm-text: #c3f0ff;
+  --tm-text-dark: #001a33;
+  --tm-shadow: rgba(0,100,150,0.3);
+  --tm-bubble-shadow: rgba(0,0,0,0.25);
+  background: linear-gradient(135deg, var(--tm-bg-start), var(--tm-bg-mid), var(--tm-bg-end)) !important;
+  color: var(--tm-text) !important;
+}
+
+body.theme-blue .profile-header, body.theme-blue .profile-header .rank-badge { background: linear-gradient(135deg,#1a5f7a,#2a7f9a) !important; color: var(--tm-text) !important; box-shadow: 0 8px 25px var(--tm-shadow) !important; border-color: var(--tm-accent) !important; }
+body.theme-blue .rank-badge { background: linear-gradient(135deg,#00d4ff,#00ff88) !important; color: var(--tm-text-dark) !important; box-shadow: 0 4px 15px rgba(0, 150, 200, 0.35) !important; }
+
+body.theme-blue .status-badge.learned, body.theme-blue .word-item.learned .status-badge { background: linear-gradient(90deg,#84fab0,#8fd3f4) !important; color: var(--tm-text-dark) !important; box-shadow: 0 4px 12px rgba(0,150,200,0.3) !important; }
+body.theme-blue .status-badge.in-progress, body.theme-blue .word-item.in-progress .status-badge { background: linear-gradient(90deg,#0099ff,#00d4ff) !important; color: var(--tm-text-dark) !important; box-shadow: 0 4px 12px rgba(0,150,200,0.3) !important; }
+
+body.theme-blue .word-streak { padding: 5px 12px; background: linear-gradient(135deg,#00ffff 0%,#00ff88 100%) !important; color: var(--tm-text-dark) !important; border-radius: 15px; font-size: 0.85em; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.25) !important; }
+
+body.theme-blue .word-item, body.theme-blue .word-progress-item { box-shadow: 0 4px 18px rgba(0,100,150,0.2) !important; border-color: rgba(77,184,214,0.08) !important; }
+
+body.theme-blue .choice-btn { background-color: var(--tm-accent-strong) !important; border-color: rgba(0,120,200,0.12) !important; color: var(--tm-text) !important; }
+
+body.theme-blue * { color: inherit !important; }
+
+/* Make completion target label readable under blue theme */
+body.theme-blue #completion-target { color: var(--tm-text) !important; opacity: 0.95 !important; }

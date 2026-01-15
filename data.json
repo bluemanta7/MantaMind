@@ -1,517 +1,1268 @@
 {
   "words": [
     {
-      "word": "Charismatic",
-      "definition": "having a compelling charm that attracts and influences others",
-      "examples": [
-        "The leader was ____ and inspired loyalty.",
-        "Her ____ personality drew attention immediately."
-      ],
-      "synonyms": ["charming", "magnetic", "captivating"]
-    },
-    {
       "word": "Prismatic",
       "definition": "showing many different colors or aspects",
       "examples": [
-        "The glass reflected a ____ glow.",
-        "His ____ personality revealed many sides."
+        "The sun hitting the crystal created a prismatic display on the wall.",
+        "Her prismatic personality allowed her to adapt to any social group."
       ],
-      "synonyms": ["iridescent", "multifaceted", "varied"]
+      "synonyms": [
+        "iridescent",
+        "multifaceted",
+        "varied"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "prismatic", "sentence": "The chandelier cast a prismatic pattern." },
+        { "type": "noun", "variant": "prism", "sentence": "Light passed through the prism." },
+        { "type": "adverb", "variant": "prismatically", "sentence": "The light split prismatically across the room." },
+        { "type": "verb (fake)", "variant": "prismaticize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Epitome",
       "definition": "a perfect example of a quality or type",
       "examples": [
-        "She was the ____ of professionalism.",
-        "The design is the ____ of simplicity."
+        "The luxury hotel was the epitome of comfort and style.",
+        "He is considered the epitome of a modern gentleman."
       ],
-      "synonyms": ["embodiment", "paragon", "ideal"]
+      "synonyms": [
+        "embodiment",
+        "paragon",
+        "ideal"
+      ],
+      "forms": [
+        { "type": "noun", "variant": "epitome", "sentence": "She is the epitome of discipline." },
+        { "type": "verb", "variant": "epitomize", "sentence": "His work ethic epitomizes professionalism." },
+        { "type": "adjective", "variant": "epitomical", "sentence": "His behavior was epitomical of a hero." },
+        { "type": "adverb (fake)", "variant": "epitomically", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Recollection",
       "definition": "the act of remembering something",
       "examples": [
-        "He had a clear ____ of the event.",
-        "Her ____ of childhood was vivid."
+        "I have no recollection of that meeting taking place.",
+        "Her vivid recollection of childhood brought the story to life."
       ],
-      "synonyms": ["memory", "remembrance", "recall"]
+      "synonyms": [
+        "memory",
+        "remembrance",
+        "recall"
+      ],
+      "forms": [
+        { "type": "noun", "variant": "recollection", "sentence": "His recollection of the event was detailed." },
+        { "type": "verb", "variant": "recollect", "sentence": "I clearly recollect the conversation." },
+        { "type": "adjective", "variant": "recollective", "sentence": "She has a strong recollective memory." },
+        { "type": "adverb (fake)", "variant": "recollectively", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Vindictive",
       "definition": "having a strong desire for revenge",
       "examples": [
-        "His ____ actions shocked everyone.",
-        "She became ____ after the betrayal."
+        "Spreading rumors was a vindictive move on his part.",
+        "The judge warned the plaintiff against seeking a vindictive punishment."
       ],
-      "synonyms": ["vengeful", "spiteful", "malicious"]
+      "synonyms": [
+        "vengeful",
+        "spiteful",
+        "malicious"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "vindictive", "sentence": "His vindictive behavior worried his friends." },
+        { "type": "noun", "variant": "vindictiveness", "sentence": "The vindictiveness of the response was shocking." },
+        { "type": "adverb", "variant": "vindictively", "sentence": "She acted vindictively after the argument." },
+        { "type": "verb (fake)", "variant": "vindictivize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Narcolepsy",
       "definition": "a disorder characterized by sudden attacks of sleep",
       "examples": [
-        "____ can interfere with daily functioning.",
-        "He manages life with ____."
+        "Living with narcolepsy requires strict sleep hygiene.",
+        "Sudden muscle weakness is a symptom often associated with narcolepsy."
       ],
-      "synonyms": ["sleep disorder", "hypersomnia"]
+      "synonyms": [
+        "sleep disorder",
+        "hypersomnia"
+      ],
+      "forms": [
+        { "type": "noun", "variant": "narcolepsy", "sentence": "Narcolepsy can disrupt daily routines." },
+        { "type": "noun (person)", "variant": "narcoleptic", "sentence": "The narcoleptic manages symptoms carefully." },
+        { "type": "adjective", "variant": "narcoleptic", "sentence": "He experiences narcoleptic episodes." },
+        { "type": "verb (fake)", "variant": "narcolepse", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Predicament",
       "definition": "a difficult or unpleasant situation",
       "examples": [
-        "She found herself in a ____.",
-        "The error put him in a ____."
+        "Losing his passport abroad was a terrible predicament.",
+        "She found herself in an awkward predicament between two feuding friends."
       ],
-      "synonyms": ["dilemma", "plight", "bind"]
+      "synonyms": [
+        "dilemma",
+        "plight",
+        "bind"
+      ],
+      "forms": [
+        { "type": "noun", "variant": "predicament", "sentence": "She was stuck in a serious predicament." },
+        { "type": "adjective", "variant": "predicamental", "sentence": "The situation was predicamental." },
+        { "type": "noun (plural)", "variant": "predicaments", "sentence": "He often found himself in strange predicaments." },
+        { "type": "verb (fake)", "variant": "predicamentize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Prosperous",
       "definition": "successful, especially financially",
       "examples": [
-        "The city became ____ over time.",
-        "They lived a ____ life."
+        "The farmer hoped for a prosperous harvest this year.",
+        "After the war, the country entered a prosperous era of growth."
       ],
-      "synonyms": ["wealthy", "thriving", "affluent"]
+      "synonyms": [
+        "wealthy",
+        "thriving",
+        "affluent"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "prosperous", "sentence": "They lived in a prosperous community." },
+        { "type": "noun", "variant": "prosperity", "sentence": "The reforms brought economic prosperity." },
+        { "type": "verb", "variant": "prosper", "sentence": "Small businesses began to prosper." },
+        { "type": "adverb", "variant": "prosperously", "sentence": "They lived prosperously ever after." }
+      ]
     },
     {
       "word": "Schizophrenia",
       "definition": "a mental disorder affecting thought processes and perception",
       "examples": [
-        "____ requires long-term treatment.",
-        "The illness known as ____ alters perception."
+        "Early diagnosis is crucial for managing schizophrenia effectively.",
+        "The film attempted to portray the reality of living with schizophrenia."
       ],
-      "synonyms": ["psychotic disorder", "mental illness"]
-    },
-    {
-      "word": "Cope",
-      "definition": "to deal effectively with something difficult",
-      "examples": [
-        "She learned to ____ with stress.",
-        "He struggled to ____ with loss."
+      "synonyms": [
+        "psychotic disorder",
+        "mental illness"
       ],
-      "synonyms": ["manage", "handle", "endure"]
-    },
-    {
-      "word": "Versatile",
-      "definition": "able to adapt or be used in many ways",
-      "examples": [
-        "She is a ____ performer.",
-        "The tool is extremely ____."
-      ],
-      "synonyms": ["adaptable", "flexible", "multifunctional"]
+      "forms": [
+        { "type": "noun", "variant": "schizophrenia", "sentence": "Schizophrenia requires lifelong management." },
+        { "type": "adjective", "variant": "schizophrenic", "sentence": "Doctors analyzed schizophrenic symptoms." },
+        { "type": "adverb", "variant": "schizophrenically", "sentence": "The character behaved schizophrenically." },
+        { "type": "verb (fake)", "variant": "schizophrenize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Cathartic",
       "definition": "providing emotional release",
       "examples": [
-        "The conversation was ____.",
-        "Writing can be ____."
+        "Screaming into a pillow can be strangely cathartic.",
+        "Writing the memoir was a cathartic experience for the author."
       ],
-      "synonyms": ["cleansing", "therapeutic", "relieving"]
+      "synonyms": [
+        "cleansing",
+        "therapeutic",
+        "relieving"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "cathartic", "sentence": "The speech was deeply cathartic." },
+        { "type": "noun", "variant": "catharsis", "sentence": "The apology brought emotional catharsis." },
+        { "type": "adverb", "variant": "cathartically", "sentence": "She spoke cathartically about her past." },
+        { "type": "verb (fake)", "variant": "catharticize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Etiquette",
       "definition": "the customary rules of polite behavior",
       "examples": [
-        "Formal ____ was expected.",
-        "She studied dining ____."
+        "It is considered bad etiquette to speak with your mouth full.",
+        "Understanding cultural etiquette is vital for international travel."
       ],
-      "synonyms": ["manners", "protocol", "decorum"]
+      "synonyms": [
+        "manners",
+        "protocol",
+        "decorum"
+      ],
+      "forms": [
+        { "type": "noun", "variant": "etiquette", "sentence": "Business etiquette matters in interviews." },
+        { "type": "noun (plural)", "variant": "etiquettes", "sentence": "They studied the various etiquettes of European courts." },
+        { "type": "adjective", "variant": "etiquetted", "sentence": "The properly etiquetted guests arrived on time." },
+        { "type": "verb (fake)", "variant": "etiquettize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Inadequate",
       "definition": "not sufficient or good enough",
       "examples": [
-        "The explanation was ____.",
-        "He felt ____ for the role."
+        "The safety measures were deemed inadequate by the inspector.",
+        "He felt inadequate when asked to solve the complex equation."
       ],
-      "synonyms": ["insufficient", "deficient", "lacking"]
+      "synonyms": [
+        "insufficient",
+        "deficient",
+        "lacking"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "inadequate", "sentence": "The resources were inadequate." },
+        { "type": "noun", "variant": "inadequacy", "sentence": "She struggled with feelings of inadequacy." },
+        { "type": "adverb", "variant": "inadequately", "sentence": "The problem was inadequately addressed." },
+        { "type": "verb (fake)", "variant": "inadequated", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Pandemonium",
       "definition": "wild and noisy chaos",
       "examples": [
-        "The announcement caused ____.",
-        "____ erupted in the crowd."
+        "Absolute pandemonium broke out when the fire alarm rang.",
+        "The flash sale caused pandemonium at the store entrance."
       ],
-      "synonyms": ["chaos", "uproar", "turmoil"]
+      "synonyms": [
+        "chaos",
+        "uproar",
+        "turmoil"
+      ],
+      "forms": [
+        { "type": "noun", "variant": "pandemonium", "sentence": "The delay caused complete pandemonium." },
+        { "type": "adjective", "variant": "pandemoniac", "sentence": "The crowd reached a pandemoniac state." },
+        { "type": "adverb", "variant": "pandemoniously", "sentence": "The fans cheered pandemoniously." },
+        { "type": "verb (fake)", "variant": "pandemonize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Hectic",
       "definition": "very busy and chaotic",
       "examples": [
-        "It was a ____ day.",
-        "Her schedule became ____."
+        "The holidays are always a hectic time for retail workers.",
+        "After a hectic week, she just wanted to relax at home."
       ],
-      "synonyms": ["frantic", "frenzied", "chaotic"]
+      "synonyms": [
+        "frantic",
+        "frenzied",
+        "chaotic"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "hectic", "sentence": "It was a hectic afternoon." },
+        { "type": "adverb", "variant": "hectically", "sentence": "She moved hectically between tasks." },
+        { "type": "noun", "variant": "hecticness", "sentence": "The hecticness of the week was exhausting." },
+        { "type": "verb (fake)", "variant": "hecticize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Statutory",
       "definition": "required or established by law",
       "examples": [
-        "____ requirements must be met.",
-        "The ____ limit was enforced."
+        "The company failed to meet its statutory obligations.",
+        "There is a statutory waiting period before the license is issued."
       ],
-      "synonyms": ["legal", "mandatory", "regulated"]
+      "synonyms": [
+        "legal",
+        "mandatory",
+        "regulated"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "statutory", "sentence": "Employees receive statutory benefits." },
+        { "type": "noun", "variant": "statute", "sentence": "The rule is defined by a statute." },
+        { "type": "adverb", "variant": "statutorily", "sentence": "It is statutorily required to wear a helmet." },
+        { "type": "verb (fake)", "variant": "statutize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Congregate",
       "definition": "to gather together in a group",
       "examples": [
-        "People began to ____ outside.",
-        "Birds ____ near the water."
+        "Students tend to congregate in the cafeteria during breaks.",
+        "Clouds began to congregate over the mountain peaks."
       ],
-      "synonyms": ["assemble", "gather", "cluster"]
+      "synonyms": [
+        "assemble",
+        "gather",
+        "cluster"
+      ],
+      "forms": [
+        { "type": "verb", "variant": "congregate", "sentence": "Students congregate in the lobby." },
+        { "type": "noun", "variant": "congregation", "sentence": "A large congregation filled the hall." },
+        { "type": "adjective", "variant": "congregational", "sentence": "It was a congregational decision." },
+        { "type": "adverb", "variant": "congregationally", "sentence": "They prayed congregationally." }
+      ]
     },
     {
       "word": "Lethargic",
       "definition": "lacking energy or enthusiasm",
       "examples": [
-        "He felt ____ all afternoon.",
-        "The heat made everyone ____."
+        "The flu left him feeling weak and lethargic.",
+        "The hot, humid weather made the dog lethargic."
       ],
-      "synonyms": ["sluggish", "listless", "weary"]
+      "synonyms": [
+        "sluggish",
+        "listless",
+        "weary"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "lethargic", "sentence": "She felt lethargic after lunch." },
+        { "type": "noun", "variant": "lethargy", "sentence": "The illness caused extreme lethargy." },
+        { "type": "adverb", "variant": "lethargically", "sentence": "He moved lethargically across the room." },
+        { "type": "verb (fake)", "variant": "lethargize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Converse",
       "definition": "to engage in conversation",
       "examples": [
-        "They ____ for hours.",
-        "She enjoys ____ with strangers."
+        "It was difficult to converse over the loud music.",
+        "They prefer to converse in their native language."
       ],
-      "synonyms": ["talk", "communicate", "discuss"]
+      "synonyms": [
+        "talk",
+        "communicate",
+        "discuss"
+      ],
+      "forms": [
+        { "type": "verb", "variant": "converse", "sentence": "They converse quietly." },
+        { "type": "noun", "variant": "conversation", "sentence": "The conversation lasted hours." },
+        { "type": "adjective", "variant": "conversational", "sentence": "She has a conversational tone." },
+        { "type": "adverb", "variant": "conversationally", "sentence": "He spoke conversationally about the topic." }
+      ]
     },
     {
       "word": "Ruminate",
       "definition": "to think deeply or repeatedly about something",
       "examples": [
-        "He continued to ____ over the decision.",
-        "She would ____ on past mistakes."
+        "He began to ruminate on the reasons for his failure.",
+        "It is unproductive to ruminate over things you cannot change."
       ],
-      "synonyms": ["ponder", "reflect", "contemplate"]
+      "synonyms": [
+        "ponder",
+        "reflect",
+        "contemplate"
+      ],
+      "forms": [
+        { "type": "verb", "variant": "ruminate", "sentence": "He tends to ruminate on problems." },
+        { "type": "noun", "variant": "rumination", "sentence": "Excessive rumination can be unhealthy." },
+        { "type": "adjective", "variant": "ruminative", "sentence": "She was in a ruminative mood." },
+        { "type": "adverb", "variant": "ruminatively", "sentence": "He stared ruminatively out the window." }
+      ]
     },
     {
       "word": "Serendipity",
       "definition": "the occurrence of events by happy or fortunate chance",
       "examples": [
-        "Their meeting was pure ____.",
-        "____ played a role in the discovery."
+        "Finding the book I needed on a random shelf was pure serendipity.",
+        "Scientific discoveries often happen through serendipity rather than planning."
       ],
-      "synonyms": ["chance", "luck", "fortuity"]
+      "synonyms": [
+        "chance",
+        "luck",
+        "fortuity"
+      ],
+      "forms": [
+        { "type": "noun", "variant": "serendipity", "sentence": "Their meeting was pure serendipity." },
+        { "type": "adjective", "variant": "serendipitous", "sentence": "The serendipitous discovery changed everything." },
+        { "type": "adverb", "variant": "serendipitously", "sentence": "They serendipitously met at the conference." },
+        { "type": "verb (fake)", "variant": "serendipitize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Abolish",
       "definition": "to formally put an end to something",
       "examples": [
-        "They voted to ____ the outdated law.",
-        "The practice was ____ decades ago."
+        "The activists worked tirelessly to abolish the death penalty.",
+        "The school decided to abolish the uniform policy."
       ],
-      "synonyms": ["eliminate", "end", "repeal"]
+      "synonyms": [
+        "eliminate",
+        "end",
+        "repeal"
+      ],
+      "forms": [
+        { "type": "verb", "variant": "abolish", "sentence": "They voted to abolish the outdated law." },
+        { "type": "noun", "variant": "abolition", "sentence": "The abolition of the practice took years." },
+        { "type": "adjective", "variant": "abolitionary", "sentence": "They took abolitionary measures." },
+        { "type": "noun (person)", "variant": "abolisher", "sentence": "He was a famous abolisher of slavery." }
+      ]
     },
     {
       "word": "Explicit",
       "definition": "stated clearly and in detail",
       "examples": [
-        "The instructions were ____.",
-        "She gave ____ consent."
+        "The contract contains explicit terms regarding payment.",
+        "She gave explicit instructions not to be disturbed."
       ],
-      "synonyms": ["clear", "direct", "definite"]
+      "synonyms": [
+        "clear",
+        "direct",
+        "definite"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "explicit", "sentence": "The instructions were explicit." },
+        { "type": "adverb", "variant": "explicitly", "sentence": "She explicitly stated her requirements." },
+        { "type": "noun", "variant": "explicitness", "sentence": "The explicitness of the rules helped everyone." },
+        { "type": "verb (fake)", "variant": "explicitize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Infantile",
       "definition": "immature or childish",
       "examples": [
-        "His response was ____.",
-        "They found the joke ____."
+        "Throwing a tantrum is infantile behavior for an adult.",
+        "He was tired of the infantile jokes his coworkers made."
       ],
-      "synonyms": ["childish", "immature", "juvenile"]
+      "synonyms": [
+        "childish",
+        "immature",
+        "juvenile"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "infantile", "sentence": "His response was infantile." },
+        { "type": "noun", "variant": "infantilism", "sentence": "His infantilism frustrated his colleagues." },
+        { "type": "verb", "variant": "infantilize", "sentence": "Don't infantilize the employees." },
+        { "type": "adverb", "variant": "infantilely", "sentence": "He behaved infantilely during the meeting." }
+      ]
     },
     {
       "word": "Cavalier",
       "definition": "showing a lack of concern or seriousness",
       "examples": [
-        "He had a ____ attitude toward rules.",
-        "Her ____ remark offended others."
+        "The manager took a cavalier approach to customer complaints.",
+        "His cavalier dismissal of the risks endangered the team."
       ],
-      "synonyms": ["dismissive", "nonchalant", "careless"]
+      "synonyms": [
+        "dismissive",
+        "nonchalant",
+        "careless"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "cavalier", "sentence": "He had a cavalier attitude toward rules." },
+        { "type": "adverb", "variant": "cavalierly", "sentence": "She cavalierly dismissed the warnings." },
+        { "type": "noun", "variant": "cavalierness", "sentence": "His cavalierness about safety was concerning." },
+        { "type": "verb (fake)", "variant": "cavalierize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Stagnant",
       "definition": "showing no movement, growth, or progress",
       "examples": [
-        "The economy became ____.",
-        "His career felt ____."
+        "Business has been stagnant for the last three quarters.",
+        "Mosquitoes breed in stagnant water."
       ],
-      "synonyms": ["motionless", "inactive", "static"]
+      "synonyms": [
+        "motionless",
+        "inactive",
+        "static"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "stagnant", "sentence": "The economy became stagnant." },
+        { "type": "verb", "variant": "stagnate", "sentence": "Sales began to stagnate last quarter." },
+        { "type": "noun", "variant": "stagnation", "sentence": "Economic stagnation worried investors." },
+        { "type": "adverb", "variant": "stagnantly", "sentence": "The water sat stagnantly in the pond." }
+      ]
     },
     {
       "word": "Vanity",
       "definition": "excessive pride in appearance or abilities",
       "examples": [
-        "His ____ was obvious.",
-        "She checked the mirror out of ____."
+        "The portrait was painted purely to satisfy his vanity.",
+        "She realized that chasing fame was just vanity."
       ],
-      "synonyms": ["conceit", "egotism", "self-admiration"]
+      "synonyms": [
+        "conceit",
+        "egotism",
+        "self-admiration"
+      ],
+      "forms": [
+        { "type": "noun", "variant": "vanity", "sentence": "His vanity was obvious." },
+        { "type": "adjective", "variant": "vain", "sentence": "She was vain about her looks." },
+        { "type": "adverb", "variant": "vainly", "sentence": "He vainly checked his reflection." },
+        { "type": "verb (fake)", "variant": "vanitize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Despondency",
       "definition": "a state of deep sadness or hopelessness",
       "examples": [
-        "He sank into ____ after the loss.",
-        "A feeling of ____ filled the room."
+        "A wave of despondency washed over him after the rejection.",
+        "She fought against despondency during the long winter months."
       ],
-      "synonyms": ["despair", "hopelessness", "dejection"]
+      "synonyms": [
+        "despair",
+        "hopelessness",
+        "dejection"
+      ],
+      "forms": [
+        { "type": "noun", "variant": "despondency", "sentence": "He sank into despondency after the loss." },
+        { "type": "adjective", "variant": "despondent", "sentence": "She felt despondent about the future." },
+        { "type": "adverb", "variant": "despondently", "sentence": "He spoke despondently about his chances." },
+        { "type": "verb (fake)", "variant": "despondencize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Arbitrary",
       "definition": "based on random choice rather than reason",
       "examples": [
-        "The decision seemed ____.",
-        "Rules were applied in an ____ way."
+        "The selection of the winner felt completely arbitrary.",
+        "An arbitrary rule prevented them from entering the park."
       ],
-      "synonyms": ["random", "capricious", "unreasoned"]
+      "synonyms": [
+        "random",
+        "capricious",
+        "unreasoned"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "arbitrary", "sentence": "The decision seemed arbitrary." },
+        { "type": "adverb", "variant": "arbitrarily", "sentence": "Rules were applied arbitrarily." },
+        { "type": "noun", "variant": "arbitrariness", "sentence": "The arbitrariness of the system frustrated everyone." },
+        { "type": "verb (fake)", "variant": "arbitrarize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Obfuscate",
       "definition": "to deliberately make something unclear",
       "examples": [
-        "He tried to ____ the facts.",
-        "The jargon only served to ____ the issue."
+        "Politicians often use complex words to obfuscate the truth.",
+        "The fog served to obfuscate the coastline from view."
       ],
-      "synonyms": ["confuse", "obscure", "cloud"]
+      "synonyms": [
+        "confuse",
+        "obscure",
+        "cloud"
+      ],
+      "forms": [
+        { "type": "verb", "variant": "obfuscate", "sentence": "He tried to obfuscate the facts." },
+        { "type": "noun", "variant": "obfuscation", "sentence": "The obfuscation made understanding difficult." },
+        { "type": "adjective", "variant": "obfuscatory", "sentence": "The lengthy explanation was obfuscatory." },
+        { "type": "adverb", "variant": "obfuscatorily", "sentence": "The text was written obfuscatorily." }
+      ]
     },
     {
       "word": "Obstinate",
-      "definition": "stubbornly refusing to change one’s opinion",
+      "definition": "stubbornly refusing to change one's opinion",
       "examples": [
-        "She remained ____ despite evidence.",
-        "His ____ nature caused conflict."
+        "The obstinate stain refused to come out of the shirt.",
+        "He is too obstinate to admit he is lost."
       ],
-      "synonyms": ["stubborn", "unyielding", "inflexible"]
+      "synonyms": [
+        "stubborn",
+        "unyielding",
+        "inflexible"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "obstinate", "sentence": "She remained obstinate despite evidence." },
+        { "type": "noun", "variant": "obstinacy", "sentence": "His obstinacy caused the negotiations to fail." },
+        { "type": "adverb", "variant": "obstinately", "sentence": "He obstinately refused to compromise." },
+        { "type": "verb (fake)", "variant": "obstinatize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Convoluted",
       "definition": "very complex and difficult to understand",
       "examples": [
-        "The explanation was ____.",
-        "The plot became ____."
+        "The instructions were so convoluted that no one understood them.",
+        "The movie had a convoluted plot full of unnecessary twists."
       ],
-      "synonyms": ["complicated", "intricate", "tangled"]
+      "synonyms": [
+        "complicated",
+        "intricate",
+        "tangled"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "convoluted", "sentence": "The explanation was convoluted." },
+        { "type": "verb", "variant": "convolute", "sentence": "Don't convolute the instructions." },
+        { "type": "noun", "variant": "convolution", "sentence": "The convolution of the argument confused everyone." },
+        { "type": "adverb", "variant": "convolutedly", "sentence": "The topic was explained convolutedly." }
+      ]
     },
     {
       "word": "Ambivalence",
       "definition": "having mixed or contradictory feelings",
       "examples": [
-        "She felt ____ about moving.",
-        "His ____ was obvious."
+        "There is some ambivalence among the staff regarding the merger.",
+        "Her ambivalence showed in her hesitation to sign the lease."
       ],
-      "synonyms": ["uncertainty", "conflict", "mixed feelings"]
+      "synonyms": [
+        "uncertainty",
+        "conflict",
+        "mixed feelings"
+      ],
+      "forms": [
+        { "type": "noun", "variant": "ambivalence", "sentence": "She felt ambivalence about moving." },
+        { "type": "adjective", "variant": "ambivalent", "sentence": "He was ambivalent toward the proposal." },
+        { "type": "adverb", "variant": "ambivalently", "sentence": "She responded ambivalently to the offer." },
+        { "type": "verb (fake)", "variant": "ambivalate", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Suboptimal",
       "definition": "less than the best possible",
       "examples": [
-        "The solution was ____.",
-        "Working conditions were ____."
+        "Driving on worn tires is a suboptimal choice for safety.",
+        "The team performed in suboptimal conditions due to the rain."
       ],
-      "synonyms": ["inferior", "imperfect", "second-rate"]
+      "synonyms": [
+        "inferior",
+        "imperfect",
+        "second-rate"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "suboptimal", "sentence": "The solution was suboptimal." },
+        { "type": "adverb", "variant": "suboptimally", "sentence": "The system performed suboptimally." },
+        { "type": "noun", "variant": "suboptimality", "sentence": "The suboptimality of the design was evident." },
+        { "type": "verb", "variant": "suboptimize", "sentence": "Do not suboptimize the individual components." }
+      ]
     },
     {
       "word": "Catalyst",
       "definition": "something that causes or speeds up change",
       "examples": [
-        "The event was a ____ for reform.",
-        "Anger became the ____ for action."
+        "The protest served as a catalyst for political change.",
+        "High heat acts as a catalyst in this chemical reaction."
       ],
-      "synonyms": ["trigger", "stimulus", "impetus"]
+      "synonyms": [
+        "trigger",
+        "stimulus",
+        "impetus"
+      ],
+      "forms": [
+        { "type": "noun", "variant": "catalyst", "sentence": "The event was a catalyst for reform." },
+        { "type": "verb", "variant": "catalyze", "sentence": "The discovery will catalyze innovation." },
+        { "type": "adjective", "variant": "catalytic", "sentence": "They aimed for a catalytic change." },
+        { "type": "adverb", "variant": "catalytically", "sentence": "The enzyme acted catalytically." }
+      ]
     },
     {
       "word": "Cohesion",
       "definition": "the quality of sticking together as a unified whole",
       "examples": [
-        "Team ____ improved results.",
-        "The group lacked ____."
+        "The essay lacked cohesion and jumped randomly between topics.",
+        "Social cohesion is important for a peaceful community."
       ],
-      "synonyms": ["unity", "bond", "solidarity"]
+      "synonyms": [
+        "unity",
+        "bond",
+        "solidarity"
+      ],
+      "forms": [
+        { "type": "noun", "variant": "cohesion", "sentence": "Team cohesion improved results." },
+        { "type": "adjective", "variant": "cohesive", "sentence": "They formed a cohesive team." },
+        { "type": "verb", "variant": "cohere", "sentence": "The ideas failed to cohere." },
+        { "type": "adverb", "variant": "cohesively", "sentence": "The group worked cohesively." }
+      ]
     },
     {
       "word": "Obscure",
       "definition": "not clearly understood or well known",
       "examples": [
-        "The reference was ____.",
-        "He studies ____ topics."
+        "The museum houses several obscure artifacts from the 12th century.",
+        "Legal jargon can obscure the meaning of a contract."
       ],
-      "synonyms": ["unclear", "vague", "hidden"]
+      "synonyms": [
+        "unclear",
+        "vague",
+        "hidden"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "obscure", "sentence": "The reference was obscure." },
+        { "type": "verb", "variant": "obscure", "sentence": "Fog began to obscure the view." },
+        { "type": "noun", "variant": "obscurity", "sentence": "The author lived in obscurity." },
+        { "type": "adverb", "variant": "obscurely", "sentence": "It was written obscurely." }
+      ]
     },
     {
       "word": "Deprecating",
       "definition": "belittling or expressing disapproval",
       "examples": [
-        "He made a ____ comment.",
-        "Her ____ humor confused them."
+        "He has a self-deprecating sense of humor that makes him likable.",
+        "Her deprecating tone made the student feel discouraged."
       ],
-      "synonyms": ["belittling", "disparaging", "demeaning"]
+      "synonyms": [
+        "belittling",
+        "disparaging",
+        "demeaning"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "deprecating", "sentence": "He made a deprecating comment." },
+        { "type": "verb", "variant": "deprecate", "sentence": "Don't deprecate your own achievements." },
+        { "type": "noun", "variant": "deprecation", "sentence": "Her self-deprecation was unnecessary." },
+        { "type": "adverb", "variant": "deprecatingly", "sentence": "She smiled deprecatingly." }
+      ]
     },
     {
       "word": "Discerning",
       "definition": "showing good judgment and insight",
       "examples": [
-        "She is a ____ critic.",
-        "A ____ eye noticed the flaws."
+        "A discerning shopper always checks the quality of the stitching.",
+        "It takes a discerning palate to distinguish between these wines."
       ],
-      "synonyms": ["perceptive", "insightful", "judicious"]
+      "synonyms": [
+        "perceptive",
+        "insightful",
+        "judicious"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "discerning", "sentence": "She is a discerning critic." },
+        { "type": "verb", "variant": "discern", "sentence": "He could discern the quality immediately." },
+        { "type": "noun", "variant": "discernment", "sentence": "Her discernment impressed everyone." },
+        { "type": "adverb", "variant": "discerningly", "sentence": "He looked discerningly at the painting." }
+      ]
     },
     {
       "word": "Unorthodox",
       "definition": "not following traditional rules or methods",
       "examples": [
-        "He took an ____ approach.",
-        "Her ideas were ____ but effective."
+        "She won the game using an unorthodox strategy.",
+        "His unorthodox lifestyle confused his conservative neighbors."
       ],
-      "synonyms": ["unconventional", "nontraditional", "innovative"]
+      "synonyms": [
+        "unconventional",
+        "nontraditional",
+        "innovative"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "unorthodox", "sentence": "He took an unorthodox approach." },
+        { "type": "noun", "variant": "unorthodoxy", "sentence": "The unorthodoxy of his methods raised questions." },
+        { "type": "adverb", "variant": "unorthodoxly", "sentence": "She solved problems unorthodoxly." },
+        { "type": "verb (fake)", "variant": "unorthodoxize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
       "word": "Benevolent",
       "definition": "kind, generous, and well-meaning",
       "examples": [
-        "A ____ donor funded the project.",
-        "He ruled in a ____ manner."
+        "The benevolent king granted a pardon to the prisoners.",
+        "They formed a benevolent society to help the poor."
       ],
-      "synonyms": ["kind", "generous", "compassionate"]
+      "synonyms": [
+        "kind",
+        "generous",
+        "compassionate"
+      ],
+      "forms": [
+        { "type": "adjective", "variant": "benevolent", "sentence": "A benevolent donor funded the project." },
+        { "type": "noun", "variant": "benevolence", "sentence": "His benevolence touched many lives." },
+        { "type": "adverb", "variant": "benevolently", "sentence": "She smiled benevolently at the children." },
+        { "type": "verb (fake)", "variant": "benevolize", "sentence": "This is a fake form variation." }
+      ]
     },
     {
-      "word": "Debacle",
-      "definition": "a sudden and complete failure",
-      "examples": [
-        "The event turned into a ____.",
-        "The launch was a total ____."
-      ],
-      "synonyms": ["disaster", "fiasco", "collapse"]
-    },
-    {
-      "word": "Conundrum",
-      "definition": "a confusing or difficult problem",
-      "examples": [
-        "The puzzle presented a ____.",
-        "He faced a moral ____."
-      ],
-      "synonyms": ["dilemma", "puzzle", "riddle"]
-    },
-    {
-      "word": "Meander",
-      "definition": "to wander aimlessly or take an indirect path",
-      "examples": [
-        "They ____ through the town.",
-        "The river began to ____."
-      ],
-      "synonyms": ["wander", "roam", "ramble"]
-    },
-    {
-      "word": "Inhibition",
-      "definition": "a restraint on behavior or emotion",
-      "examples": [
-        "Alcohol lowered his ____.",
-        "Fear created an ____."
-      ],
-      "synonyms": ["restraint", "constraint", "limitation"]
-    },
-    {
-      "word": "Acuity",
-      "definition": "sharpness of mind or senses",
-      "examples": [
-        "Her mental ____ impressed everyone.",
-        "Visual ____ declined with age."
-      ],
-      "synonyms": ["sharpness", "keenness", "perception"]
-    },
-    {
-      "word": "Ignominious",
-      "definition": "deserving shame or disgrace",
-      "examples": [
-        "He suffered an ____ defeat.",
-        "The incident ended in an ____ manner."
-      ],
-      "synonyms": ["shameful", "disgraceful", "humiliating"]
-    },
-    {
-      "word": "Amalgamate",
-      "definition": "to combine or unite into one",
-      "examples": [
-        "The companies decided to ____.",
-        "They ____ their efforts."
-      ],
-      "synonyms": ["merge", "combine", "unite"]
-    },
-    {
-      "word": "Insolence",
-      "definition": "rude or disrespectful behavior",
-      "examples": [
-        "His ____ shocked the teacher.",
-        "She was punished for ____."
-      ],
-      "synonyms": ["rudeness", "impudence", "disrespect"]
-    },
-    {
-      "word": "Trepidation",
-      "definition": "a feeling of fear or anxiety",
-      "examples": [
-        "She felt ____ before speaking.",
-        "There was ____ in his voice."
-      ],
-      "synonyms": ["fear", "dread", "apprehension"]
-    },
-    {
-      "word": "Supplemental",
-      "definition": "provided in addition to something else",
-      "examples": [
-        "They included ____ materials.",
-        "The course offers ____ readings."
-      ],
-      "synonyms": ["additional", "extra", "supporting"]
-    },
-    {
-      "word": "Immaculate",
-      "definition": "perfectly clean or flawless",
-      "examples": [
-        "Her home was ____.",
-        "He kept an ____ record."
-      ],
-      "synonyms": ["spotless", "pristine", "flawless"]
-    },
-    {
-      "word": "Pretentious",
-      "definition": "trying to appear more important than one really is",
-      "examples": [
-        "His speech sounded ____.",
-        "The restaurant felt ____."
-      ],
-      "synonyms": ["showy", "pompous", "affected"]
-    },
-    {
-      "word": "Ambiguous",
-      "definition": "having more than one possible meaning",
-      "examples": [
-        "The message was ____.",
-        "His response remained ____."
-      ],
-      "synonyms": ["unclear", "vague", "equivocal"]
-    },
-    {
-      "word": "Conspicuous",
-      "definition": "easily noticed or seen",
-      "examples": [
-        "His absence was ____.",
-        "She wore a ____ outfit."
-      ],
-      "synonyms": ["noticeable", "obvious", "prominent"]
-    },
-    {
-      "word": "Covert",
-      "definition": "hidden or secret",
-      "examples": [
-        "They ran a ____ operation.",
-        "His actions were ____."
-      ],
-      "synonyms": ["secret", "hidden", "clandestine"]
-    }
-  ]
+    "word": "Debacle",
+    "definition": "a sudden and complete failure",
+    "examples": [
+      "The software update was a ____ that crashed the system.",
+      "He tried to forget the ____ of his first public speech."
+    ],
+    "synonyms": [
+      "disaster",
+      "fiasco",
+      "collapse"
+    ],
+    "forms": [
+      {
+        "type": "noun",
+        "variant": "debacle",
+        "sentence": "The event turned into a ____."
+      },
+      {
+        "type": "noun (plural)",
+        "variant": "debacles",
+        "sentence": "The company suffered several financial ____."
+      },
+      {
+        "type": "noun (possessive)",
+        "variant": "debacle's",
+        "sentence": "The ____ aftermath was costly."
+      },
+      {
+        "type": "verb (fake)",
+        "variant": "debacleize",
+        "sentence": "This is a fake form variation."
+      }
+    ]
+  },
+  {
+    "word": "Conundrum",
+    "definition": "a confusing or difficult problem",
+    "examples": [
+      "Arranging the seating chart was a logistical ____.",
+      "The detective faced a ____ with no clear suspects."
+    ],
+    "synonyms": [
+      "dilemma",
+      "puzzle",
+      "riddle"
+    ],
+    "forms": [
+      {
+        "type": "noun",
+        "variant": "conundrum",
+        "sentence": "The puzzle presented a ____."
+      },
+      {
+        "type": "noun (plural)",
+        "variant": "conundrums",
+        "sentence": "Life is full of unsolvable ____."
+      },
+      {
+        "type": "noun (possessive)",
+        "variant": "conundrum's",
+        "sentence": "The ____ complexity baffled us."
+      },
+      {
+        "type": "verb (fake)",
+        "variant": "conundrumize",
+        "sentence": "This is a fake form variation."
+      }
+    ]
+  },
+  {
+    "word": "Meander",
+    "definition": "to wander aimlessly or take an indirect path",
+    "examples": [
+      "We plan to ____ through the park without a set destination.",
+      "The path continues to ____ along the riverbank."
+    ],
+    "synonyms": [
+      "wander",
+      "roam",
+      "ramble"
+    ],
+    "forms": [
+      {
+        "type": "verb",
+        "variant": "meander",
+        "sentence": "They ____ through the town."
+      },
+      {
+        "type": "noun",
+        "variant": "meander",
+        "sentence": "The river's ____ slowed shipping."
+      },
+      {
+        "type": "adjective",
+        "variant": "meandering",
+        "sentence": "It was a long, ____ road."
+      },
+      {
+        "type": "adverb",
+        "variant": "meanderingly",
+        "sentence": "The stream flowed ____."
+      }
+    ]
+  },
+  {
+    "word": "Inhibition",
+    "definition": "a restraint on behavior or emotion",
+    "examples": [
+      "She danced with no ____ at the wedding.",
+      "Shyness acted as an ____ to making new friends."
+    ],
+    "synonyms": [
+      "restraint",
+      "constraint",
+      "limitation"
+    ],
+    "forms": [
+      {
+        "type": "noun",
+        "variant": "inhibition",
+        "sentence": "Alcohol lowered his ____."
+      },
+      {
+        "type": "verb",
+        "variant": "inhibit",
+        "sentence": "Fear can ____ creative thinking."
+      },
+      {
+        "type": "adjective",
+        "variant": "inhibited",
+        "sentence": "She felt ____ in social settings."
+      },
+      {
+        "type": "adverb",
+        "variant": "inhibitedly",
+        "sentence": "He laughed ____."
+      }
+    ]
+  },
+  {
+    "word": "Acuity",
+    "definition": "sharpness of mind or senses",
+    "examples": [
+      "Pilots must undergo tests to ensure visual ____.",
+      "His intellectual ____ declined slightly in his later years."
+    ],
+    "synonyms": [
+      "sharpness",
+      "keenness",
+      "perception"
+    ],
+    "forms": [
+      {
+        "type": "noun",
+        "variant": "acuity",
+        "sentence": "Her mental ____ impressed everyone."
+      },
+      {
+        "type": "adjective",
+        "variant": "acute",
+        "sentence": "He has ____ hearing."
+      },
+      {
+        "type": "adverb",
+        "variant": "acutely",
+        "sentence": "She was ____ aware of the tension."
+      },
+      {
+        "type": "noun (variant)",
+        "variant": "acuteness",
+        "sentence": "The ____ of the pain was severe."
+      }
+    ]
+  },
+  {
+    "word": "Ignominious",
+    "definition": "deserving shame or disgrace",
+    "examples": [
+      "The dictator met an ____ end.",
+      "Being fired for theft was an ____ way to leave the company."
+    ],
+    "synonyms": [
+      "shameful",
+      "disgraceful",
+      "humiliating"
+    ],
+    "forms": [
+      {
+        "type": "adjective",
+        "variant": "ignominious",
+        "sentence": "He suffered an ____ defeat."
+      },
+      {
+        "type": "noun",
+        "variant": "ignominy",
+        "sentence": "The scandal brought public ____."
+      },
+      {
+        "type": "adverb",
+        "variant": "ignominiously",
+        "sentence": "He was ____ removed from office."
+      },
+      {
+        "type": "noun (plural)",
+        "variant": "ignominies",
+        "sentence": "He endured the daily ____ of prison life."
+      }
+    ]
+  },
+  {
+    "word": "Amalgamate",
+    "definition": "to combine or unite into one",
+    "examples": [
+      "The two banks plan to ____ next month.",
+      "They will ____ the different departments into one division."
+    ],
+    "synonyms": [
+      "merge",
+      "combine",
+      "unite"
+    ],
+    "forms": [
+      {
+        "type": "verb",
+        "variant": "amalgamate",
+        "sentence": "The companies decided to ____."
+      },
+      {
+        "type": "noun",
+        "variant": "amalgamation",
+        "sentence": "The ____ created a larger entity."
+      },
+      {
+        "type": "adjective",
+        "variant": "amalgamative",
+        "sentence": "The process was ____."
+      },
+      {
+        "type": "adverb",
+        "variant": "amalgamatively",
+        "sentence": "They worked ____ to join the forces."
+      }
+    ]
+  },
+  {
+    "word": "Insolence",
+    "definition": "rude or disrespectful behavior",
+    "examples": [
+      "The captain would not tolerate ____ from the crew.",
+      "Her ____ resulted in a week of detention."
+    ],
+    "synonyms": [
+      "rudeness",
+      "impudence",
+      "disrespect"
+    ],
+    "forms": [
+      {
+        "type": "noun",
+        "variant": "insolence",
+        "sentence": "His ____ shocked the teacher."
+      },
+      {
+        "type": "adjective",
+        "variant": "insolent",
+        "sentence": "The ____ student was suspended."
+      },
+      {
+        "type": "adverb",
+        "variant": "insolently",
+        "sentence": "He spoke ____ to his supervisor."
+      },
+      {
+        "type": "noun (plural)",
+        "variant": "insolences",
+        "sentence": "She tired of his constant small ____."
+      }
+    ]
+  },
+  {
+    "word": "Trepidation",
+    "definition": "a feeling of fear or anxiety",
+    "examples": [
+      "He accepted the dangerous assignment with some ____.",
+      "There was a palpable sense of ____ in the waiting room."
+    ],
+    "synonyms": [
+      "fear",
+      "dread",
+      "apprehension"
+    ],
+    "forms": [
+      {
+        "type": "noun",
+        "variant": "trepidation",
+        "sentence": "She felt ____ before speaking."
+      },
+      {
+        "type": "adjective",
+        "variant": "trepidatious",
+        "sentence": "His ____ steps showed nervousness."
+      },
+      {
+        "type": "adverb",
+        "variant": "trepidatiously",
+        "sentence": "She ____ entered the room."
+      },
+      {
+        "type": "noun (plural)",
+        "variant": "trepidations",
+        "sentence": "He put aside his ____ and jumped."
+      }
+    ]
+  },
+  {
+    "word": "Supplemental",
+    "definition": "provided in addition to something else",
+    "examples": [
+      "The teacher provided ____ reading for advanced students.",
+      "A ____ income helped them pay off the debt."
+    ],
+    "synonyms": [
+      "additional",
+      "extra",
+      "supporting"
+    ],
+    "forms": [
+      {
+        "type": "adjective",
+        "variant": "supplemental",
+        "sentence": "They included ____ materials."
+      },
+      {
+        "type": "noun",
+        "variant": "supplement",
+        "sentence": "Take this ____ with meals."
+      },
+      {
+        "type": "verb",
+        "variant": "supplement",
+        "sentence": "They ____ their income with freelance work."
+      },
+      {
+        "type": "adverb",
+        "variant": "supplementally",
+        "sentence": "The data was added ____."
+      }
+    ]
+  },
+  {
+    "word": "Immaculate",
+    "definition": "perfectly clean or flawless",
+    "examples": [
+      "The hotel room was ____ when we arrived.",
+      "He wore an ____ white suit to the party."
+    ],
+    "synonyms": [
+      "spotless",
+      "pristine",
+      "flawless"
+    ],
+    "forms": [
+      {
+        "type": "adjective",
+        "variant": "immaculate",
+        "sentence": "Her home was ____."
+      },
+      {
+        "type": "adverb",
+        "variant": "immaculately",
+        "sentence": "He dressed ____ for the interview."
+      },
+      {
+        "type": "noun",
+        "variant": "immaculateness",
+        "sentence": "The ____ of the room impressed guests."
+      },
+      {
+        "type": "noun (concept)",
+        "variant": "immaculacy",
+        "sentence": "They debated the ____ of the theory."
+      }
+    ]
+  },
+  {
+    "word": "Pretentious",
+    "definition": "trying to appear more important than one really is",
+    "examples": [
+      "Using obscure words incorrectly can make you sound ____.",
+      "The art gallery had a ____ atmosphere that made me uncomfortable."
+    ],
+    "synonyms": [
+      "showy",
+      "pompous",
+      "affected"
+    ],
+    "forms": [
+      {
+        "type": "adjective",
+        "variant": "pretentious",
+        "sentence": "His speech sounded ____."
+      },
+      {
+        "type": "noun",
+        "variant": "pretentiousness",
+        "sentence": "The ____ of the venue was off-putting."
+      },
+      {
+        "type": "adverb",
+        "variant": "pretentiously",
+        "sentence": "She ____ corrected everyone's grammar."
+      },
+      {
+        "type": "verb",
+        "variant": "pretend",
+        "sentence": "He likes to ____ he is royalty."
+      }
+    ]
+  },
+  {
+    "word": "Ambiguous",
+    "definition": "having more than one possible meaning",
+    "examples": [
+      "The politician gave an ____ answer to avoid the question.",
+      "The rules were ____ and open to interpretation."
+    ],
+    "synonyms": [
+      "unclear",
+      "vague",
+      "equivocal"
+    ],
+    "forms": [
+      {
+        "type": "adjective",
+        "variant": "ambiguous",
+        "sentence": "The message was ____."
+      },
+      {
+        "type": "noun",
+        "variant": "ambiguity",
+        "sentence": "The ____ caused confusion."
+      },
+      {
+        "type": "adverb",
+        "variant": "ambiguously",
+        "sentence": "He answered ____."
+      },
+      {
+        "type": "noun (plural)",
+        "variant": "ambiguities",
+        "sentence": "The contract contained several ____."
+      }
+    ]
+  },
+  {
+    "word": "Conspicuous",
+    "definition": "easily noticed or seen",
+    "examples": [
+      "The stain on his shirt was quite ____.",
+      "He tried not to be ____ while following the suspect."
+    ],
+    "synonyms": [
+      "noticeable",
+      "obvious",
+      "prominent"
+    ],
+    "forms": [
+      {
+        "type": "adjective",
+        "variant": "conspicuous",
+        "sentence": "His absence was ____."
+      },
+      {
+        "type": "adverb",
+        "variant": "conspicuously",
+        "sentence": "She was ____ absent from the meeting."
+      },
+      {
+        "type": "noun",
+        "variant": "conspicuousness",
+        "sentence": "The ____ of the error was embarrassing."
+      },
+      {
+        "type": "noun (quality)",
+        "variant": "conspicuity",
+        "sentence": "The bright orange vest ensured his ____."
+      }
+    ]
+  },
+  {
+    "word": "Covert",
+    "definition": "hidden or secret",
+    "examples": [
+      "The spy went on a ____ mission behind enemy lines.",
+      "They exchanged ____ glances across the table."
+    ],
+    "synonyms": [
+      "secret",
+      "hidden",
+      "clandestine"
+    ],
+    "forms": [
+      {
+        "type": "adjective",
+        "variant": "covert",
+        "sentence": "They ran a ____ operation."
+      },
+      {
+        "type": "adverb",
+        "variant": "covertly",
+        "sentence": "They met ____ at midnight."
+      },
+      {
+        "type": "noun",
+        "variant": "covertness",
+        "sentence": "The ____ of the mission was essential."
+      },
+      {
+        "type": "noun (plural)",
+        "variant": "coverts",
+        "sentence": "The birds hid in the thick ____."
+      }
+    ]
+  }
+]
 }

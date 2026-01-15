@@ -31,22 +31,61 @@
   <main class="game-container">
     <h1>⚙️ Settings</h1>
     <button id="clear-progress">🧹 Clear My Progress</button>
-    <button id="toggle-theme">🌗 Toggle Dark/Light Mode</button>
+
+    <section class="appearance-settings">
+      <h3>Appearance</h3>
+      <div class="setting-row">
+        <label for="theme-select">Theme color</label>
+        <div class="theme-select" id="theme-select">
+          <label><input type="radio" name="theme" value="blue" id="theme-blue" /> <span class="theme-swatch swatch-blue" aria-hidden="true"></span> Blue</label>
+          <label><input type="radio" name="theme" value="red" id="theme-red" /> <span class="theme-swatch swatch-red" aria-hidden="true"></span> Red</label>
+          <label><input type="radio" name="theme" value="purple" id="theme-purple" /> <span class="theme-swatch swatch-purple" aria-hidden="true"></span> Purple</label>
+          <label><input type="radio" name="theme" value="dark" id="theme-dark" /> <span class="theme-swatch swatch-dark" aria-hidden="true"></span> Dark (green highlights)</label>
+        </div>
+      </div>
+    </section>
 
     <section class="question-type-settings">
       <h3>Test Question Types</h3>
       <div class="setting-row">
         <label for="toggle-mc">Multiple choice</label>
-        <input type="checkbox" id="toggle-mc" />
+        <label class="switch"><input type="checkbox" id="toggle-mc" /><span class="slider"></span></label>
       </div>
       <div class="setting-row">
         <label for="toggle-match">Matching (up to 5 pairs)</label>
-        <input type="checkbox" id="toggle-match" />
+        <label class="switch"><input type="checkbox" id="toggle-match" /><span class="slider"></span></label>
       </div>
+      <div class="setting-row">
+        <label for="toggle-formmatch">Form variants (choose the correct variant)</label>
+        <label class="switch"><input type="checkbox" id="toggle-formmatch" /><span class="slider"></span></label>
+      </div>
+
+      <div class="setting-row">
+        <label for="word-threshold">Per-word correct threshold</label>
+        <select id="word-threshold">
+          <option value="1">1 correct (quick)</option>
+          <option value="2">2 correct</option>
+          <option value="3">3 correct (default)</option>
+          <option value="5">5 correct (strict)</option>
+        </select>
+      </div>
+
+      <div class="setting-row">
+        <label for="progress-target">Questions in a Row Goal</label>
+        <select id="progress-target">
+          <option value="10">10 questions in a row (default)</option>
+          <option value="25">25 questions in a row</option>
+          <option value="50">50 questions in a row</option>
+        </select>
+      </div>
+
       <p class="hint">Tip: Keep matching pairs to 5 or fewer for best UX.</p>
+
+      <p class="hint">Per-word threshold: how many correct answers in a row mark a single word as learned. Questions in a Row Goal: number of learned words to reach 100% completion.</p>
+
       <button id="save-settings" class="primary">Save settings</button>
     </section>
-  </main>
+  </main> 
 
   <script>
     // 🍔 Burger Menu Toggle
@@ -75,37 +114,108 @@
       }
     });
 
-    // 🌗 Theme Toggle
-    document.getElementById('toggle-theme').addEventListener('click', () => {
-      document.body.classList.toggle('light-theme');
-    });
+    // --- Apply theme helper ---
+    function applyTheme(theme) {
+      // Swap body theme classes
+      document.body.classList.remove('theme-red', 'theme-blue');
+      document.body.classList.add(`theme-${theme}`);
+      // Ensure the correct theme stylesheet is loaded for preview
+      let link = document.getElementById('theme-stylesheet');
+      const href = `Styles/theme-${theme}.css`;
+      if (!link) {
+        link = document.createElement('link');
+        link.id = 'theme-stylesheet';
+        link.rel = 'stylesheet';
+        document.head.appendChild(link);
+      }
+      if (link.href.indexOf(href) === -1) link.href = href;
+    }
 
     // --- Question type settings persistence ---
     function loadQuestionTypeSettings() {
       const currentUser = localStorage.getItem('currentUser');
       const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-      const defaults = { multipleChoice: true, matching: false };
-      const settings = (currentUser && userData[currentUser] && userData[currentUser].settings) || defaults;
+      const appSettings = JSON.parse(localStorage.getItem('appSettings') || '{}');
+      const defaults = { multipleChoice: true, matching: false, formMatch: false, theme: 'blue', progressTarget: 3 };
+      const settings = (currentUser && userData[currentUser] && userData[currentUser].settings) || (appSettings && Object.keys(appSettings).length ? appSettings : defaults);
 
       document.getElementById('toggle-mc').checked = !!settings.multipleChoice;
       document.getElementById('toggle-match').checked = !!settings.matching;
+      document.getElementById('toggle-formmatch').checked = !!settings.formMatch;
+
+      // theme
+      document.getElementById('theme-blue').checked = (settings.theme === 'blue');
+      document.getElementById('theme-red').checked = (settings.theme === 'red');
+      document.getElementById('theme-purple').checked = (settings.theme === 'purple');
+      document.getElementById('theme-dark').checked = (settings.theme === 'dark');
+      applyTheme(settings.theme);
+
+      // thresholds
+      // For backwards compatibility: `settings.progressTarget` used to mean per-word threshold.
+      document.getElementById('word-threshold').value = String(settings.wordThreshold || settings.progressTarget || 3);
+      document.getElementById('progress-target').value = String(settings.progressTargetWords || 10);
+
+      // apply theme immediately when changed and update selection UI
+      document.getElementById('theme-blue').addEventListener('change', () => { applyTheme('blue'); updateThemeSelectionUI(); });
+      document.getElementById('theme-red').addEventListener('change', () => { applyTheme('red'); updateThemeSelectionUI(); });
+      document.getElementById('theme-purple').addEventListener('change', () => { applyTheme('purple'); updateThemeSelectionUI(); });
+      document.getElementById('theme-dark').addEventListener('change', () => { applyTheme('dark'); updateThemeSelectionUI(); });
+
+      // update selection UI initially
+      updateThemeSelectionUI();
     }
 
     function saveQuestionTypeSettings() {
       const currentUser = localStorage.getItem('currentUser');
-      if (!currentUser) return alert('No user logged in.');
+      const theme = document.querySelector('input[name="theme"]:checked') ? document.querySelector('input[name="theme"]:checked').value : 'blue';
+      const wordThreshold = parseInt(document.getElementById('word-threshold').value || '3', 10);
+      const progressTargetWords = parseInt(document.getElementById('progress-target').value || '10', 10);
+
+      if (!currentUser) {
+        // Save as app-wide settings when no user is logged in
+        const appSettings = {
+          multipleChoice: !!document.getElementById('toggle-mc').checked,
+          matching: !!document.getElementById('toggle-match').checked,
+          formMatch: !!document.getElementById('toggle-formmatch').checked,
+          theme: theme,
+          wordThreshold: wordThreshold,
+          progressTargetWords: progressTargetWords
+        };
+        localStorage.setItem('appSettings', JSON.stringify(appSettings));
+        applyTheme(theme);
+        alert('Settings saved globally (no user). The page will refresh to apply changes.');
+        setTimeout(() => location.reload(), 250);
+        return;
+      }
+
       const userData = JSON.parse(localStorage.getItem('userData') || '{}');
       userData[currentUser] = userData[currentUser] || {};
       userData[currentUser].settings = {
         multipleChoice: !!document.getElementById('toggle-mc').checked,
-        matching: !!document.getElementById('toggle-match').checked
+        matching: !!document.getElementById('toggle-match').checked,
+        formMatch: !!document.getElementById('toggle-formmatch').checked,
+        theme: theme,
+        wordThreshold: wordThreshold,
+        progressTargetWords: progressTargetWords
       };
       localStorage.setItem('userData', JSON.stringify(userData));
-      alert('Settings saved!');
+      applyTheme(theme);
+      // Force a reload so theme & settings take effect immediately across pages
+      alert('Settings saved! The page will refresh briefly to apply your changes.');
+      setTimeout(() => location.reload(), 250);
     }
 
     document.getElementById('save-settings').addEventListener('click', saveQuestionTypeSettings);
     window.addEventListener('load', loadQuestionTypeSettings);
+
+    // --- Theme selection UI helper ---
+    function updateThemeSelectionUI() {
+      document.querySelectorAll('.theme-select label').forEach(lbl => {
+        const radio = lbl.querySelector('input[type="radio"]');
+        if (!radio) return;
+        if (radio.checked) lbl.classList.add('selected'); else lbl.classList.remove('selected');
+      });
+    }
   </script>
   <script src="nav.js"></script>
 </body>

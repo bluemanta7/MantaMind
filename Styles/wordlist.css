@@ -333,6 +333,13 @@ body {
   color: #333;
   font-weight: 600;
 }
+
+/* Theme-red override for wordlist bubbles and progress states */
+body.theme-red .word-item.not-started { border-left-color: rgba(255,80,80,0.06) !important; background: rgba(140,12,18,0.04) !important; }
+body.theme-red .word-item.in-progress { border-left-color: #ff9aa2 !important; background: linear-gradient(135deg,#ffc6c9,#ff9aa2) !important; box-shadow:0 4px 12px rgba(140,12,18,0.28) !important; color:#241212 !important; }
+body.theme-red .word-item.learned { border-left-color: #ff4a4a !important; background: linear-gradient(135deg,#ff9a8a,#ff4a4a) !important; box-shadow:0 6px 18px rgba(140,12,18,0.45) !important; color:#241212 !important; }
+
+body.theme-red .status-badge.learned, body.theme-red .status-badge.in-progress, body.theme-red .word-streak { box-shadow:0 4px 12px rgba(0,0,0,0.6) !important; }
 /* ```
 
 ---

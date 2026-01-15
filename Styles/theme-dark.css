@@ -1,0 +1,138 @@
+/* Theme: Dark Gray with Green Highlights (theme-dark)
+   Neutral dark background with green accents for a low-contrast professional look.
+*/
+
+body.theme-dark {
+  --tm-bg-start: #0b0b0b;
+  --tm-bg-mid: #161616;
+  --tm-bg-end: #0f0f0f;
+  --tm-accent: #2ecc71; /* bright green */
+  --tm-accent-2: #1abc5b;
+  --tm-accent-strong: #118a3f;
+  --tm-text: #dfffe6;
+  --tm-text-dark: #04220b;
+  --tm-shadow: rgba(0,0,0,0.7);
+  --tm-bubble-shadow: rgba(0,0,0,0.75);
+  background: linear-gradient(135deg, var(--tm-bg-start) 0%, var(--tm-bg-mid) 50%, var(--tm-bg-end) 100%) !important;
+  color: var(--tm-text) !important;
+}
+
+/* Nav/title */
+body.theme-dark #top-nav { background: linear-gradient(135deg, #101010, #141414) !important; border-bottom-color: var(--tm-accent) !important; }
+body.theme-dark #nav-title { color: var(--tm-text) !important; }
+
+/* Profile header & rank badges */
+body.theme-dark .profile-header, body.theme-dark .profile-header .rank-badge {
+  background: linear-gradient(135deg, #101010 0%, #1b1b1b 100%) !important;
+  color: var(--tm-text) !important;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6) !important;
+  border-color: rgba(46,204,113,0.18) !important;
+}
+
+body.theme-dark .rank-badge {
+  background: linear-gradient(135deg, var(--tm-accent), var(--tm-accent-2)) !important;
+  color: var(--tm-text-dark) !important;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.6) !important;
+  border: 1px solid rgba(46,204,113,0.35) !important;
+}
+
+/* Badges and streaks */
+body.theme-dark .status-badge.learned, body.theme-dark .word-item.learned .status-badge { background: linear-gradient(90deg,#8ef0b3,#2ecc71) !important; color: var(--tm-text-dark) !important; box-shadow:0 4px 12px rgba(0,0,0,0.7) !important; }
+body.theme-dark .status-badge.in-progress, body.theme-dark .word-item.in-progress .status-badge { background: linear-gradient(90deg,#baf0d0,#6de6a3) !important; color: var(--tm-text-dark) !important; }
+body.theme-dark .word-streak { background: linear-gradient(135deg,#aef0c9,#6de6a3) !important; color: var(--tm-text-dark) !important; box-shadow: 0 4px 10px rgba(0,0,0,0.75) !important; }
+
+/* Containers */
+body.theme-dark .stat-card, body.theme-dark .progress-section, body.theme-dark .achievements-section, body.theme-dark #word-progress-section {
+  background: linear-gradient(135deg,#111111,#171717) !important;
+  border-color: rgba(46,204,113,0.08) !important;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.6) !important;
+  color: var(--tm-text) !important;
+}
+
+body.theme-dark .progress-bar-fill { background: linear-gradient(90deg,#8ef0b3,#2ecc71) !important; }
+
+/* Matching & choice button overrides for challenge */
+body.theme-dark .choice-btn { background-color: var(--tm-accent) !important; border-color: rgba(46,204,113,0.18) !important; color: var(--tm-text-dark) !important; }
+body.theme-dark .choice-btn:hover { background-color: var(--tm-accent-2) !important; box-shadow: 0 0 12px rgba(46,204,113,0.18) !important; }
+body.theme-dark .choice-btn.correct-choice { background-color: #eaffef !important; color: var(--tm-text-dark) !important; }
+body.theme-dark .choice-btn.incorrect-choice { background-color: #0b3f26 !important; color: var(--tm-text) !important; }
+
+body.theme-dark .matching-container, body.theme-dark .matching-col, body.theme-dark .match-item { background: rgba(26,26,26,0.12) !important; color: var(--tm-text) !important; border-color: rgba(46,204,113,0.06) !important; }
+body.theme-dark .match-item.selected-left { outline-color: rgba(46,204,113,0.45) !important; }
+body.theme-dark .match-item.paired { background: linear-gradient(90deg,#8ef0b3,#2ecc71) !important; color: var(--tm-text-dark) !important; }
+
+/* Sidebar */
+body.theme-dark #sidebar-menu { background: linear-gradient(135deg,#0f0f0f 0%, #141414 100%) !important; border-left-color: var(--tm-accent) !important; box-shadow: -2px 0 15px rgba(0,0,0,0.7) !important; }
+body.theme-dark #sidebar-menu a { color: var(--tm-text) !important; }
+
+/* Wordlist progress items */
+body.theme-dark .word-item.not-started { background: rgba(255,255,255,0.02) !important; }
+body.theme-dark .word-item.in-progress { background: linear-gradient(135deg,#c7f4dc,#aef0c9) !important; color: var(--tm-text-dark) !important; }
+body.theme-dark .word-item.learned { background: linear-gradient(135deg,#8ef0b3,#2ecc71) !important; color: var(--tm-text-dark) !important; }
+
+/* Challenge-specific overrides to ensure bubbles change */
+body.theme-dark #challenge-box .choice-btn, body.theme-dark #challenge-box .choice-btn:hover {
+  background: linear-gradient(90deg,#2ecc71,#1abc5b) !important;
+  border-color: rgba(46,204,113,0.28) !important;
+  color: var(--tm-text-dark) !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6) !important;
+}
+body.theme-dark #challenge-box .choice-btn.correct-choice { background-color: #eaffef !important; color: var(--tm-text-dark) !important; }
+body.theme-dark #challenge-box .choice-btn.incorrect-choice { background-color: #052915 !important; color: var(--tm-text) !important; }
+
+/* Sidebar strong override */
+body.theme-dark #sidebar-menu, body.theme-dark #sidebar-menu:not(.hidden) { background: linear-gradient(135deg,#080808,#141414) !important; border-left-color: #39ff14 !important; box-shadow: -2px 0 18px rgba(0,0,0,0.85) !important; }
+body.theme-dark #sidebar-menu a { color: var(--tm-text) !important; }
+
+/* Wordlist border / bubble overrides (neon green accents) */
+body.theme-dark .word-item, body.theme-dark .word-progress-item { border-left-color: #39ff14 !important; border-color: rgba(57,255,20,0.12) !important; }
+body.theme-dark .word-item.in-progress { background: linear-gradient(135deg,#dfffe6,#baf0d0) !important; }
+body.theme-dark .word-item.learned { background: linear-gradient(135deg,#8ef0b3,#2ecc71) !important; }
+
+/* Matching paired states */
+body.theme-dark .match-item.paired { background: linear-gradient(90deg,#8ef0b3,#2ecc71) !important; color: var(--tm-text-dark) !important; }
+
+/* Challenge/streak box overrides (dark green theme) */
+body.theme-dark #streak-box {
+  background: linear-gradient(135deg,#0f1410,#161616) !important;
+  border: 2px solid rgba(57,255,20,0.28) !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.7) !important;
+  color: var(--tm-text) !important;
+}
+body.theme-dark #streak-box h2 { color: var(--tm-text) !important; }
+body.theme-dark #streak-box p, body.theme-dark #streak-box .stat-value { color: #c8f9de !important; }
+
+body.theme-dark #challenge-box {
+  background: linear-gradient(135deg,#0b0b0b,#151515) !important;
+  border: 2px solid rgba(57,255,20,0.18) !important;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.75) !important;
+  color: var(--tm-text) !important;
+}
+body.theme-dark #challenge-box #word-display, body.theme-dark #challenge-box #task-container, body.theme-dark #challenge-box #feedback { color: var(--tm-text) !important; }
+
+/* Buttons and settings controls (dark) */
+body.theme-dark button, body.theme-dark #challenge-box button { background: linear-gradient(135deg,#2ecc71,#1abc5b) !important; color: var(--tm-text-dark) !important; border: 2px solid rgba(46,204,113,0.25) !important; box-shadow: 0 4px 12px rgba(0,0,0,0.6) !important; }
+body.theme-dark button:hover, body.theme-dark #challenge-box button:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.8) !important; transform: translateY(-2px) !important; }
+body.theme-dark button.primary { background: linear-gradient(135deg,#9ef0c8,#6de6a3) !important; color: var(--tm-text-dark) !important; border-color: rgba(46,204,113,0.35) !important; }
+
+/* Completion bar */
+body.theme-dark #completion-bar { background: linear-gradient(90deg,#8ef0b3,#2ecc71) !important; box-shadow: 0 0 10px rgba(46,204,113,0.12) !important; }
+body.theme-dark .progress-bar-fill { background: linear-gradient(90deg,#8ef0b3,#2ecc71) !important; }
+
+/* Ensure specific buttons and headers flip color */
+body.theme-dark #hint-btn, body.theme-dark #next-task, body.theme-dark #give-up-btn, body.theme-dark .primary, body.theme-dark button.primary {
+  background: linear-gradient(135deg,#2ecc71,#1abc5b) !important;
+  color: var(--tm-text-dark) !important;
+  border: 2px solid rgba(46,204,113,0.25) !important;
+}
+body.theme-dark #challenge-title { color: var(--tm-text) !important; text-shadow: 0 0 8px rgba(46,204,113,0.06) !important; }
+body.theme-dark #completion-bar-container { border-color: rgba(46,204,113,0.14) !important; background: rgba(8,12,10,0.4) !important; }
+
+/* Wordlist explicit border override */
+body.theme-dark #word-list li, body.theme-dark .word-item { border: 2px solid rgba(57,255,20,0.12) !important; }
+
+/* Final fallback */
+body.theme-dark * { color: inherit !important; }
+
+/* Make completion target label readable under dark theme */
+body.theme-dark #completion-target { color: var(--tm-text) !important; opacity: 0.95 !important; }

@@ -19,11 +19,30 @@
   box-shadow: 0 4px 15px rgba(0, 100, 150, 0.3);
 }
 
+/* Red theme specifics for nav fallback */
+body.theme-red #top-nav { border-bottom-color: #ff6b6b; }
+body.theme-red #nav-title { color: #ffd6d9; }
+body.theme-red #burger-btn { border-color: #ff8aa1; color: #ff8aa1; }
+
 #nav-title {
   font-size: 1.5em;
   color: #00d4ff;
   font-weight: bold;
   text-shadow: 0 0 10px rgba(0, 201, 255, 0.5);
+  /* ensure title stays left-aligned */
+  margin-right: auto;
+}
+
+/* center the user indicator in the top nav */
+#user-indicator {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.95em;
+  color: #c3f0ff;
+  cursor: pointer;
+  z-index: 101;
+  white-space: nowrap;
 }
 
 #burger-btn {
@@ -35,6 +54,8 @@
   padding: 5px 10px;
   border-radius: 6px;
   transition: all 0.3s;
+  margin-left: auto; /* push to the right */
+  z-index: 102;
 }
 
 #burger-btn:hover {
@@ -45,13 +66,13 @@
 /* Sidebar Menu */
 #sidebar-menu {
   position: fixed;
-  top: 0;
+  top: 60px; /* open below header so it appears under the burger */
   right: 0;
   width: 220px;
-  height: 100vh;
+  height: calc(100vh - 60px);
   background: linear-gradient(135deg, #0a2342 0%, #1a4d7a 100%);
   border-left: 3px solid #00d4ff;
-  padding-top: 80px;
+  padding-top: 12px;
   padding-left: 20px;
   padding-right: 20px;
   box-shadow: -2px 0 15px rgba(0, 100, 150, 0.3);
@@ -91,4 +112,11 @@
 .hidden {
   display: none !important;
 }
+
+/* On very small screens hide the centered user indicator to avoid overlap with burger */
+@media (max-width: 480px) {
+  #user-indicator { display: none; }
+  #nav-title { margin-left: 6px; }
+}
+
 

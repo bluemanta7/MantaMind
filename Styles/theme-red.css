@@ -1,0 +1,164 @@
+/* Theme: Red (theme-red)
+   Defines theme variables and overrides for red theme.
+   Use body.theme-red to scope rules so this file can be swapped dynamically.
+*/
+
+body.theme-red {
+  /* Theme variables */
+  --tm-bg-start: #3b0f1d;
+  --tm-bg-mid: #6b1424;
+  --tm-bg-end: #3f0b12;
+  --tm-accent: #ff6b6b;           /* primary accent */
+  --tm-accent-2: #ff3b5c;         /* secondary accent */
+  --tm-accent-strong: #9b1f2a;    /* darker accent for headers */
+  --tm-text: #ffd6d9;
+  --tm-text-dark: #241212;
+  --tm-shadow: rgba(140,12,18,0.45);
+  --tm-shadow-strong: rgba(140,12,18,0.6);
+  --tm-bubble-shadow: rgba(0,0,0,0.55);
+  background: linear-gradient(135deg, var(--tm-bg-start) 0%, var(--tm-bg-mid) 50%, var(--tm-bg-end) 100%) !important;
+  color: var(--tm-text) !important;
+}
+
+/* nav/title */
+body.theme-red #top-nav { background: linear-gradient(135deg, var(--tm-bg-start), var(--tm-bg-mid)) !important; border-bottom-color: var(--tm-accent) !important; }
+body.theme-red #nav-title { color: var(--tm-text) !important; }
+
+/* Profile header & rank badges */
+body.theme-red .profile-header, body.theme-red .profile-header .rank-badge {
+  background: linear-gradient(135deg, var(--tm-accent-strong) 0%, var(--tm-accent-2) 100%) !important;
+  color: var(--tm-text) !important;
+  box-shadow: 0 8px 25px var(--tm-shadow) !important;
+  border-color: var(--tm-accent) !important;
+}
+
+body.theme-red .rank-badge {
+  background: linear-gradient(135deg, var(--tm-accent), var(--tm-accent-2)) !important;
+  color: var(--tm-text-dark) !important;
+  box-shadow: 0 4px 18px var(--tm-shadow-strong) !important;
+  border: 1px solid rgba(255,80,80,0.6) !important;
+  text-shadow: none !important;
+}
+
+/* Wordlist/status badges and streaks (bright red, stronger shadow) */
+body.theme-red .status-badge.learned, body.theme-red .word-item.learned .status-badge {
+  background: linear-gradient(90deg,var(--tm-accent),var(--tm-accent-2)) !important;
+  color: var(--tm-text-dark) !important;
+  box-shadow: 0 4px 12px var(--tm-shadow-strong) !important;
+}
+
+body.theme-red .status-badge.in-progress, body.theme-red .word-item.in-progress .status-badge {
+  background: linear-gradient(90deg,#ff8a90,#ff4a4a) !important;
+  color: var(--tm-text-dark) !important;
+  box-shadow: 0 4px 12px var(--tm-shadow-strong) !important;
+}
+
+body.theme-red .status-badge.not-started, body.theme-red .word-item.not-started .status-badge {
+  background: rgba(120,12,18,0.12) !important;
+  color: var(--tm-text) !important;
+  border: 1px solid rgba(255,80,80,0.12) !important;
+  box-shadow: none !important;
+}
+
+body.theme-red .word-streak {
+  padding: 5px 12px;
+  background: linear-gradient(135deg,#ff8a90 0%,#ff4a4a 100%) !important;
+  color: var(--tm-text-dark) !important;
+  border-radius: 15px;
+  font-size: 0.85em;
+  font-weight: bold;
+  box-shadow: 0 4px 10px var(--tm-bubble-shadow) !important;
+}
+
+/* Ensure containers pick up red-ish outlines */
+body.theme-red .word-item, body.theme-red .word-progress-item {
+  box-shadow: 0 4px 18px rgba(140,12,18,0.25) !important;
+  border-color: rgba(255,80,80,0.08) !important;
+}
+
+/* Keep choice buttons & other interactive elements consistent */
+body.theme-red .choice-btn { background-color: var(--tm-accent-strong) !important; border-color: rgba(255,120,140,0.12) !important; color: var(--tm-text) !important; }
+
+/* Progress-state warm/bright overrides */
+/* Rank badge variants (progressive warmth) */
+body.theme-red .rank-badge.beginner { background: linear-gradient(135deg,#ffb3b6 0%, #ff8a90 100%) !important; color: var(--tm-text-dark) !important; box-shadow: 0 4px 12px rgba(110,10,16,0.45) !important; }
+body.theme-red .rank-badge.intermediate { background: linear-gradient(135deg,#ff9a80 0%, #ff6b6b 100%) !important; color: var(--tm-text-dark) !important; }
+body.theme-red .rank-badge.advanced { background: linear-gradient(135deg,#ff8a50 0%, #ff4a2a 100%) !important; color: var(--tm-text-dark) !important; }
+body.theme-red .rank-badge.master { background: linear-gradient(135deg,#ffd580 0%, #ff6b00 100%) !important; color: var(--tm-text-dark) !important; }
+
+/* Wordlist and profile progress items — warmer as progress increases */
+body.theme-red .word-item.not-started, body.theme-red .word-progress-item.not-started { background: rgba(140,12,18,0.06) !important; border-color: rgba(255,80,80,0.06) !important; color: var(--tm-text) !important; box-shadow: none !important; }
+
+body.theme-red .word-item.in-progress, body.theme-red .word-progress-item.in-progress {
+  background: linear-gradient(135deg,#ffc6c9 0%, #ff9aa2 100%) !important; /* warm-pink */
+  border-color: rgba(255,100,120,0.12) !important;
+  box-shadow: 0 4px 12px rgba(140,12,18,0.28) !important;
+  color: var(--tm-text-dark) !important;
+}
+
+body.theme-red .word-item.learned, body.theme-red .word-progress-item.learned {
+  background: linear-gradient(135deg,#ff9a8a 0%, #ff4a4a 100%) !important; /* bright warm */
+  border-color: rgba(255,60,60,0.28) !important;
+  box-shadow: 0 6px 18px rgba(140,12,18,0.45) !important;
+  color: var(--tm-text-dark) !important;
+}
+
+/* Badges and streak bubbles (become warmer/brighter with progress) */
+body.theme-red .badge.learned, body.theme-red .status-badge.learned, body.theme-red .word-item.learned .status-badge {
+  background: linear-gradient(90deg,#ffb3b9,#ff6b6b) !important;
+  color: var(--tm-text-dark) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.55) !important;
+}
+body.theme-red .badge.in-progress, body.theme-red .status-badge.in-progress, body.theme-red .word-item.in-progress .status-badge {
+  background: linear-gradient(90deg,#ffc6c9,#ff9aa2) !important;
+  color: var(--tm-text-dark) !important;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.45) !important;
+}
+body.theme-red .badge.not-started, body.theme-red .status-badge.not-started { background: rgba(120,12,18,0.08) !important; color: var(--tm-text) !important; border: 1px solid rgba(255,80,80,0.12) !important; box-shadow:none !important; }
+
+/* Word streak bubble extra pop */
+body.theme-red .word-streak { background: linear-gradient(135deg,#ffb3b9 0%, #ff6b6b 100%) !important; color: var(--tm-text-dark) !important; box-shadow: 0 4px 12px rgba(0,0,0,0.6) !important; }
+
+/* Make progress bars and fills warmer for red theme */
+body.theme-red #completion-bar { background: linear-gradient(90deg,#ff9a8a,#ff4a4a) !important; }
+body.theme-red #progress-bar, body.theme-red .progress-bar-fill { background: linear-gradient(90deg,#ff9a8a,#ff4a4a) !important; box-shadow: 0 0 10px rgba(255,80,80,0.25) !important; }
+
+/* Profile & Dashboard card overrides: ensure stat cards, progress, and achievements are warm red */
+body.theme-red .stat-card, body.theme-red .progress-section, body.theme-red .achievements-section, body.theme-red #word-progress-section {
+  background: linear-gradient(135deg, #5c1016 0%, #8a1a2a 100%) !important;
+  border-color: #ff6b6b !important;
+  box-shadow: 0 6px 22px rgba(140,12,18,0.45) !important;
+  color: var(--tm-text) !important;
+}
+
+body.theme-red .stat-card h3, body.theme-red .progress-section h2, body.theme-red .achievements-section h2, body.theme-red #word-progress-section h2 {
+  color: var(--tm-text) !important;
+  text-shadow: 0 0 8px rgba(255,120,120,0.12) !important;
+}
+
+body.theme-red .stat-value { color: var(--tm-text) !important; text-shadow: 0 0 10px rgba(255,80,80,0.12) !important; }
+
+body.theme-red .achievement, body.theme-red .achievements-grid .achievement {
+  background: linear-gradient(135deg,#7b121a,#ff6b6b) !important;
+  box-shadow: 0 6px 18px rgba(140,12,18,0.35) !important;
+  color: var(--tm-text) !important;
+  border-color: rgba(255,80,80,0.18) !important;
+}
+
+body.theme-red .stat-card:hover { transform: translateY(-8px) !important; box-shadow: 0 10px 30px rgba(140,12,18,0.55) !important; }
+
+body.theme-red .progress-bar-container { background: rgba(60,8,12,0.6) !important; border-color: #ff6b6b !important; box-shadow: 0 0 12px rgba(140,12,18,0.18) !important; }
+
+/* Rank progress (light warm red instead of white) */
+body.theme-red .rank-progress, body.theme-red .profile-container .rank-progress {
+  background: linear-gradient(135deg, rgba(255,140,140,0.06), rgba(255,120,120,0.09)) !important;
+  border-left-color: #ff6b6b !important;
+  color: var(--tm-text) !important;
+  box-shadow: 0 4px 12px rgba(140,12,18,0.12) !important;
+}
+
+/* Final fallback for leftover tints (keeps color inheritance local) */
+body.theme-red * { color: inherit !important; }
+
+/* Make completion target label readable under red theme */
+body.theme-red #completion-target { color: var(--tm-text) !important; opacity: 0.95 !important; }

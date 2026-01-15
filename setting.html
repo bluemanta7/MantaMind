@@ -32,19 +32,42 @@
   <main class="game-container">
     <h1>⚙️ Settings</h1>
     <button id="clear-progress">🧹 Clear My Progress</button>
-    <button id="toggle-theme">🌗 Toggle Dark/Light Mode</button>
+
+    <section class="appearance-settings">
+      <h3>Appearance</h3>
+      <div class="setting-row">
+        <label for="theme-select">Theme color</label>
+        <div class="theme-select" id="theme-select">
+          <label><input type="radio" name="theme" value="blue" id="theme-blue" /> Blue</label>
+          <label><input type="radio" name="theme" value="red" id="theme-red" /> Red</label>
+        </div>
+      </div>
+    </section>
 
     <section class="question-type-settings">
       <h3>Test Question Types</h3>
       <div class="setting-row">
         <label for="toggle-mc">Multiple choice</label>
-        <input type="checkbox" id="toggle-mc" />
+        <label class="switch"><input type="checkbox" id="toggle-mc" /><span class="slider"></span></label>
       </div>
-      <!-- Fill-in-the-blank removed per user preference -->
       <div class="setting-row">
         <label for="toggle-match">Matching (up to 5 pairs)</label>
-        <input type="checkbox" id="toggle-match" />
+        <label class="switch"><input type="checkbox" id="toggle-match" /><span class="slider"></span></label>
       </div>
+      <div class="setting-row">
+        <label for="toggle-formmatch">Form variants (choose the correct variant)</label>
+        <label class="switch"><input type="checkbox" id="toggle-formmatch" /><span class="slider"></span></label>
+      </div>
+
+      <div class="setting-row">
+        <label for="progress-target">Words-to-learn threshold</label>
+        <select id="progress-target">
+          <option value="3">3 correct in a row (default)</option>
+          <option value="5">5 correct in a row</option>
+          <option value="10">10 correct in a row</option>
+        </select>
+      </div>
+
       <p class="hint">Tip: Keep matching pairs to 5 or fewer for best UX.</p>
       <button id="save-settings" class="primary">Save settings</button>
     </section>
@@ -77,20 +100,32 @@
       }
     });
 
-    // 🌗 Theme Toggle
-    document.getElementById('toggle-theme').addEventListener('click', () => {
-      document.body.classList.toggle('light-theme');
-    });
+    // --- Apply theme helper ---
+    function applyTheme(theme) {
+      document.body.classList.remove('theme-red');
+      if (theme === 'red') document.body.classList.add('theme-red');
+    }
 
     // --- Question type settings persistence ---
     function loadQuestionTypeSettings() {
       const currentUser = localStorage.getItem('currentUser');
       const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-      const defaults = { multipleChoice: true, matching: false };
+      const defaults = { multipleChoice: true, matching: false, formMatch: false, theme: 'blue', progressTarget: 3 };
       const settings = (currentUser && userData[currentUser] && userData[currentUser].settings) || defaults;
 
       document.getElementById('toggle-mc').checked = !!settings.multipleChoice;
       document.getElementById('toggle-match').checked = !!settings.matching;
+      document.getElementById('toggle-formmatch').checked = !!settings.formMatch;
+
+      document.getElementById('theme-blue').checked = (settings.theme === 'blue');
+      document.getElementById('theme-red').checked = (settings.theme === 'red');
+      applyTheme(settings.theme);
+
+      document.getElementById('progress-target').value = String(settings.progressTarget || 3);
+
+      // apply theme immediately when changed
+      document.getElementById('theme-blue').addEventListener('change', () => applyTheme('blue'));
+      document.getElementById('theme-red').addEventListener('change', () => applyTheme('red'));
     }
 
     function saveQuestionTypeSettings() {
@@ -98,11 +133,17 @@
       if (!currentUser) return alert('No user logged in.');
       const userData = JSON.parse(localStorage.getItem('userData') || '{}');
       userData[currentUser] = userData[currentUser] || {};
+      const theme = document.querySelector('input[name="theme"]:checked') ? document.querySelector('input[name="theme"]:checked').value : 'blue';
+      const progressTarget = parseInt(document.getElementById('progress-target').value || '3', 10);
       userData[currentUser].settings = {
         multipleChoice: !!document.getElementById('toggle-mc').checked,
-        matching: !!document.getElementById('toggle-match').checked
+        matching: !!document.getElementById('toggle-match').checked,
+        formMatch: !!document.getElementById('toggle-formmatch').checked,
+        theme: theme,
+        progressTarget: progressTarget
       };
       localStorage.setItem('userData', JSON.stringify(userData));
+      applyTheme(theme);
       alert('Settings saved!');
     }
 

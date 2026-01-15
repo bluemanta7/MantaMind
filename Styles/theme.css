@@ -1,0 +1,83 @@
+/* theme.css — high-specificity theme overrides loaded last to ensure themes apply across pages */
+
+/* Global red theme background */
+body.theme-red {
+  background: linear-gradient(135deg, #3b0f1d 0%, #6b1424 50%, #3f0b12 100%) !important;
+  color: #ffd6d9 !important;
+}
+
+/* Nav */
+body.theme-red #top-nav {
+  background: linear-gradient(135deg, #3b0f1d 0%, #6b1424 100%) !important;
+  border-bottom-color: #ff6b6b !important;
+}
+body.theme-red #nav-title { color: #ffd6d9 !important; text-shadow: 0 0 10px rgba(255,130,150,0.4) !important; }
+body.theme-red #burger-btn { border-color: #ff8aa1 !important; color: #ff8aa1 !important; }
+
+/* Sidebar */
+body.theme-red #sidebar-menu { background: linear-gradient(135deg, #3b0f1d 0%, #6b1424 100%) !important; border-left-color: #ff6b6b !important; }
+body.theme-red #sidebar-menu a { color: #ffd6d9 !important; }
+
+/* Major containers */
+body.theme-red .game-container, body.theme-red .profile-container, body.theme-red .wordlist-container,
+body.theme-red #challenge-box, body.theme-red #streak-box, body.theme-red #progress-dashboard {
+  background: linear-gradient(135deg, #4b0f19 0%, #6b1424 100%) !important;
+  border-color: #ff9aa2 !important;
+  box-shadow: 0 4px 15px rgba(180,30,40,0.3) !important;
+  color: #ffd6d9 !important;
+}
+
+/* Buttons */
+body.theme-red button, body.theme-red .primary { background: linear-gradient(135deg, #d6455c 0%, #ff6b6b 100%) !important; color: #241212 !important; border-color: #ff9aa2 !important; }
+body.theme-red button:hover { box-shadow: 0 0 12px rgba(255,100,140,0.4) !important; }
+
+/* Choice buttons */
+body.theme-red .choice-btn { background-color: #a61d2b !important; border-color: #ff9aa2 !important; color: #ffd6d9 !important; }
+body.theme-red .choice-btn:hover { background-color: #d6455c !important; box-shadow: 0 0 12px rgba(255,100,140,0.4) !important; }
+body.theme-red .choice-btn.correct-choice { background-color: #ffdfd6 !important; color: #241212 !important; }
+body.theme-red .choice-btn.incorrect-choice { background-color: #6b000f !important; color: #fff !important; }
+
+/* Completion bars */
+body.theme-red #completion-bar { background: linear-gradient(90deg, #ff7b88, #ff3b5c) !important; }
+body.theme-red #progress-bar { background: linear-gradient(90deg, #ff7b88, #ff3b5c) !important; }
+
+/* Wordlist/status badges */
+body.theme-red .status-badge.learned { background: linear-gradient(90deg,#ffb3b9,#ff6b6b); color:#241212 !important; }
+body.theme-red .status-badge.in-progress { background: linear-gradient(90deg,#ff9aa2,#ff6b6b); color:#241212 !important; }
+
+/* Matching game */
+body.theme-red .matching-container, body.theme-red .matching-col, body.theme-red .match-item { background: rgba(107,17,23,0.12) !important; color: #ffd6d9 !important; border-color: rgba(255,120,140,0.12) !important; }
+body.theme-red .match-item { background: linear-gradient(90deg, rgba(166,29,43,0.12), rgba(214,69,92,0.06)) !important; }
+body.theme-red .match-item.selected-left { outline-color: #ff9aa2 !important; }
+body.theme-red .match-item.paired { background: linear-gradient(90deg,#ffc6c9,#ffb3b9) !important; color: #241212 !important; }
+
+/* Welcome / headings */
+body.theme-red #welcome-section h1, body.theme-red h1, body.theme-red h2, body.theme-red h3 { color: #ffd6d9 !important; text-shadow: 0 0 8px rgba(255,130,150,0.25) !important; }
+
+/* Word progress cards and word list */
+body.theme-red .word-progress-card, body.theme-red .word-item { background: linear-gradient(90deg, rgba(107,17,23,0.08), rgba(107,17,23,0.04)) !important; border-color: rgba(255,120,140,0.08) !important; color: #ffd6d9 !important; }
+body.theme-red .word-header { color: #ffd6d9 !important; }
+body.theme-red .word-definition, body.theme-red .word-example { color: #ffd6d9 !important; }
+
+/* Progress bar outlines and containers */
+body.theme-red #completion-bar-container, body.theme-red .progress-bar-container { background-color: rgba(60,8,12,0.4) !important; border-color: #ff6b6b !important; box-shadow: 0 0 8px rgba(180,30,40,0.12) !important; }
+
+/* Subtle text override for any remaining blue tints */
+body.theme-red * { color: inherit !important; }
+
+/* Profile rank */
+body.theme-red .rank-badge.beginner, body.theme-red .rank-badge.intermediate, body.theme-red .rank-badge.advanced, body.theme-red .rank-badge.master { background: rgba(255,130,150,0.08) !important; color: #ffd6d9 !important; }
+
+/* Strong red overrides for badges and wordlist bubbles */
+body.theme-red .profile-header, body.theme-red .profile-header .rank-badge { background: linear-gradient(135deg, #5c1016 0%, #9b1f2a 100%) !important; color: #ffd6d9 !important; box-shadow: 0 8px 25px rgba(140,12,18,0.35) !important; border-color: #ff6b6b !important; }
+body.theme-red .rank-badge { background: linear-gradient(135deg,#ff6b6b 0%, #ff3b5c 100%) !important; color: #241212 !important; box-shadow: 0 4px 18px rgba(140,12,18,0.6) !important; border: 1px solid rgba(255,80,80,0.6) !important; text-shadow: none !important; }
+body.theme-red .status-badge.learned, body.theme-red .word-item.learned .status-badge { background: linear-gradient(90deg,#ff6b6b,#ff3b5c) !important; color:#241212 !important; box-shadow: 0 4px 12px rgba(140,12,18,0.45) !important; }
+body.theme-red .status-badge.in-progress, body.theme-red .word-item.in-progress .status-badge { background: linear-gradient(90deg,#ff8a90,#ff4a4a) !important; color:#241212 !important; box-shadow: 0 4px 12px rgba(140,12,18,0.45) !important; }
+body.theme-red .status-badge.not-started, body.theme-red .word-item.not-started .status-badge { background: rgba(120,12,18,0.08) !important; color:#ffd6d9 !important; border:1px solid rgba(255,80,80,0.12) !important; box-shadow:none !important; }
+body.theme-red .word-streak { padding: 5px 12px; background: linear-gradient(135deg,#ff8a90 0%,#ff4a4a 100%) !important; color: #241212 !important; border-radius: 15px; font-size: 0.85em; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.55) !important; }
+body.theme-red .word-item, body.theme-red .word-progress-item { box-shadow: 0 4px 18px rgba(140,12,18,0.25) !important; border-color: rgba(255,80,80,0.08) !important; }
+
+/* Ensure theme overrides load last */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

@@ -49,7 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
           statusClass = 'learned';
         } else if (isInProgress) {
           statusBadge = '<span class="status-badge in-progress">🔄 In Progress</span>';
-          streakDisplay = `<span class="word-streak">🔥 Streak: ${streak}/3</span>`;
+          const userSettings = (user && user.settings) || {};
+          const thresh = parseInt(userSettings.progressTarget || 3, 10);
+          streakDisplay = `<span class="word-streak">🔥 Streak: ${streak}/${thresh}</span>`;
           statusClass = 'in-progress';
         } else {
           statusBadge = '<span class="status-badge not-started">📝 Not Started</span>';

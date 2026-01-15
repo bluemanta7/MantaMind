@@ -7,7 +7,7 @@ let userData = {};
 let wordData = [];
 let currentWord = null;
 
-const challengeSteps = ['definition-match', 'choose-sentence'];
+const challengeSteps = ['definition-match', 'choose-sentence', 'form-match'];
 
 // ============================================
 // INITIALIZATION
@@ -64,6 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // Ensure the progress label/bar reflects any saved settings immediately
+  try { updateProgressBar(); } catch (e) { /* ignore if page doesn't show progress */ }
 });
 
 // ============================================
@@ -94,6 +97,12 @@ function loadWordData() {
         if (!Array.isArray(wordData)) wordData = [];
         shuffleArray(wordData);
         console.log('✅ Loaded', wordData.length, 'words from', path);
+
+        // Ensure each word has up to 4 conservative form variants for form-match questions
+        try { augmentWordForms(); } catch (e) { console.warn('augmentWordForms failed', e); }
+
+        // Update progress UI now that we have word data (so partial progress can be computed)
+        try { updateProgressBar(); } catch (e) { /* ignore on pages that don't show progress */ }
 
         if (challengeStarted) {
           loadTask(challengeSteps[stepIndex]);
@@ -169,8 +178,13 @@ function setupChallengeButtons() {
       updateProgress(false, cw.word);
       const nextBtnEl = document.getElementById('next-task');
       if (nextBtnEl) nextBtnEl.style.display = 'inline-block';
-
-      document.querySelectorAll('.choice-btn, #blank-input').forEach(el => el.disabled = true);
+      // Highlight the correct choice if it exists
+      const correctBtn = document.querySelector('.choice-btn[data-correct="true"]');
+      if (correctBtn) {
+        correctBtn.classList.add('correct-choice');
+        if (!/✅/.test(correctBtn.innerHTML)) correctBtn.innerHTML += ' ✅';
+      }
+      document.querySelectorAll('.choice-btn').forEach(el => el.disabled = true);
     });
   }
 }
@@ -228,11 +242,11 @@ function startChallenge() {
     if (userSettings.multipleChoice) {
       enabledFormats.push('multiple-definition', 'multiple-word', 'choose-sentence');
     }
-    if (userSettings.fillBlank) enabledFormats.push('fill');
+    if (userSettings.formMatch) enabledFormats.push('form-match');
     if (userSettings.matching) enabledFormats.push('matching');
   } catch (e) {
     // fallback: if something goes wrong, enable all
-    enabledFormats.push('multiple-definition', 'multiple-word', 'fill', 'choose-sentence');
+    enabledFormats.push('multiple-definition', 'multiple-word', 'choose-sentence');
   }
 
   if (!enabledFormats || enabledFormats.length === 0) {
@@ -256,18 +270,35 @@ function startChallenge() {
 
   if (format === 'multiple-definition') showMultipleChoiceDefinition(currentWord);
   else if (format === 'multiple-word') showMultipleChoiceWord(currentWord);
-  else if (format === 'fill') showFillInBlank(currentWord);
   else if (format === 'matching') showMatchingQuestion();
-  else showTypingChallenge(currentWord);
+  else if (format === 'form-match') showFormMatchQuestion(currentWord);
+  else showMultipleChoiceDefinition(currentWord);
 }
 
 // Return current user settings (with defaults)
 function getUserSettings() {
   const currentUser = localStorage.getItem('currentUser');
   const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-  const defaults = { multipleChoice: true, fillBlank: false, matching: false };
-  if (!currentUser || !userData[currentUser] || !userData[currentUser].settings) return defaults;
-  return Object.assign({}, defaults, userData[currentUser].settings);
+  const appSettings = JSON.parse(localStorage.getItem('appSettings') || '{}');
+  const defaults = { multipleChoice: true, matching: false, formMatch: false, theme: 'blue', wordThreshold: 3, progressTargetWords: 10 };
+
+  // prefer per-user settings
+  let s = null;
+  if (currentUser && userData[currentUser] && userData[currentUser].settings) s = Object.assign({}, defaults, userData[currentUser].settings);
+  else if (appSettings && Object.keys(appSettings).length > 0) s = Object.assign({}, defaults, appSettings);
+  else s = Object.assign({}, defaults);
+
+  // Migration: old key `progressTarget` used to mean per-word threshold; if present and newer keys missing, map it
+  if (s.progressTarget && !s.wordThreshold && !('wordThreshold' in s)) {
+    const maybe = parseInt(s.progressTarget, 10);
+    if (!isNaN(maybe)) s.wordThreshold = maybe;
+  }
+
+  // Ensure numeric types
+  s.wordThreshold = parseInt(s.wordThreshold || defaults.wordThreshold, 10);
+  s.progressTargetWords = parseInt(s.progressTargetWords || defaults.progressTargetWords, 10);
+
+  return s;
 }
 
 function advanceToNextTask() {
@@ -326,34 +357,88 @@ function loadTask(type) {
 
     container.innerHTML = `
       <p>What does "<strong>${cw.word}</strong>" mean?</p>
-      ${options.map((opt) => `<button class="choice-btn" onclick="handleMultipleChoice(${opt.correct}, this, '${cw.word}', '${cw.definition.replace(/'/g, "\\'")}')">${opt.text}</button>`).join('')}
-    `;
-
-  } else if (type === 'fill-blank') {
-    const exampleSentence = cw.examples && cw.examples[0] ? cw.examples[0] : '';
-    const blankedSentence = exampleSentence ? exampleSentence.replace(new RegExp(cw.word, 'i'), '_____') : '';
-
-    container.innerHTML = `
-      <p>Complete the sentence:</p>
-      <p>${blankedSentence}</p>
-      <p><em>Hint: A synonym is "<strong>${synonymHint}</strong>"</em></p>
-      <input type="text" id="blank-input" placeholder="Your answer" />
-      <button onclick="checkFillBlank()">Submit</button>
+      ${options.map((opt) => `<button class="choice-btn" data-correct="${opt.correct}" onclick="handleMultipleChoice(${opt.correct}, this, '${cw.word}', '${cw.definition.replace(/'/g, "\\'")}')">${opt.text}</button>`).join('')}
     `;
 
   } else if (type === 'choose-sentence') {
-    // 4 sentence options: 1 correct example + up to 3 distractor sentences
-    const correctSentence = cw.examples && cw.examples[0] ? cw.examples[0] : '';
-    const pool = wordData.filter(w => w.word !== cw.word);
+    // 1 correct example (filled) + up to 3 distractor examples (blanked) from other words for variety
+    const example = cw.examples && cw.examples[0] ? cw.examples[0] : '';
+    // Keep the correct example blank in the UI (do NOT reveal the target word).
+    // If the example already contains '____' keep as-is; otherwise blank the target word if present or blank a longish word as fallback.
+    let correctSentence = example || '';
+    if (!/____/.test(correctSentence)) {
+      const esc = cw.word.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
+      const replaced = correctSentence.replace(new RegExp('\\b' + esc + '\\b', 'i'), '____');
+      if (replaced === correctSentence) {
+        // target word wasn't present; blank a long word as fallback to indicate missing word
+        correctSentence = correctSentence.replace(/\b([A-Za-z]{4,})\b/, '____');
+      } else {
+        correctSentence = replaced;
+      }
+    }
+
+    // Ensure the correct sentence is non-empty
+    if (!correctSentence || !correctSentence.trim()) correctSentence = 'This sentence contains ____.';
+
+    // Build distractors from other words' examples (keep them blank)
+    const pool = wordData.filter(w => w.word !== cw.word && w.examples && w.examples.length);
     shuffleArray(pool);
-    const distractSentences = pool.slice(0, 3).map(w => `The delicious pizza was very ${w.word}.`);
-    const options = [{ text: correctSentence, correct: true }, ...distractSentences.map(s => ({ text: s, correct: false }))];
+    // Prepare regex to blank any known vocabulary word to avoid revealing answers
+    const allWordsPattern = wordData.map(w => w.word.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')).join('|');
+    const allWordsRegex = new RegExp('\\b(' + allWordsPattern + ')\\b', 'gi');
+
+    const distractSentences = pool.slice(0, 3).map(w => {
+      let s = w.examples[0] || '';
+      s = String(s);
+      // Blank any vocabulary word found in the sentence to avoid leaks
+      s = s.replace(allWordsRegex, '____');
+      // Ensure at least one blank exists (fallback: blank a longish word)
+      if (!/____/.test(s)) {
+        s = s.replace(/\b([A-Za-z]{4,})\b/, '____');
+      }
+      // Final fallback if the sentence ended up empty
+      if (!s || !s.trim()) s = 'This sentence contains ____.';
+      return s;
+    });
+
+    let options = [{ text: correctSentence, correct: true }, ...distractSentences.map(s => ({ text: s, correct: false }))];
     shuffleArray(options);
+
+    // Ensure incorrect options don't accidentally reveal any vocabulary words (including the target)
+    const cwEsc = cw.word.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
+    const cwRegex = new RegExp('\\b' + cwEsc + '\\b', 'gi');
+
+    options = options.map(opt => {
+      if (opt.correct) return opt;
+      // allWordsRegex is already computed above in this scope; reuse it
+      let txt = opt.text ? String(opt.text) : '';
+      txt = txt.replace(allWordsRegex, '____');
+      txt = txt.replace(cwRegex, '____');
+      if (!/____/.test(txt)) txt = txt.replace(/\b([A-Za-z]{4,})\b/, '____');
+      if (!txt || !txt.trim()) txt = 'This sentence contains ____.';
+      return { text: txt, correct: false };
+    });
+
+    // Ensure no duplicate text options (unique by text); replace duplicates with blank fallback
+    const seen = new Set();
+    options = options.map(opt => {
+      let text = opt.text;
+      const key = text.toLowerCase();
+      if (seen.has(key)) {
+        // replace with a generic blanked sentence to preserve choice count
+        text = 'This sentence contains ____.';
+      }
+      seen.add(text.toLowerCase());
+      return { text, correct: opt.correct };
+    });
 
     container.innerHTML = `
       <p>Which sentence uses "<strong>${cw.word}</strong>" correctly?</p>
-      ${options.map(opt => `<button class="choice-btn" onclick="handleMultipleChoice(${opt.correct}, this, '${cw.word}', '${cw.definition}')">${opt.text}</button>`).join('')}
+      ${options.map(opt => `<button class="choice-btn" data-correct="${opt.correct}" onclick="handleMultipleChoice(${opt.correct}, this, '${cw.word}', '${cw.definition}')">${opt.text}</button>`).join('')}
     `;
+  } else if (type === 'form-match') {
+    // Delegate to the form-match renderer
+    showFormMatchQuestion(cw);
   } else {
     container.innerHTML = `<p>Unknown task type. Showing definition for <strong>${cw.word}</strong>:</p><p>${cw.definition}</p>`;
   }
@@ -377,6 +462,16 @@ function handleMultipleChoice(isCorrect, button, word, definition) {
   if (button) button.innerHTML += isCorrect ? " ✅" : " ❌";
 
   if (!isCorrect) {
+    // Highlight the correct choice button if present
+    const correctBtn = document.querySelector('.choice-btn[data-correct="true"]');
+    if (correctBtn) {
+      correctBtn.classList.add('correct-choice');
+      if (!/✅/.test(correctBtn.innerHTML)) correctBtn.innerHTML += ' ✅';
+      // scroll into view for clarity
+      correctBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Preserve existing reveal behavior
     showCorrectAnswer(word, definition);
   }
 
@@ -386,33 +481,27 @@ function handleMultipleChoice(isCorrect, button, word, definition) {
   if (nextBtn) nextBtn.style.display = 'inline-block';
 }
 
-function checkFillBlank() {
-  const input = document.getElementById('blank-input');
-  const cw = currentWord || wordData[wordIndex];
-  if (!input || !cw) return;
-  const isCorrect = input.value.trim().toLowerCase() === cw.word.toLowerCase();
 
-  input.disabled = true;
-  input.classList.add(isCorrect ? 'correct-choice' : 'incorrect-choice');
-
-  if (!isCorrect) {
-    showCorrectAnswer(cw.word, cw.definition);
-  }
-
-  showFeedback(isCorrect);
-  updateProgress(isCorrect, cw.word);
-  const nextBtn = document.getElementById('next-task');
-  if (nextBtn) nextBtn.style.display = 'inline-block';
-}
 
 function showCorrectAnswer(word, definition) {
   const container = document.getElementById('task-container');
   if (!container) return;
   const revealBox = document.createElement('div');
   revealBox.className = 'reveal-box';
+
+  // Show definition and a helpful example (blanked) so users see context without the explicit answer
+  let exampleHTML = '';
+  if (currentWord && Array.isArray(currentWord.examples) && currentWord.examples.length) {
+    const ex = currentWord.examples[0];
+    // blank any appearance of the target word to avoid revealing the answer
+    const esc = String(currentWord.word).replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
+    const exBlanked = ex.replace(new RegExp('\\b' + esc + '\\b', 'gi'), '____');
+    exampleHTML = `<p><strong>Example:</strong> ${exBlanked}</p>`;
+  }
+
   revealBox.innerHTML = `
-    <p><strong>Correct Answer:</strong> ${word}</p>
     <p><strong>Definition:</strong> ${definition}</p>
+    ${exampleHTML}
   `;
   container.appendChild(revealBox);
 }
@@ -457,11 +546,13 @@ function updateProgress(isCorrect, word) {
       user.bestStreak = user.currentStreak;
     }
 
-    // Mark as learned if word streak reaches 3
-    if (user.wordStreaks[word] >= 3 && !user.learnedWords.includes(word)) {
+    // Mark as learned if word streak reaches configured per-word threshold
+    const settings = getUserSettings();
+    const threshold = parseInt(settings.wordThreshold || 3, 10);
+    if (user.wordStreaks[word] >= threshold && !user.learnedWords.includes(word)) {
       user.learnedWords.push(word);
       user.inProgressWords = user.inProgressWords.filter(w => w !== word);
-      console.log(`🎉 "${word}" marked as learned! (Streak: ${user.wordStreaks[word]})`);
+      console.log(`🎉 "${word}" marked as learned! (Streak: ${user.wordStreaks[word]}) (threshold ${threshold})`);
     } else if (!user.inProgressWords.includes(word) && !user.learnedWords.includes(word)) {
       user.inProgressWords.push(word);
     }
@@ -497,28 +588,181 @@ function updateProgress(isCorrect, word) {
   // Save to localStorage
   localStorage.setItem('userData', JSON.stringify(userData));
 
-  console.log(`Word "${word}" streak: ${user.wordStreaks[word]}/3`);
+  const settings = getUserSettings();
+  const thresh = parseInt(settings.wordThreshold || 3, 10);
+  console.log(`Word "${word}" streak: ${user.wordStreaks[word]}/${thresh}`);
+}
+
+function updateProgressTargetLabel(wordThreshold, progressGoal) {
+  // show a small label under the main completion bar explaining both thresholds
+  try {
+    const container = document.getElementById('completion-bar-container');
+    if (!container) return;
+    let el = document.getElementById('completion-target');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'completion-target';
+      el.className = 'completion-target';
+      el.style.fontSize = '0.85rem';
+      el.style.marginTop = '6px';
+      el.style.textAlign = 'center';
+      container.appendChild(el);
+    }
+    el.textContent = `Per-word: ${wordThreshold} • Questions goal: ${progressGoal}`;
+  } catch (e) {
+    // silent fail if DOM structure differs on some pages
+  }
 }
 
 function updateProgressBar() {
-  if (!currentUser || !userData[currentUser]) return;
+  // allow showing progress for app-wide settings even when no explicit user is set
+  const settings = getUserSettings();
+  if (!currentUser || !userData[currentUser]) {
+    // show the target label based on settings (app or defaults)
+    updateProgressTargetLabel(settings.wordThreshold, settings.progressTargetWords);
+    return;
+  }
 
   const user = userData[currentUser];
-  const streak = user.currentStreak || 0;
-  const maxStreak = 10; // fill bar at 10 in a row
-  const percentage = Math.min(Math.round((streak / maxStreak) * 100), 100);
+  const settingsLocal = getUserSettings();
+  const progressGoal = parseInt(settingsLocal.progressTargetWords || 10, 10);
+  let percentage = 0;
+
+  // We want the completion bar to reflect partial progress across words:
+  // Sum min(streak / wordThreshold, 1) across known words and compare to progressGoal.
+  const wordThreshold = parseInt(settingsLocal.wordThreshold || 3, 10);
+  let progressSum = 0;
+
+  if (Array.isArray(wordData) && wordData.length) {
+    wordData.forEach(w => {
+      const s = (user.wordStreaks && user.wordStreaks[w.word]) ? (user.wordStreaks[w.word] || 0) : 0;
+      progressSum += Math.min(s / Math.max(1, wordThreshold), 1);
+    });
+    percentage = Math.min(Math.round((progressSum / progressGoal) * 100), 100);
+  } else {
+    // Fallback: if we don't have wordData yet, use learned count as 1 point each
+    const learned = Array.isArray(user.learnedWords) ? user.learnedWords.length : 0;
+    percentage = Math.min(Math.round((learned / progressGoal) * 100), 100);
+  }
+
+  // Update visible label that explains both targets
+  updateProgressTargetLabel(wordThreshold, progressGoal);
 
   const progressBar = document.getElementById('completion-bar');
+  // read previous percentage for victory detection
+  const prevPercentage = progressBar && progressBar.dataset ? parseInt(progressBar.dataset.lastPercent || '0', 10) : 0;
+
   if (progressBar) {
     progressBar.style.width = percentage + '%';
     progressBar.textContent = percentage + '%';
+    progressBar.dataset.lastPercent = String(percentage);
   }
 
+  // helper to compute raw progress state (exposed for diagnostics)
+  function getProgressState() {
+    const settingsLocal = getUserSettings();
+    const wordThreshold = parseInt(settingsLocal.wordThreshold || 3, 10);
+    const progressGoal = parseInt(settingsLocal.progressTargetWords || 10, 10);
+    let progressSum = 0;
+    if (Array.isArray(wordData) && wordData.length) {
+      wordData.forEach(w => {
+        const s = (user.wordStreaks && user.wordStreaks[w.word]) ? (user.wordStreaks[w.word] || 0) : 0;
+        progressSum += Math.min(s / Math.max(1, wordThreshold), 1);
+      });
+    }
+    const percentage = progressGoal > 0 ? Math.min(100, Math.round((progressSum / progressGoal) * 100)) : 0;
+    return { progressSum, progressGoal, wordThreshold, percentage };
+  }
+
+  // setup help tooltip behavior once (if present)
+  try {
+    const helpBtn = document.getElementById('completion-help');
+    const helpTip = document.getElementById('completion-help-tooltip');
+    if (helpBtn && helpTip && !helpBtn.dataset.hasListener) {
+      const showTip = (ev) => {
+        helpTip.classList.add('show');
+        helpTip.setAttribute('aria-hidden', 'false');
+        // position to the left of the button when space allows
+        const rect = helpBtn.getBoundingClientRect();
+        helpTip.style.left = Math.max(8, rect.left - helpTip.offsetWidth + rect.width + 6) + 'px';
+        helpTip.style.top = (rect.bottom + 8) + 'px';
+      };
+      const hideTip = () => { helpTip.classList.remove('show'); helpTip.setAttribute('aria-hidden', 'true'); };
+      helpBtn.addEventListener('mouseenter', showTip);
+      helpBtn.addEventListener('focus', showTip);
+      helpBtn.addEventListener('mouseleave', hideTip);
+      helpBtn.addEventListener('blur', hideTip);
+      helpBtn.addEventListener('click', (e) => { e.preventDefault(); showTip(); setTimeout(hideTip, 6000); });
+      helpBtn.dataset.hasListener = '1';
+    }
+  } catch (e) { /* ignore */ }
+
+  // add debug buttons handlers for preview and details (if present)
+  try {
+    const previewBtn = document.getElementById('preview-victory');
+    if (previewBtn && !previewBtn.dataset.listener) {
+      previewBtn.addEventListener('click', (e) => { e.preventDefault(); showVictory(); });
+      previewBtn.dataset.listener = '1';
+    }
+
+    const detailsBtn = document.getElementById('progress-details');
+    if (detailsBtn && !detailsBtn.dataset.listener) {
+      detailsBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const state = getProgressState();
+        alert(`Progress details:\n- Word threshold: ${state.wordThreshold}\n- Progress goal (questions): ${state.progressGoal}\n- Progress sum (points): ${state.progressSum.toFixed(2)}\n- Percentage: ${state.percentage}%`);
+      });
+      detailsBtn.dataset.listener = '1';
+    }
+  } catch (e) { /* ignore */ }
   const profileBar = document.getElementById('progress-bar');
   if (profileBar) {
     profileBar.style.width = percentage + '%';
     profileBar.textContent = percentage + '%';
+    profileBar.dataset.lastPercent = String(percentage);
   }
+
+  // If we just reached 100% (enough learned words), trigger victory animation once
+  if (percentage === 100 && prevPercentage < 100) {
+    showVictory();
+  }
+}
+
+// Show a temporary victory overlay with confetti
+function showVictory() {
+  // prevent overlapping or repeated calls within short time
+  if (document.getElementById('victory-overlay')) return;
+
+  const overlay = document.createElement('div');
+  overlay.id = 'victory-overlay';
+  overlay.className = 'show';
+  overlay.innerHTML = `<div style="font-size:1.4em;">🎉</div><div>Perfect! Progress complete.</div>`;
+  document.body.appendChild(overlay);
+
+  // spawn confetti pieces
+  const colors = ['#ff6b6b','#ffdfd6','#a64cd9','#ffd36b','#6de6a3','#2ecc71'];
+  for (let i = 0; i < 18; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = (20 + Math.random() * 60) + '%';
+    piece.style.top = (Math.random() * 20) + '%';
+    piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+    piece.style.transform = `translateY(-20vh) rotate(${Math.random()*360}deg)`;
+    piece.style.animationDelay = (Math.random()*200)+'ms';
+    piece.style.animationDuration = (900 + Math.random()*900)+'ms';
+    document.body.appendChild(piece);
+    // cleanup after animation
+    setTimeout(() => piece.remove(), 2200);
+  }
+
+  // remove overlay after a short delay
+  setTimeout(() => {
+    if (overlay) {
+      overlay.classList.remove('show');
+      overlay.style.opacity = '0';
+      setTimeout(() => overlay.remove(), 400);
+    }
+  }, 2600);
 }
 
 
@@ -620,6 +864,84 @@ function shuffleArray(array) {
   }
 }
 
+// Augment words with conservative form variants (up to 4 total) so form-match always has choices
+function augmentWordForms() {
+  if (!Array.isArray(wordData)) return;
+  let augmented = 0;
+  const augmentLog = [];
+
+  wordData.forEach(cw => {
+    if (!cw || !cw.word) return;
+
+    // ensure forms exists
+    cw.forms = Array.isArray(cw.forms) ? cw.forms.slice() : [];
+    const existing = new Set(cw.forms.map(f => String(f.variant).toLowerCase()).filter(Boolean));
+
+    const base = String(cw.word);
+    const baseLower = base.toLowerCase();
+    const example = cw.examples && cw.examples[0] ? cw.examples[0] : null;
+
+    // Collect POS evidence from explicit forms
+    const nounVariants = cw.forms.filter(f => /\bnoun\b/i.test(f.type)).map(f => String(f.variant));
+    const verbVariants = cw.forms.filter(f => /\bverb\b/i.test(f.type)).map(f => String(f.variant));
+
+    const candidates = [];
+
+    // prefer adding the base form if missing
+    if (!existing.has(baseLower)) {
+      candidates.push({ type: 'base', variant: base.toLowerCase(), sentence: example ? example.replace(/____/g, base) : `The ${base} was noted.` });
+    }
+
+    // Noun plural: only generate from an explicit noun variant (prefer one matching base)
+    if (nounVariants.length) {
+      const nounMatchBase = nounVariants.find(v => String(v).toLowerCase() === baseLower);
+      const nounToPluralize = nounMatchBase || nounVariants[0];
+      if (nounToPluralize) {
+        const plural = String(nounToPluralize) + 's';
+        if (!existing.has(plural.toLowerCase())) {
+          candidates.push({ type: 'noun (plural)', variant: plural, sentence: example ? example.replace(/____/g, plural) : `The ${plural} were noted.` });
+        }
+      }
+    }
+
+    // Verb-derived forms: only derive from an explicit verb variant or if definition starts with "to"
+    const verbSources = verbVariants.slice();
+    if (!verbSources.length && /^to\s+/i.test(cw.definition || '')) {
+      // treat base as a verb source if definition indicates infinitive
+      verbSources.push(base.toLowerCase());
+    }
+
+    for (const vsrc of verbSources) {
+      const vs = String(vsrc);
+      // gerund
+      const ing = (vs.endsWith('e') && vs.length > 2) ? (vs.slice(0, -1) + 'ing') : (vs + 'ing');
+      if (!existing.has(ing.toLowerCase())) candidates.push({ type: 'gerund', variant: ing, sentence: example ? example.replace(/____/g, ing) : `${ing} was observed.` });
+      // simple past (naive)
+      const ed = vs.endsWith('e') ? (vs + 'd') : (vs + 'ed');
+      if (!existing.has(ed.toLowerCase())) candidates.push({ type: 'past', variant: ed, sentence: example ? example.replace(/____/g, ed) : `${ed} occurred.` });
+    }
+
+    // Add from candidates until we have 4 unique variants
+    for (const c of candidates) {
+      if (cw.forms.length >= 4) break;
+      const v = String(c.variant);
+      if (!v) continue;
+      const key = v.toLowerCase();
+      if (existing.has(key)) continue;
+      cw.forms.push({ type: c.type, variant: v, sentence: c.sentence });
+      existing.add(key);
+      augmented++;
+      augmentLog.push({ word: cw.word, added: v, type: c.type });
+    }
+
+    // truncate to 4
+    if (cw.forms.length > 4) cw.forms = cw.forms.slice(0, 4);
+  });
+
+  if (augmentLog.length) console.log('✨ augmentWordForms added variants:', augmentLog);
+  console.log(`✨ augmentWordForms: added/filled variants for ${augmented} entries (or variants).`);
+}
+
 function endChallenge() {
   if (!currentWord) {
     const container = document.getElementById('task-container');
@@ -663,12 +985,116 @@ function showMultipleChoiceWord(wordObj) {
   loadTask('definition-match');
 }
 
-function showFillInBlank(wordObj) {
-  loadTask('fill-blank');
+
+
+// New: Form-match question type
+function showFormMatchQuestion(wordObj) {
+  const cw = wordObj || wordData[wordIndex];
+  const container = document.getElementById('task-container');
+  if (!container || !cw || !Array.isArray(cw.forms) || cw.forms.length === 0) {
+    // fallback to a sentence choice if no forms available
+    loadTask('choose-sentence');
+    return;
+  }
+
+  // pick a random form from the word's forms
+  const form = cw.forms[Math.floor(Math.random() * cw.forms.length)];
+  // sentence shown should keep the blank (do not reveal variant)
+  let sentence = form.sentence || '';
+  // safety fallback for empty form sentences
+  if (!sentence || !String(sentence).trim()) sentence = 'This sentence contains ____.';
+
+  if (!/____/.test(sentence)) {
+    const esc = form.variant ? form.variant.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&') : '';
+    if (esc) sentence = sentence.replace(new RegExp('\\b' + esc + '\\b', 'i'), '____');
+    if (!/____/.test(sentence)) sentence = sentence.replace(/\b([A-Za-z]{4,})\b/, '____');
+  }
+
+  // Build variants list (unique)
+  let variants = cw.forms.map(f => f.variant).filter(Boolean);
+  variants = Array.from(new Set(variants)); // unique
+
+  // Ensure correct variant is present
+  const correctVariant = form.variant;
+  if (!variants.includes(correctVariant)) variants.unshift(correctVariant);
+
+  // Pad with variants from other words if needed
+  if (variants.length < 4) {
+    const otherVariants = [];
+    wordData.forEach(w => {
+      if (w.forms && w.word !== cw.word) {
+        w.forms.forEach(f => { if (f.variant) otherVariants.push(f.variant); });
+      }
+    });
+    shuffleArray(otherVariants);
+    for (const v of otherVariants) {
+      if (variants.length >= 4) break;
+      if (!variants.includes(v)) variants.push(v);
+    }
+  }
+
+  // If still fewer than 4, add generic distractors to reach 4
+  while (variants.length < 4) variants.push('None of the above');
+
+  // Limit to 4 choices and shuffle
+  variants = variants.slice(0, 4);
+  shuffleArray(variants);
+
+  // Render choices wrapped to avoid concatenated copy and include data-variant
+  container.innerHTML = `
+    <p>Which <strong>variant</strong> of "<strong>${cw.word}</strong>" fits the sentence?</p>
+    <p>${sentence}</p>
+    <div class="choices-row">
+      ${variants.map(opt => `<div class="choice-wrapper"><button class="choice-btn" data-variant="${opt.replace(/"/g, '&quot;')}" onclick="handleFormChoiceByVariant(this.dataset.variant, '${correctVariant.replace(/'/g, "\\'")}', this, '${cw.word.replace(/'/g, "\\'")}')">${opt}</button></div>`).join('\n')}
+    </div>
+  `;
 }
 
-function showTypingChallenge(wordObj) {
-  loadTask('fill-blank');
+function handleFormChoice(isCorrect, button, word, correctType, variant) {
+  // legacy handler (kept for compatibility) - converts to variant-based display
+  const correctVariant = variant;
+  handleFormChoiceByVariant(correctVariant, correctVariant, button, word);
+}
+
+function handleFormChoiceByVariant(selectedVariant, correctVariant, button, word) {
+  // Disable further interaction
+  document.querySelectorAll('.choice-btn').forEach(btn => btn.disabled = true);
+
+  const isCorrect = String(selectedVariant) === String(correctVariant);
+
+  // Mark selected button
+  if (button) {
+    button.classList.add(isCorrect ? 'correct-choice' : 'incorrect-choice');
+    button.innerHTML += isCorrect ? ' ✅' : ' ❌';
+  }
+
+  // If incorrect, highlight the correct option for closure
+  if (!isCorrect) {
+    // Find the button with matching data-variant (if available) or matching text
+    const allBtns = Array.from(document.querySelectorAll('.choice-btn'));
+    let correctBtn = allBtns.find(b => (b.dataset && b.dataset.variant && b.dataset.variant === correctVariant));
+    if (!correctBtn) {
+      correctBtn = allBtns.find(b => b.textContent && b.textContent.trim() === correctVariant);
+    }
+    if (correctBtn) {
+      correctBtn.classList.add('correct-choice');
+      if (!/✅/.test(correctBtn.innerHTML)) correctBtn.innerHTML += ' ✅';
+    }
+
+    // Also append a reveal-box to provide explicit feedback
+    const container = document.getElementById('task-container');
+    const revealBox = document.createElement('div');
+    revealBox.className = 'reveal-box';
+    revealBox.innerHTML = `<p><strong>Correct Variant:</strong> ${correctVariant}</p>`;
+    container.appendChild(revealBox);
+    // Scroll reveal into view for clarity
+    revealBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  showFeedback(isCorrect);
+  updateProgress(isCorrect, word);
+  const nextBtn = document.getElementById('next-task');
+  if (nextBtn) nextBtn.style.display = 'inline-block';
 }
 
 // --- Matching question type ---

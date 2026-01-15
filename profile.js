@@ -56,10 +56,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     totalWords = 14;
   }
 
-  // Calculate stats
+  // Determine per-word threshold and questions goal from settings
+  const settings = (user && user.settings) || ( (userData && userData[currentUser] && userData[currentUser].settings) || {} );
+  const wordThreshold = parseInt((settings.wordThreshold || settings.progressTarget || 3), 10);
+  const progressGoal = parseInt((settings.progressTargetWords || 10), 10);
+
+  // Calculate stats with progressive completion: each word contributes min(streak/wordThreshold,1)
   const learnedCount = (user.learnedWords || []).length;
   const inProgressCount = (user.inProgressWords || []).length;
-  const completionPercent = totalWords > 0 ? Math.round((learnedCount / totalWords) * 100) : 0;
+  let progressSum = 0;
+  const wordStreaks = user.wordStreaks || {};
+  allWords.forEach(w => { const s = wordStreaks[w.word] || 0; progressSum += Math.min(s / Math.max(1, wordThreshold), 1); });
+  const completionPercent = progressGoal > 0 ? Math.min(100, Math.round((progressSum / progressGoal) * 100)) : 0;
   const rank = calculateRank(completionPercent);
 
   // Update UI
@@ -136,7 +144,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         statusText = '✅ Learned';
       } else if (isInProgress || streak > 0) {
         statusClass = 'in-progress';
-        statusText = `🔄 ${streak}/3`;
+        statusText = `🔄 ${streak}/${threshold}`;
       }
 
       const wordCard = document.createElement('div');

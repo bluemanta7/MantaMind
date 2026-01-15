@@ -243,6 +243,15 @@ body {
   line-height: 1.4;
 }
 
+/* Theme-red strong overrides: ensure profile bubbles use warm reds */
+body.theme-red .profile-header, body.theme-red .profile-header .rank-badge { background: linear-gradient(135deg,#9b1f2a,#ff6b6b) !important; color:#ffd6d9 !important; box-shadow:0 8px 25px rgba(140,12,18,0.45) !important; border-color:#ff6b6b !important; }
+body.theme-red .rank-badge { background: linear-gradient(135deg,#ff6b6b,#ff3b5c) !important; color:#241212 !important; box-shadow:0 6px 18px rgba(140,12,18,0.6) !important; }
+
+/* Word progress items warm/bright */
+body.theme-red .word-progress-item.not-started { background: rgba(140,12,18,0.06) !important; border-color: rgba(255,80,80,0.06) !important; color: #ffd6d9 !important; }
+body.theme-red .word-progress-item.in-progress { background: linear-gradient(135deg,#ffc6c9,#ff9aa2) !important; border-color: rgba(255,100,120,0.12) !important; box-shadow:0 4px 12px rgba(140,12,18,0.28) !important; color:#241212 !important; }
+body.theme-red .word-progress-item.learned { background: linear-gradient(135deg,#ff9a8a,#ff4a4a) !important; border-color: rgba(255,60,60,0.28) !important; box-shadow:0 6px 18px rgba(140,12,18,0.45) !important; color:#241212 !important; }
+
 /* ============================================
    WORD PROGRESS SECTION
    ============================================ */

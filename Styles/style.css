@@ -171,6 +171,105 @@ body {
   padding-right: 4px;
 }
 
+/* Small helper label that explains the current target threshold */
+#completion-target {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.9);
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* Help icon and tooltip for completion bar */
+.help-btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;
+  height:28px;
+  border-radius:6px;
+  border:1px solid rgba(255,255,255,0.06);
+  background: rgba(0,0,0,0.06);
+  color: #ffffff;
+  font-size: 0.9rem;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.help-tooltip {
+  position: absolute;
+  z-index: 2000;
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  max-width: 320px;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.6);
+  display: none;
+}
+
+.help-tooltip.show {
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .help-tooltip { display:none !important; }
+}
+
+/* Small utility button used for diagnostics */
+.small-btn {
+  display:inline-block;
+  margin-left:8px;
+  padding:6px 8px;
+  font-size:0.8rem;
+  border-radius:6px;
+  background: rgba(255,255,255,0.04);
+  color: #c3f0ff;
+  border:1px solid rgba(255,255,255,0.06);
+  cursor: pointer;
+}
+
+.small-btn:hover { background: rgba(255,255,255,0.06); }
+
+/* Victory overlay (appears when progress reaches 100%) */
+#victory-overlay {
+  position: fixed;
+  left: 50%;
+  top: 18%;
+  transform: translateX(-50%) scale(0.98);
+  background: rgba(255,255,255,0.06);
+  color: #ffffff;
+  padding: 18px 26px;
+  border-radius: 12px;
+  z-index: 9999;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  opacity: 0;
+  pointer-events: none;
+  font-weight: bold;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+#victory-overlay.show {
+  animation: victoryPop 0.6s ease forwards;
+}
+@keyframes victoryPop {
+  from { opacity: 0; transform: translateX(-50%) scale(0.98); }
+  to { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+/* Confetti pieces */
+.confetti-piece {
+  position: absolute;
+  width: 8px; height: 12px; border-radius: 2px;
+  opacity: 0.95;
+  will-change: transform, opacity;
+  animation: confettiFall 1200ms linear forwards;
+}
+@keyframes confettiFall {
+  to { transform: translateY(180vh) rotate(720deg); opacity: 0; }
+}
+
 .choice-btn.correct-choice {
   background-color: #00ff88;
   color: #001a33;
@@ -182,4 +281,32 @@ body {
   color: white;
   border-color: #ff0000;
 }
+
+/* Red theme overrides */
+body.theme-red #hint-btn { background-color: #b51e2a; border-color: #ff6b6b; }
+body.theme-red #hint-btn:hover { background-color: #d6455c; box-shadow: 0 0 10px rgba(255,100,140,0.5); }
+body.theme-red #next-task, body.theme-red #give-up-btn { background: linear-gradient(135deg, #d6455c 0%, #ff6b6b 100%); color: #241212; border-color: #ff9aa2; }
+
+/* NAV and DASHBOARD overrides for full red theme */
+body.theme-red #top-nav {
+  background: linear-gradient(135deg, #3b0f1d 0%, #6b1424 100%);
+  border-bottom-color: #ff6b6b;
+  box-shadow: 0 4px 15px rgba(180,30,40,0.3);
+}
+body.theme-red #nav-title { color: #ffd6d9; text-shadow: 0 0 10px rgba(255,130,150,0.4); }
+body.theme-red #burger-btn { border-color: #ff8aa1; color: #ff8aa1; }
+body.theme-red #sidebar-menu { background: linear-gradient(135deg, #3b0f1d 0%, #6b1424 100%); border-left-color: #ff6b6b; box-shadow: -2px 0 15px rgba(180,30,40,0.3); }
+
+body.theme-red .game-container, body.theme-red #challenge-box, body.theme-red #streak-box, body.theme-red #progress-dashboard {
+  background: linear-gradient(135deg, #4b0f19 0%, #6b1424 100%);
+  border-color: #ff9aa2;
+  box-shadow: 0 4px 15px rgba(180,30,40,0.3);
+}
+body.theme-red #challenge-title, body.theme-red #streak-box h2, body.theme-red #progress-dashboard h2 { color: #ffd6d9; }
+body.theme-red .choice-btn { background-color: #a61d2b; border-color: #ff9aa2; }
+body.theme-red .choice-btn:hover { background-color: #d6455c; }
+body.theme-red .stat-value { color: #ffd6d9; }
+body.theme-red #completion-bar { background: linear-gradient(90deg, #ff7b88, #ff3b5c); }
+
+
 

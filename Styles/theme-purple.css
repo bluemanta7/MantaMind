@@ -1,0 +1,150 @@
+/* Theme: Purple (theme-purple)
+   Soft purple theme with warm accents and high-contrast text.
+*/
+
+body.theme-purple {
+  --tm-bg-start: #2b0b3b;
+  --tm-bg-mid: #5a0f6b;
+  --tm-bg-end: #321033;
+  --tm-accent: #a64cd9;
+  --tm-accent-2: #7b2ad6;
+  --tm-accent-strong: #51146a;
+  --tm-text: #f6e8ff;
+  --tm-text-dark: #24102e;
+  --tm-shadow: rgba(80,20,120,0.35);
+  --tm-shadow-strong: rgba(60,10,90,0.55);
+  --tm-bubble-shadow: rgba(20,0,30,0.45);
+  background: linear-gradient(135deg, var(--tm-bg-start) 0%, var(--tm-bg-mid) 50%, var(--tm-bg-end) 100%) !important;
+  color: var(--tm-text) !important;
+}
+
+/* Nav/title */
+body.theme-purple #top-nav { background: linear-gradient(135deg, var(--tm-bg-start), var(--tm-bg-mid)) !important; border-bottom-color: var(--tm-accent) !important; }
+body.theme-purple #nav-title { color: var(--tm-text) !important; }
+
+/* Profile header & rank badges */
+body.theme-purple .profile-header, body.theme-purple .profile-header .rank-badge {
+  background: linear-gradient(135deg, var(--tm-accent-strong) 0%, var(--tm-accent-2) 100%) !important;
+  color: var(--tm-text) !important;
+  box-shadow: 0 8px 25px var(--tm-shadow) !important;
+  border-color: var(--tm-accent) !important;
+}
+
+body.theme-purple .rank-badge {
+  background: linear-gradient(135deg, var(--tm-accent), var(--tm-accent-2)) !important;
+  color: var(--tm-text-dark) !important;
+  box-shadow: 0 4px 18px var(--tm-shadow-strong) !important;
+  border: 1px solid rgba(166,76,217,0.6) !important;
+}
+
+/* Badges and streaks */
+body.theme-purple .status-badge.learned, body.theme-purple .word-item.learned .status-badge {
+  background: linear-gradient(90deg,#dab3ff,#a64cd9) !important;
+  color: var(--tm-text-dark) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.45) !important;
+}
+body.theme-purple .status-badge.in-progress, body.theme-purple .word-item.in-progress .status-badge {
+  background: linear-gradient(90deg,#e6c6ff,#c385ff) !important;
+  color: var(--tm-text-dark) !important;
+}
+body.theme-purple .word-streak { background: linear-gradient(135deg,#e6c6ff,#c385ff) !important; color: var(--tm-text-dark) !important; box-shadow: 0 4px 10px rgba(0,0,0,0.45) !important; }
+
+/* Containers */
+body.theme-purple .stat-card, body.theme-purple .progress-section, body.theme-purple .achievements-section, body.theme-purple #word-progress-section {
+  background: linear-gradient(135deg,#3b0f3f,#5a0f6b) !important;
+  border-color: rgba(166,76,217,0.12) !important;
+  box-shadow: 0 6px 22px rgba(60,10,90,0.35) !important;
+  color: var(--tm-text) !important;
+}
+
+body.theme-purple .progress-bar-fill { background: linear-gradient(90deg,#dab3ff,#a64cd9) !important; }
+
+/* Choice buttons */
+body.theme-purple .choice-btn { background-color: var(--tm-accent-strong) !important; color: var(--tm-text) !important; }
+
+/* Matching & choice button overrides for challenge */
+body.theme-purple .choice-btn { background-color: var(--tm-accent) !important; border-color: rgba(166,76,217,0.18) !important; color: var(--tm-text) !important; }
+body.theme-purple .choice-btn:hover { background-color: var(--tm-accent-2) !important; box-shadow: 0 0 12px rgba(166,76,217,0.3) !important; }
+body.theme-purple .choice-btn.correct-choice { background-color: #fff3ff !important; color: var(--tm-text-dark) !important; }
+body.theme-purple .choice-btn.incorrect-choice { background-color: #521042 !important; color: var(--tm-text) !important; }
+
+body.theme-purple .matching-container, body.theme-purple .matching-col, body.theme-purple .match-item { background: rgba(90,15,107,0.08) !important; color: var(--tm-text) !important; border-color: rgba(166,76,217,0.08) !important; }
+body.theme-purple .match-item { background: linear-gradient(90deg, rgba(218,179,255,0.06), rgba(166,76,217,0.03)) !important; }
+body.theme-purple .match-item.selected-left { outline-color: rgba(166,76,217,0.45) !important; }
+body.theme-purple .match-item.paired { background: linear-gradient(90deg,#e6c6ff,#c385ff) !important; color: var(--tm-text-dark) !important; }
+
+/* Sidebar */
+body.theme-purple #sidebar-menu { background: linear-gradient(135deg,#321033 0%, #5a0f6b 100%) !important; border-left-color: var(--tm-accent) !important; box-shadow: -2px 0 15px rgba(80,20,120,0.25) !important; }
+body.theme-purple #sidebar-menu a { color: var(--tm-text) !important; }
+
+/* Wordlist progress items */
+body.theme-purple .word-item.not-started { background: rgba(90,15,107,0.04) !important; }
+body.theme-purple .word-item.in-progress { background: linear-gradient(135deg,#efd6ff,#e6c6ff) !important; color: var(--tm-text-dark) !important; }
+body.theme-purple .word-item.learned { background: linear-gradient(135deg,#e6c6ff,#dab3ff) !important; color: var(--tm-text-dark) !important; }
+
+/* Challenge-specific overrides to ensure bubbles change */
+body.theme-purple #challenge-box .choice-btn, body.theme-purple #challenge-box .choice-btn:hover {
+  background: linear-gradient(90deg,#a64cd9,#7b2ad6) !important;
+  border-color: rgba(166,76,217,0.18) !important;
+  color: var(--tm-text) !important;
+  box-shadow: 0 6px 18px rgba(80,20,120,0.28) !important;
+}
+body.theme-purple #challenge-box .choice-btn.correct-choice { background-color: #fff3ff !important; color: var(--tm-text-dark) !important; }
+body.theme-purple #challenge-box .choice-btn.incorrect-choice { background-color: #421040 !important; color: var(--tm-text) !important; }
+
+/* Sidebar strong override */
+body.theme-purple #sidebar-menu, body.theme-purple #sidebar-menu:not(.hidden) { background: linear-gradient(135deg,#28102a,#5a0f6b) !important; border-left-color: #a64cd9 !important; box-shadow: -2px 0 18px rgba(80,20,120,0.45) !important; }
+body.theme-purple #sidebar-menu a { color: var(--tm-text) !important; }
+
+/* Wordlist border / bubble overrides */
+body.theme-purple .word-item, body.theme-purple .word-progress-item { border-left-color: #a64cd9 !important; border-color: rgba(166,76,217,0.12) !important; }
+body.theme-purple .word-item.in-progress { background: linear-gradient(135deg,#f0d9ff,#e6c6ff) !important; }
+body.theme-purple .word-item.learned { background: linear-gradient(135deg,#e6c6ff,#dab3ff) !important; }
+
+/* Matching and paired states */
+body.theme-purple .match-item.paired { background: linear-gradient(90deg,#e6c6ff,#dab3ff) !important; color: var(--tm-text-dark) !important; }
+
+/* Challenge/streak box overrides (purple) */
+body.theme-purple #streak-box {
+  background: linear-gradient(135deg,#3b0f3f,#5a0f6b) !important;
+  border: 2px solid rgba(166,76,217,0.35) !important;
+  box-shadow: 0 6px 18px rgba(60,10,90,0.35) !important;
+  color: var(--tm-text) !important;
+}
+body.theme-purple #streak-box h2 { color: var(--tm-text) !important; }
+body.theme-purple #streak-box p, body.theme-purple #streak-box .stat-value { color: #e9d6ff !important; }
+
+body.theme-purple #challenge-box {
+  background: linear-gradient(135deg,#28102a,#5a0f6b) !important;
+  border: 2px solid rgba(166,76,217,0.28) !important;
+  box-shadow: 0 6px 22px rgba(60,10,90,0.3) !important;
+  color: var(--tm-text) !important;
+}
+body.theme-purple #challenge-box #word-display, body.theme-purple #challenge-box #task-container, body.theme-purple #challenge-box #feedback { color: var(--tm-text) !important; }
+
+/* Buttons and settings controls (purple) */
+body.theme-purple button, body.theme-purple #challenge-box button { background: linear-gradient(135deg,#a64cd9,#7b2ad6) !important; color: var(--tm-text) !important; border: 2px solid rgba(166,76,217,0.25) !important; box-shadow: 0 4px 12px rgba(80,20,120,0.25) !important; }
+body.theme-purple button:hover, body.theme-purple #challenge-box button:hover { box-shadow: 0 6px 18px rgba(80,20,120,0.35) !important; transform: translateY(-2px) !important; }
+body.theme-purple button.primary { background: linear-gradient(135deg,#ff9ee6,#c86bff) !important; color: var(--tm-text-dark) !important; border-color: rgba(166,76,217,0.35) !important; }
+
+/* Completion bar */
+body.theme-purple #completion-bar { background: linear-gradient(90deg,#dab3ff,#a64cd9) !important; box-shadow: 0 0 10px rgba(166,76,217,0.12) !important; }
+body.theme-purple .progress-bar-fill { background: linear-gradient(90deg,#dab3ff,#a64cd9) !important; }
+
+/* Ensure specific buttons and headers flip color */
+body.theme-purple #hint-btn, body.theme-purple #next-task, body.theme-purple #give-up-btn, body.theme-purple .primary, body.theme-purple button.primary {
+  background: linear-gradient(135deg,#a64cd9,#7b2ad6) !important;
+  color: var(--tm-text) !important;
+  border: 2px solid rgba(166,76,217,0.25) !important;
+}
+body.theme-purple #challenge-title { color: var(--tm-text) !important; text-shadow: 0 0 8px rgba(166,76,217,0.12) !important; }
+body.theme-purple #completion-bar-container { border-color: rgba(166,76,217,0.2) !important; background: rgba(50,10,60,0.4) !important; }
+
+/* Wordlist explicit border override */
+body.theme-purple #word-list li, body.theme-purple .word-item { border: 2px solid rgba(166,76,217,0.12) !important; }
+
+/* Final fallback */
+body.theme-purple * { color: inherit !important; }
+
+/* Make completion target label readable under purple theme */
+body.theme-purple #completion-target { color: var(--tm-text) !important; opacity: 0.95 !important; }
