@@ -3,6 +3,19 @@
 // ============================================
 // Burger menu & logout are now handled by nav.js
 
+// TTS helper utilities
+function playTTS(text) {
+  if (!text) return;
+  const utter = new SpeechSynthesisUtterance(text);
+  window.speechSynthesis.speak(utter);
+}
+
+function getTTSButton(text) {
+  if (!text) return '';
+  const esc = String(text).replace(/'/g, "\\'").replace(/\"/g, '&quot;');
+  return `<button class="tts-btn" onclick="playTTS('${esc}')">🔊</button>`;
+}
+
 // 🚪 Logout Button - Also in nav.js but re-added for safety
 document.addEventListener('DOMContentLoaded', () => {
   const logoutBtn = document.getElementById('logout-btn');
@@ -62,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         li.className = `word-item ${statusClass}`;
         li.innerHTML = `
           <div class="word-header">
-            <strong class="word-title">${entry.word}</strong>
+            <strong class="word-title">${entry.word}</strong> ${getTTSButton(entry.word)}
             ${statusBadge}
             ${streakDisplay}
           </div>

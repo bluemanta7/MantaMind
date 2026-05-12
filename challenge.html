@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MantaMind: Daily Word Challenge</title>
   <link rel="stylesheet" href="Styles/style.css" />
   <link rel="stylesheet" href="Styles/nav.css" />
@@ -45,6 +46,12 @@
     <button id="progress-details" class="small-btn" title="Show progress details">Details</button>
   </div>
   <div id="completion-help-tooltip" class="help-tooltip" role="status" aria-hidden="true">This bar shows combined partial progress toward your Questions goal. Each word contributes up to 1 point based on streak / per-word target. The Questions goal is how many completed words you need to reach 100%.</div>
+  <!-- Daily goal tracker added -->
+  <div id="daily-goal-box" style="margin-top:12px;">
+    <h3>🎯 Daily Goal</h3>
+    <p><span id="daily-progress">0</span> / <span id="daily-target">0</span></p>
+    <div id="daily-bar-container"><div id="daily-bar"></div></div>
+  </div>
 </aside>
 
 
@@ -57,7 +64,14 @@
         <button id="next-task">Start Challenge</button>
         <button id="give-up-btn" style="display:none;">Give Up</button>
         <button id="hint-btn" style="display:none;">💡 Hint</button>
-
+        <!-- Death Trap button and display -->
+        <button id="death-trap-btn">⏱️ Death Trap Mode</button>
+        <div id="death-trap-ui" style="display:none; margin-top:10px;">
+          <p>Time left: <span id="death-timer">0</span>s</p>
+          <p>Streak: <span id="death-streak">0</span></p>
+          <p>Questions: <span id="death-questions">0</span></p>
+          <button id="death-end-btn">End Run</button>
+        </div>
       </section>
     </div>
   </main>

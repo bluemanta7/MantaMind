@@ -7,6 +7,20 @@ let userData = {};
 let wordData = [];
 let currentWord = null;
 
+// pool can be limited (e.g. missed words review)
+let challengePool = null;
+
+// daily goal / stats support
+// nothing else yet, kept inside userData per-user
+
+// death trap mode state
+let deathTrapActive = false;
+let deathTimerId = null;
+let deathRunStreak = 0;
+let deathRunQuestions = 0;
+let deathGoalStreak = 0;
+let deathGoalQuestions = 0;
+
 const challengeSteps = ['definition-match', 'choose-sentence', 'form-match'];
 
 // ============================================
@@ -40,6 +54,12 @@ document.addEventListener('DOMContentLoaded', () => {
   setupAuthToggle();
   if (window.location.pathname.includes('challenge.html')) {
     redirectIfNotLoggedIn();
+    initDailyGoal();
+    // if reviewing missed words, change header text
+    if (isMissedMode()) {
+      const titleEl = document.getElementById('challenge-title');
+      if (titleEl) titleEl.textContent = '🕮 Review Missed Words';
+    }
   }
 
   const giveUpButton = document.getElementById('give-up-btn');
@@ -62,6 +82,25 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         feedbackEl.textContent = '💡 No synonyms available for this word.';
       }
+      // treat hint as a miss if not yet learned
+      if (currentWord && currentWord.word) addMissedWord(currentWord.word);
+    });
+  }
+
+  // death trap button setup
+  const deathBtn = document.getElementById('death-trap-btn');
+  if (deathBtn) {
+    deathBtn.addEventListener('click', () => {
+      const ui = document.getElementById('death-trap-ui');
+      if (ui) ui.style.display = 'block';
+      startDeathTrapSetup();
+    });
+  }
+  const deathEnd = document.getElementById('death-end-btn');
+  if (deathEnd) {
+    deathEnd.addEventListener('click', () => {
+      if (deathTimerId) clearInterval(deathTimerId);
+      endDeathTrap();
     });
   }
 
@@ -98,6 +137,9 @@ function loadWordData() {
         shuffleArray(wordData);
         console.log('✅ Loaded', wordData.length, 'words from', path);
 
+        // prepare pool in case we are in missed-word mode
+        try { preparePool(); } catch (e) { console.warn('preparePool failed', e); }
+
         // Ensure each word has up to 4 conservative form variants for form-match questions
         try { augmentWordForms(); } catch (e) { console.warn('augmentWordForms failed', e); }
 
@@ -129,6 +171,21 @@ function loadUserData() {
     currentUser = savedUser;
     userData = JSON.parse(savedUserData);
     
+    // ensure some new data structures exist for extended features
+    if (userData[currentUser]) {
+      const u = userData[currentUser];
+      u.missedWords = u.missedWords || [];
+      u.badges = u.badges || {};
+      u.stats = u.stats || { totalCorrect:0, totalIncorrect:0, perfectDays:0, deathTrapBest:0 };
+      if (u.dailyGoal) {
+        u.dailyGoal.progress = u.dailyGoal.progress || 0;
+        u.dailyGoal.lastReset = u.dailyGoal.lastReset || new Date().toISOString().slice(0,10);
+        u.dailyGoal.perfectDates = u.dailyGoal.perfectDates || [];
+      }
+      // save back in case we added defaults
+      localStorage.setItem('userData', JSON.stringify(userData));
+    }
+    
     // Initialize wordStreaks if it doesn't exist
     if (userData[currentUser] && !userData[currentUser].wordStreaks) {
       userData[currentUser].wordStreaks = {};
@@ -136,6 +193,8 @@ function loadUserData() {
     }
     
     loadUserStreaks();
+    // daily goal rollover check
+    resetDailyProgressIfNewDay();
   }
 }
 
@@ -203,6 +262,7 @@ function syncChallengeStatus() {
   challengeStarted = localStorage.getItem('challengeStarted') === 'true';
   stepIndex = parseInt(localStorage.getItem('stepIndex') || '0', 10);
   wordIndex = parseInt(localStorage.getItem('wordIndex') || '0', 10);
+  try { preparePool(); } catch (e) { }
   updateButtonsUI();
 }
 
@@ -232,8 +292,15 @@ function startChallenge() {
 
   challengeStarted = true;
   localStorage.setItem('challengeStarted', 'true');
-
-  currentWord = wordData[Math.floor(Math.random() * wordData.length)];
+  // refresh pool each time in case missedWords list changed
+  try { preparePool(); } catch (e) { }
+  const pool = (challengePool && challengePool.length) ? challengePool : wordData;
+  if (!pool || pool.length === 0) {
+    const taskContainer = document.getElementById('task-container');
+    if (taskContainer) taskContainer.innerHTML = '<p>⚠️ No words available for this challenge mode.</p>';
+    return;
+  }
+  currentWord = pool[Math.floor(Math.random() * pool.length)];
 
   // Determine enabled formats based on per-user settings
   const enabledFormats = [];
@@ -306,7 +373,19 @@ function advanceToNextTask() {
 
   if (stepIndex >= challengeSteps.length) {
     stepIndex = 0;
-    wordIndex = (wordIndex + 1) % wordData.length;
+    // refresh pool (in case missedWords list changed)
+    try { preparePool(); } catch (e) {}
+    // choose next word from pool; if not in pool use default sequential behavior
+    const pool = (challengePool && challengePool.length) ? challengePool : wordData;
+    if (pool && pool.length) {
+      // pick a new random word within pool to avoid patterns
+      currentWord = pool[Math.floor(Math.random() * pool.length)];
+      // attempt to reflect in wordIndex for storage (index within wordData)
+      const idx = wordData.findIndex(w => w.word === currentWord.word);
+      wordIndex = idx >= 0 ? idx : 0;
+    } else {
+      wordIndex = (wordIndex + 1) % wordData.length;
+    }
   }
 
   localStorage.setItem('stepIndex', stepIndex);
@@ -330,10 +409,18 @@ function loadTask(type) {
     return;
   }
 
-  const cw = wordData[wordIndex];
+  // determine pool (may be restricted for missed mode)
+  const pool = (challengePool && challengePool.length) ? challengePool : wordData;
+  let cw;
+  if (currentWord && pool.find(w => w.word === currentWord.word)) {
+    cw = currentWord;
+  } else {
+    // use wordIndex as index into pool if valid, else first element
+    cw = pool[wordIndex % pool.length] || pool[0];
+  }
 
   if (!cw) {
-    console.error(`Invalid wordIndex: ${wordIndex}`);
+    console.error(`Could not determine current word from pool`);
     container.innerHTML = '<p>⚠️ Error: Could not find the current word.</p>';
     return;
   }
@@ -356,7 +443,7 @@ function loadTask(type) {
     shuffleArray(options);
 
     container.innerHTML = `
-      <p>What does "<strong>${cw.word}</strong>" mean?</p>
+      <p>What does "<strong>${cw.word}</strong>" mean? ${getTTSButton(cw.word)}</p>
       ${options.map((opt) => `<button class="choice-btn" data-correct="${opt.correct}" onclick="handleMultipleChoice(${opt.correct}, this, '${cw.word}', '${cw.definition.replace(/'/g, "\\'")}')">${opt.text}</button>`).join('')}
     `;
 
@@ -433,7 +520,7 @@ function loadTask(type) {
     });
 
     container.innerHTML = `
-      <p>Which sentence uses "<strong>${cw.word}</strong>" correctly?</p>
+      <p>Which sentence uses "<strong>${cw.word}</strong>" correctly? ${getTTSButton(cw.word)}</p>
       ${options.map(opt => `<button class="choice-btn" data-correct="${opt.correct}" onclick="handleMultipleChoice(${opt.correct}, this, '${cw.word}', '${cw.definition}')">${opt.text}</button>`).join('')}
     `;
   } else if (type === 'form-match') {
@@ -523,53 +610,70 @@ function showFeedback(isCorrect) {
 function updateProgress(isCorrect, word) {
   if (!currentUser || !userData[currentUser]) return;
 
+  // if we are running a death trap, divert all handling there and do not affect main stats
+  if (deathTrapActive) {
+    handleDeathTrapAnswer(isCorrect, word);
+    return;
+  }
+
   const user = userData[currentUser];
 
-  // Initialize structures
+  // initialize extended structures
   user.learnedWords = user.learnedWords || [];
   user.inProgressWords = user.inProgressWords || [];
   user.wordStreaks = user.wordStreaks || {};
   user.currentStreak = user.currentStreak || 0;
   user.bestStreak = user.bestStreak || 0;
+  user.stats = user.stats || { totalCorrect:0, totalIncorrect:0, perfectDays:0, deathTrapBest:0 };
 
   if (!user.wordStreaks[word]) {
     user.wordStreaks[word] = 0;
   }
 
+  // update accuracy stats
+  if (isCorrect) user.stats.totalCorrect++;
+  else user.stats.totalIncorrect++;
+
+  if (!isCorrect) {
+    addMissedWord(word);
+  }
+
   if (isCorrect) {
-    // Increment word-specific streak
+    // increment streaks
     user.wordStreaks[word]++;
-
-    // Increment global streak
     user.currentStreak++;
-    if (user.currentStreak > user.bestStreak) {
-      user.bestStreak = user.currentStreak;
-    }
+    if (user.currentStreak > user.bestStreak) user.bestStreak = user.currentStreak;
+    // award streak badges on hitting exact thresholds
+    if (user.currentStreak === 5) awardBadge('streak-5');
+    if (user.currentStreak === 10) awardBadge('streak-10');
 
-    // Mark as learned if word streak reaches configured per-word threshold
+    // check learning threshold
     const settings = getUserSettings();
     const threshold = parseInt(settings.wordThreshold || 3, 10);
     if (user.wordStreaks[word] >= threshold && !user.learnedWords.includes(word)) {
       user.learnedWords.push(word);
       user.inProgressWords = user.inProgressWords.filter(w => w !== word);
       console.log(`🎉 "${word}" marked as learned! (Streak: ${user.wordStreaks[word]}) (threshold ${threshold})`);
+      removeMissedWord(word);
+      // check milestone badges
+      const learnedCount = user.learnedWords.length;
+      if (learnedCount >= 1) awardBadge('first-word');
+      if (learnedCount >= 5) awardBadge('five-words');
+      if (learnedCount >= 10) awardBadge('ten-words');
     } else if (!user.inProgressWords.includes(word) && !user.learnedWords.includes(word)) {
       user.inProgressWords.push(word);
     }
 
+    // daily goal progress
+    recordDailyCorrect();
   } else {
-    // Reset word-specific streak on incorrect answer
+    // incorrect case
     user.wordStreaks[word] = 0;
-
-    // Reset global streak
     user.currentStreak = 0;
 
-    // If word was learned, move it back to in-progress
     if (user.learnedWords.includes(word)) {
       user.learnedWords = user.learnedWords.filter(w => w !== word);
-      if (!user.inProgressWords.includes(word)) {
-        user.inProgressWords.push(word);
-      }
+      if (!user.inProgressWords.includes(word)) user.inProgressWords.push(word);
       console.log(`⚠️ "${word}" moved back to in-progress (streak reset)`);
     } else if (!user.inProgressWords.includes(word)) {
       user.inProgressWords.push(word);
@@ -726,6 +830,8 @@ function updateProgressBar() {
   if (percentage === 100 && prevPercentage < 100) {
     showVictory();
   }
+  // refresh daily goal UI if present
+  try { renderDailyGoalUI(); } catch (e) { /* ignore if no bar */ }
 }
 
 // Show a temporary victory overlay with confetti
@@ -942,6 +1048,209 @@ function augmentWordForms() {
   console.log(`✨ augmentWordForms: added/filled variants for ${augmented} entries (or variants).`);
 }
 
+// ======== additional feature helpers ========
+
+function isMissedMode() {
+  try { return new URLSearchParams(window.location.search).get('mode') === 'missed'; } catch (e) { return false; }
+}
+
+function preparePool() {
+  if (isMissedMode() && currentUser && userData[currentUser]) {
+    const missed = userData[currentUser].missedWords || [];
+    challengePool = wordData.filter(w => missed.includes(w.word));
+    if (!challengePool.length) {
+      const container = document.getElementById('task-container');
+      if (container) container.innerHTML = '<p>No missed words to review.</p>';
+    }
+  } else {
+    challengePool = wordData;
+  }
+}
+
+function addMissedWord(word) {
+  if (!currentUser || !userData[currentUser] || !word) return;
+  const user = userData[currentUser];
+  user.missedWords = user.missedWords || [];
+  if (!user.missedWords.includes(word)) {
+    user.missedWords.push(word);
+    localStorage.setItem('userData', JSON.stringify(userData));
+  }
+}
+
+function removeMissedWord(word) {
+  if (!currentUser || !userData[currentUser] || !word) return;
+  const user = userData[currentUser];
+  if (Array.isArray(user.missedWords)) {
+    user.missedWords = user.missedWords.filter(w => w !== word);
+    localStorage.setItem('userData', JSON.stringify(userData));
+  }
+}
+
+function awardBadge(id) {
+  if (!currentUser || !userData[currentUser] || !id) return;
+  const user = userData[currentUser];
+  user.badges = user.badges || {};
+  if (!user.badges[id]) {
+    user.badges[id] = true;
+    showBadgeNotification(id);
+    localStorage.setItem('userData', JSON.stringify(userData));
+  }
+}
+
+function showBadgeNotification(id) {
+  const achievementsMap = {
+    'deathtrap-win': 'Death Trap Champion',
+    'perfect-5-days': 'Consistency King',
+  };
+  const name = achievementsMap[id] || id;
+  alert(`🏅 Badge unlocked: ${name}`);
+}
+
+function resetDailyProgressIfNewDay() {
+  if (!currentUser || !userData[currentUser] || !userData[currentUser].dailyGoal) return;
+  const user = userData[currentUser];
+  const today = new Date().toISOString().slice(0,10);
+  const goal = user.dailyGoal;
+  if (goal.lastReset !== today) {
+    if (goal.progress >= goal.target) {
+      user.stats = user.stats || {};
+      user.stats.perfectDays = (user.stats.perfectDays || 0) + 1;
+      if (user.stats.perfectDays >= 5) {
+        awardBadge('perfect-5-days');
+      }
+    }
+    goal.progress = 0;
+    goal.lastReset = today;
+    localStorage.setItem('userData', JSON.stringify(userData));
+  }
+}
+
+function recordDailyCorrect() {
+  if (!currentUser || !userData[currentUser] || !userData[currentUser].dailyGoal) return;
+  const goal = userData[currentUser].dailyGoal;
+  goal.progress = (goal.progress || 0) + 1;
+  if (goal.progress === goal.target) {
+    showVictory();
+  }
+  localStorage.setItem('userData', JSON.stringify(userData));
+  renderDailyGoalUI();
+}
+
+function initDailyGoal() {
+  if (!currentUser || !userData[currentUser]) return;
+  const user = userData[currentUser];
+  if (!user.dailyGoal || !user.dailyGoal.target) {
+    const goal = parseInt(prompt('Set your daily goal (# of correct answers per day):', '20'), 10);
+    if (goal && goal > 0) {
+      user.dailyGoal = { target: goal, timeTarget: null, progress: 0, lastReset: new Date().toISOString().slice(0,10), perfectDates: [] };
+      localStorage.setItem('userData', JSON.stringify(userData));
+    }
+  }
+  resetDailyProgressIfNewDay();
+  renderDailyGoalUI();
+}
+
+function renderDailyGoalUI() {
+  const goalEl = document.getElementById('daily-bar');
+  const progEl = document.getElementById('daily-progress');
+  const targEl = document.getElementById('daily-target');
+  if (!goalEl || !progEl || !targEl) return;
+  const user = userData[currentUser] || {};
+  const goal = (user.dailyGoal || {});
+  const progress = goal.progress || 0;
+  const target = goal.target || 0;
+  progEl.textContent = progress;
+  targEl.textContent = target;
+  let pct = target > 0 ? Math.min(100, Math.round((progress/target)*100)) : 0;
+  goalEl.style.width = pct + '%';
+  goalEl.textContent = pct + '%';
+}
+
+function startDeathTrapSetup() {
+  if (deathTrapActive) return;
+  let duration = parseInt(prompt('Enter duration in seconds (30,60,90):', '60'), 10);
+  if (![30,60,90].includes(duration)) duration = 60;
+  let stash = prompt('Enter streak goal for reward (e.g. 10) or leave blank:', '10');
+  deathGoalStreak = parseInt(stash, 10) || 10;
+  stash = prompt('Enter question goal for reward (e.g. 20) or leave blank:', '20');
+  deathGoalQuestions = parseInt(stash, 10) || 20;
+  startDeathTrap(duration);
+}
+
+function startDeathTrap(duration) {
+  deathTrapActive = true;
+  deathRunStreak = 0;
+  deathRunQuestions = 0;
+  updateDeathUI();
+  const timerEl = document.getElementById('death-timer');
+  let remaining = duration;
+  if (timerEl) timerEl.textContent = remaining;
+  deathTimerId = setInterval(() => {
+    remaining--;
+    if (timerEl) timerEl.textContent = remaining;
+    if (remaining <= 0) {
+      clearInterval(deathTimerId);
+      endDeathTrap();
+    }
+  }, 1000);
+}
+
+function handleDeathTrapAnswer(isCorrect, word) {
+  deathRunQuestions++;
+  // update global stats as well
+  if (currentUser && userData[currentUser]) {
+    const user = userData[currentUser];
+    user.stats = user.stats || { totalCorrect:0, totalIncorrect:0, perfectDays:0, deathTrapBest:0 };
+    if (isCorrect) user.stats.totalCorrect++;
+    else user.stats.totalIncorrect++;
+    localStorage.setItem('userData', JSON.stringify(userData));
+  }
+
+  if (isCorrect) {
+    deathRunStreak++;
+    if (deathRunStreak >= deathGoalStreak || deathRunQuestions >= deathGoalQuestions) {
+      awardBadge('deathtrap-win');
+      showVictory();
+    }
+  } else {
+    deathRunStreak = 0;
+    addMissedWord(word);
+  }
+  updateDeathUI();
+}
+
+function updateDeathUI() {
+  const streakEl = document.getElementById('death-streak');
+  const questEl = document.getElementById('death-questions');
+  if (streakEl) streakEl.textContent = deathRunStreak;
+  if (questEl) questEl.textContent = deathRunQuestions;
+}
+
+function endDeathTrap() {
+  deathTrapActive = false;
+  alert(`⏱️ Time's up! You answered ${deathRunQuestions} questions; longest run ${deathRunStreak}.`);
+  if (currentUser && userData[currentUser]) {
+    const user = userData[currentUser];
+    user.stats = user.stats || {};
+    user.stats.deathTrapBest = Math.max(user.stats.deathTrapBest || 0, deathRunQuestions);
+    localStorage.setItem('userData', JSON.stringify(userData));
+  }
+  const ui = document.getElementById('death-trap-ui');
+  if (ui) ui.style.display = 'none';
+}
+
+function playTTS(text) {
+  if (!text) return;
+  const utter = new SpeechSynthesisUtterance(text);
+  window.speechSynthesis.speak(utter);
+}
+
+function getTTSButton(text) {
+  if (!text) return '';
+  const esc = String(text).replace(/'/g, "\\'").replace(/"/g,'&quot;');
+  return `<button class="tts-btn" onclick="playTTS('${esc}')">🔊</button>`;
+}
+
 function endChallenge() {
   if (!currentWord) {
     const container = document.getElementById('task-container');
@@ -1042,7 +1351,7 @@ function showFormMatchQuestion(wordObj) {
 
   // Render choices wrapped to avoid concatenated copy and include data-variant
   container.innerHTML = `
-    <p>Which <strong>variant</strong> of "<strong>${cw.word}</strong>" fits the sentence?</p>
+    <p>Which <strong>variant</strong> of "<strong>${cw.word}</strong>" fits the sentence? ${getTTSButton(cw.word)}</p>
     <p>${sentence}</p>
     <div class="choices-row">
       ${variants.map(opt => `<div class="choice-wrapper"><button class="choice-btn" data-variant="${opt.replace(/"/g, '&quot;')}" onclick="handleFormChoiceByVariant(this.dataset.variant, '${correctVariant.replace(/'/g, "\\'")}', this, '${cw.word.replace(/'/g, "\\'")}')">${opt}</button></div>`).join('\n')}

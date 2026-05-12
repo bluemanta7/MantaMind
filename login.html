@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login to MantaMind</title>
   <link rel="stylesheet" href="Styles/style.css" />
   <link rel="stylesheet" href="Styles/nav.css" />
@@ -70,7 +71,13 @@
               password: password,
               learnedWords: [],
               inProgressWords: [],
-              correctStreaks: {}
+              wordStreaks: {},
+              currentStreak: 0,
+              bestStreak: 0,
+              missedWords: [],
+              badges: {},
+              stats: { totalCorrect:0, totalIncorrect:0, perfectDays:0, deathTrapBest:0 },
+              // dailyGoal will be set on first challenge
             };
             currentUser = username;
             saveAndRedirect();

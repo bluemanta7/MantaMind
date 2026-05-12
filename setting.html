@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MantaMind Settings</title>
   <link rel="stylesheet" href="Styles/style.css" />
 <link rel="stylesheet" href="Styles/nav.css" />
@@ -71,6 +72,15 @@
       <p class="hint">Tip: Keep matching pairs to 5 or fewer for best UX.</p>
       <button id="save-settings" class="primary">Save settings</button>
     </section>
+
+    <section class="daily-goal-settings">
+      <h3>Daily Goal</h3>
+      <div class="setting-row">
+        <label for="daily-goal-input">Correct answers target</label>
+        <input type="number" id="daily-goal-input" min="1" placeholder="e.g. 20" />
+      </div>
+      <button id="save-daily-goal" class="primary">Save daily goal</button>
+    </section>
   </main>
 
   <script>
@@ -110,8 +120,9 @@
     function loadQuestionTypeSettings() {
       const currentUser = localStorage.getItem('currentUser');
       const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      const user = (currentUser && userData[currentUser]) ? userData[currentUser] : {};
       const defaults = { multipleChoice: true, matching: false, formMatch: false, theme: 'blue', progressTarget: 3 };
-      const settings = (currentUser && userData[currentUser] && userData[currentUser].settings) || defaults;
+      const settings = (user && user.settings) || defaults;
 
       document.getElementById('toggle-mc').checked = !!settings.multipleChoice;
       document.getElementById('toggle-match').checked = !!settings.matching;
@@ -126,6 +137,12 @@
       // apply theme immediately when changed
       document.getElementById('theme-blue').addEventListener('change', () => applyTheme('blue'));
       document.getElementById('theme-red').addEventListener('change', () => applyTheme('red'));
+
+      // populate daily goal input if available
+      const dailyInput = document.getElementById('daily-goal-input');
+      if (dailyInput && user && user.dailyGoal && user.dailyGoal.target) {
+        dailyInput.value = user.dailyGoal.target;
+      }
     }
 
     function saveQuestionTypeSettings() {
@@ -148,6 +165,24 @@
     }
 
     document.getElementById('save-settings').addEventListener('click', saveQuestionTypeSettings);
+    document.getElementById('save-daily-goal').addEventListener('click', () => {
+      const currentUser = localStorage.getItem('currentUser');
+      if (!currentUser) return;
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      userData[currentUser] = userData[currentUser] || {};
+      const goalVal = parseInt(document.getElementById('daily-goal-input').value, 10);
+      if (goalVal && goalVal > 0) {
+        userData[currentUser].dailyGoal = userData[currentUser].dailyGoal || {};
+        userData[currentUser].dailyGoal.target = goalVal;
+        // reset progress so that new target applies
+        userData[currentUser].dailyGoal.progress = 0;
+        userData[currentUser].dailyGoal.lastReset = new Date().toISOString().slice(0,10);
+        localStorage.setItem('userData', JSON.stringify(userData));
+        alert('Daily goal saved!');
+      } else {
+        alert('Please enter a valid number');
+      }
+    });
     window.addEventListener('load', loadQuestionTypeSettings);
   </script>
   <script src="nav.js"></script>

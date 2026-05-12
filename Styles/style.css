@@ -287,6 +287,67 @@ body.theme-red #hint-btn { background-color: #b51e2a; border-color: #ff6b6b; }
 body.theme-red #hint-btn:hover { background-color: #d6455c; box-shadow: 0 0 10px rgba(255,100,140,0.5); }
 body.theme-red #next-task, body.theme-red #give-up-btn { background: linear-gradient(135deg, #d6455c 0%, #ff6b6b 100%); color: #241212; border-color: #ff9aa2; }
 
+/* Daily goal bar */
+#daily-bar-container {
+  width: 100%;
+  height: 16px;
+  background: rgba(0,80,120,0.3);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+#daily-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ffd700, #ffdd55);
+  transition: width 0.4s ease;
+  font-size: 0.75rem;
+  color: #001a33;
+  text-align: center;
+  line-height:16px;
+}
+#daily-goal-box h3 { margin:6px 0 2px; font-size:0.95rem; }
+
+/* Death Trap UI styling */
+#death-trap-btn {
+  background: linear-gradient(135deg,#ffcc00,#ff9900);
+  color: #001a33;
+  border: 2px solid #ffd700;
+  padding: 8px 14px;
+  margin: 10px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+#death-trap-btn:hover { box-shadow:0 0 10px rgba(255,204,0,0.5); }
+#death-trap-ui {
+  background: rgba(0,0,0,0.2);
+  padding: 10px;
+  border-radius: 8px;
+  color: #c3f0ff;
+}
+
+/* TTS icon button */
+.tts-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: #00d4ff;
+  vertical-align: middle;
+  margin-left:4px;
+}
+.tts-btn:hover { color: #00ffff; }
+
+/* Responsive layout tweaks */
+@media (max-width: 768px) {
+  .challenge-grid { display: flex; flex-direction: column; }
+  #streak-box, #challenge-box { width: 100%; }
+  #next-task, #give-up-btn, #hint-btn, #death-trap-btn { width: 100%; margin: 6px 0; }
+  .stats-grid { display: flex; flex-direction: column; gap: 12px; }
+  .stat-card { width: 100%; }
+}
+
 /* NAV and DASHBOARD overrides for full red theme */
 body.theme-red #top-nav {
   background: linear-gradient(135deg, #3b0f1d 0%, #6b1424 100%);

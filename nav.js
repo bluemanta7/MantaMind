@@ -18,6 +18,26 @@ function setupNav() {
   setupLogout();
   setupUserIndicator();
   applyThemeFromSettings();
+  addMissedWordsLink();
+}
+
+// dynamically append a "Missed Words" entry to the sidebar on every page
+function addMissedWordsLink() {
+  const sidebar = document.getElementById('sidebar-menu');
+  if (!sidebar) return;
+  const ul = sidebar.querySelector('ul');
+  if (!ul) return;
+  // avoid duplicating
+  if (ul.querySelector('a[href="challenge.html?mode=missed"]')) return;
+  const li = document.createElement('li');
+  li.innerHTML = '<a href="challenge.html?mode=missed">📚 Missed Words</a>';
+  // insert after the normal challenge link if possible
+  const challengeLi = ul.querySelector('a[href="challenge.html"]')?.parentElement;
+  if (challengeLi && challengeLi.parentElement === ul) {
+    challengeLi.insertAdjacentElement('afterend', li);
+  } else {
+    ul.appendChild(li);
+  }
 }
 
 function applyThemeFromSettings() {

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MantaMind Dashboard</title>
   <link rel="stylesheet" href="Styles/style.css" />
 <link rel="stylesheet" href="Styles/nav.css" />
@@ -36,6 +37,10 @@
       <p><strong>Username:</strong> <span id="user-name"></span></p>
       <p><strong>Learned Words:</strong> <span id="learned-count"></span></p>
       <p><strong>In Progress Words:</strong> <span id="inprogress-count"></span></p>
+      <p><strong>Accuracy:</strong> <span id="db-accuracy">0%</span></p>
+      <p><strong>Missed Words:</strong> <span id="db-missed">0</span></p>
+      <p><strong>Perfect Days:</strong> <span id="db-perfect">0</span></p>
+      <p><strong>Death Trap Best:</strong> <span id="db-deathbest">—</span></p>
     </div>
 
     <div id="word-lists">
@@ -71,6 +76,14 @@
       document.getElementById('user-name').textContent = currentUser;
       document.getElementById('learned-count').textContent = user.learnedWords.length;
       document.getElementById('inprogress-count').textContent = user.inProgressWords.length;
+      // extra stats
+      const totC = user.stats?.totalCorrect || 0;
+      const totI = user.stats?.totalIncorrect || 0;
+      const acc = totC + totI > 0 ? Math.round((totC/(totC+totI))*100) : 0;
+      document.getElementById('db-accuracy').textContent = acc + '%';
+      document.getElementById('db-missed').textContent = (user.missedWords || []).length;
+      document.getElementById('db-perfect').textContent = user.stats?.perfectDays || 0;
+      document.getElementById('db-deathbest').textContent = user.stats?.deathTrapBest ? user.stats.deathTrapBest : '—';
 
       const learnedList = document.getElementById('learned-list');
       const inprogressList = document.getElementById('inprogress-list');

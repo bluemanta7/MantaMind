@@ -19,7 +19,9 @@ const achievements = [
   { id: 'streak-5', icon: '🔥', name: 'On Fire', desc: 'Get a 5-word streak', requirement: 5, type: 'streak' },
   { id: 'streak-10', icon: '💥', name: 'Unstoppable', desc: 'Get a 10-word streak', requirement: 10, type: 'streak' },
   { id: 'half-complete', icon: '⭐', name: 'Halfway There', desc: 'Reach 50% completion', requirement: 50, type: 'percent' },
-  { id: 'master-rank', icon: '👑', name: 'Vocabulary Master', desc: 'Achieve Master rank', requirement: 75, type: 'percent' }
+  { id: 'master-rank', icon: '👑', name: 'Vocabulary Master', desc: 'Achieve Master rank', requirement: 75, type: 'percent' },
+  { id: 'perfect-5-days', icon: '📅', name: 'Consistency King', desc: 'Hit your daily goal 5 times', requirement: 5, type: 'perfectDays' },
+  { id: 'deathtrap-win', icon: '⏱️', name: 'Death Trap Champion', desc: 'Win a Death Trap run', type: 'event' }
 ];
 
 // 📊 Calculate Rank Based on Completion Percentage
@@ -79,6 +81,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('current-streak').textContent = user.currentStreak || 0;
   document.getElementById('best-streak').textContent = user.bestStreak || 0;
 
+  // additional stats
+  const totalCorrect = user.stats?.totalCorrect || 0;
+  const totalIncorrect = user.stats?.totalIncorrect || 0;
+  const accuracy = totalCorrect + totalIncorrect > 0 ? Math.round((totalCorrect/(totalCorrect+totalIncorrect))*100) : 0;
+  document.getElementById('accuracy').textContent = accuracy + '%';
+  document.getElementById('missed-words').textContent = (user.missedWords || []).length;
+  document.getElementById('perfect-days').textContent = user.stats?.perfectDays || 0;
+
   // Update rank badge
   const rankBadge = document.getElementById('rank-badge');
   rankBadge.textContent = `${rank.icon} ${rank.name}`;
@@ -95,6 +105,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const bestMs = user.matchingHighscore;
     matchingBestEl.textContent = bestMs ? (bestMs/1000).toFixed(3) + ' s' : '—';
   }
+  // Death trap best (questions answered in one run)
+  const deathBestEl = document.getElementById('deathtrap-best');
+  if (deathBestEl) {
+    const db = user.stats?.deathTrapBest;
+    deathBestEl.textContent = db ? db : '—';
+  }
 
   // Load achievements
   const achievementsContainer = document.getElementById('achievements-container');
@@ -107,7 +123,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       isUnlocked = (user.bestStreak || 0) >= achievement.requirement;
     } else if (achievement.type === 'percent') {
       isUnlocked = completionPercent >= achievement.requirement;
+    } else if (achievement.type === 'perfectDays') {
+      isUnlocked = (user.stats?.perfectDays || 0) >= achievement.requirement;
+    } else if (achievement.type === 'event') {
+      isUnlocked = !!(user.badges && user.badges[achievement.id]);
     } else {
+      // assume simple learned-word count
       isUnlocked = learnedCount >= achievement.requirement;
     }
 
@@ -129,6 +150,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const wordStreaks = user.wordStreaks || {};
     const learnedWords = user.learnedWords || [];
     const inProgressWords = user.inProgressWords || [];
+
+    // compute threshold for display (same logic as settings parsing)
+    const settings = (user && user.settings) || {};
+    const threshold = parseInt((settings.wordThreshold || settings.progressTarget || 3), 10);
 
     allWords.forEach(wordEntry => {
       const word = wordEntry.word;
